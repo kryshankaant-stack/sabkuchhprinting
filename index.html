@@ -6,7 +6,7 @@
   <title>Sab Kuch Printing | Premium Commercial Printing & Packaging</title>
   <meta name="description" content="Sab Kuch Printing — premium digital, offset, flex, packaging and commercial printing with instant quotation.">
 
-  <!-- Favicon -->
+  <!-- Official Favicon -->
   <link rel="icon" type="image/png" href="SKP.png">
   <link rel="apple-touch-icon" href="SKP.png">
 
@@ -14,319 +14,589 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Libraries -->
+  <!-- PDF & Offline QR Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
-      --bg: #030712;
-      --card-bg: #0b1329;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #2563eb;
-      --cyan: #00e5ff;
-      --pink: #ff007a;
+      --dark-nav: #000000;
+      --ink: #070d18;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --paper: #f8fafc;
+      --white: #ffffff;
+      --cyan: #00a7ff;
+      --blue: #2563eb;
+      --violet: #7c3aed;
+      --magenta: #f43f5e;
+      --yellow: #f59e0b;
+      --green: #10b981;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      background: var(--paper);
+      color: var(--ink);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
     }
 
-    /* 1. Sleek Black Header */
+    /* 1. Ultra-Clean White Lead Verification Modal */
+    #leadModalOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 20000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .lead-modal-card {
+      background: #ffffff;
+      color: #0f172a;
+      max-width: 450px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      border: 1px solid #e2e8f0;
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.94); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .lead-modal-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .lead-modal-logo {
+      height: 38px;
+      width: auto;
+      background: #000;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .lead-modal-top h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .lead-modal-top p {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .lead-input-group {
+      text-align: left;
+      margin-bottom: 12px;
+    }
+
+    .lead-input-group label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    .lead-input-group input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      color: #0f172a;
+      transition: all 0.2s;
+    }
+
+    .lead-input-group input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+    }
+
+    .error-hint {
+      color: #ef4444;
+      font-size: 11px;
+      margin-top: 3px;
+      display: none;
+      font-weight: 700;
+    }
+
+    .btn-gps {
+      background: #eff6ff;
+      color: var(--blue);
+      border: 1px solid #bfdbfe;
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 5px;
+    }
+
+    .btn-submit-lead {
+      width: 100%;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 11px;
+      border: none;
+      border-radius: 9px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s;
+    }
+
+    .btn-submit-lead:hover {
+      background: #1e293b;
+    }
+
+    /* 2. Dark Seamless Header */
     .site-header {
-      background: rgba(3, 7, 18, 0.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: #000000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
     .nav-container {
-      max-width: 1300px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 10px 20px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
     .brand-logo-img {
-      height: 42px;
+      height: 48px;
       width: auto;
+      max-width: 160px;
       object-fit: contain;
     }
 
-    .nav-hanuman-img {
-      height: 44px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(255,255,255,0.15));
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
     }
 
-    /* 2. Trending Integrated Hero Banner (Clean & Immersive) */
-    .hero-banner {
-      position: relative;
-      background: radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.15), transparent 60%), #030712;
-      padding: 36px 20px 24px;
-      text-align: center;
-      overflow: hidden;
+    .nav-links a {
+      text-decoration: none;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 700;
+      transition: color 0.2s;
     }
 
-    .hero-tag {
+    .nav-links a:hover {
+      color: #38bdf8;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-calc-nav {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 11px;
+      font-size: 12.5px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,0.18);
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--cyan);
+      box-shadow: 0 8px 20px rgba(37,99,235,.35);
+      transition: all 0.2s;
+    }
+
+    .btn-calc-nav:hover {
+      transform: translateY(-2px);
+    }
+
+    .nav-hanuman-img {
+      height: 52px;
+      width: auto;
+      max-width: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(255,255,255,0.15));
+    }
+
+    /* 3. Hero Banner (No-Gap Framing) */
+    .trending-banner-section {
+      padding: 50px 24px 50px;
+      background:
+        radial-gradient(circle at 82% 38%, rgba(37,99,235,.20), transparent 32%),
+        radial-gradient(circle at 18% 75%, rgba(124,58,237,.14), transparent 30%),
+        linear-gradient(135deg, #000000 0%, #07101f 58%, #020617 100%);
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .banner-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+    }
+
+    .banner-left {
+      text-align: left;
+    }
+
+    .banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #38bdf8;
       padding: 6px 14px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--cyan);
+    .banner-pulse {
+      width: 8px;
+      height: 8px;
+      background: #38bdf8;
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--cyan);
+      box-shadow: 0 0 10px #38bdf8;
     }
 
-    .hero-heading {
-      font-size: clamp(28px, 6vw, 56px);
+    .banner-title {
+      font-size: clamp(34px, 3.8vw, 58px);
+      line-height: 1.08;
       font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin-bottom: 12px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      letter-spacing: -.03em;
+      margin-bottom: 18px;
     }
 
-    .hero-heading span {
-      background: linear-gradient(135deg, #00e5ff, #ec4899, #facc15);
+    .banner-title span {
+      background: linear-gradient(100deg, #38bdf8, #f43f5e, #fbbf24);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-sub {
-      font-size: 14px;
-      color: var(--muted);
-      max-width: 540px;
-      margin: 0 auto 22px;
-      line-height: 1.6;
-    }
-
-    /* Integrated Clean Visual Frame */
-    .visual-wrapper {
+    .banner-desc {
       max-width: 580px;
-      margin: 0 auto 26px;
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(37, 99, 235, 0.2);
-      background: #000;
-    }
-
-    .visual-img {
-      width: 100%;
-      height: auto;
-      max-height: 280px;
-      object-fit: cover;
-      display: block;
-      /* Soft dark vignette on image borders */
-      mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, black 70%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, black 70%, transparent 100%);
-    }
-
-    .visual-pill {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(3, 7, 18, 0.75);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #e2e8f0;
-      white-space: nowrap;
-    }
-
-    /* Single High-Impact Action Button */
-    .btn-calc-hero {
-      background: linear-gradient(135deg, #2563eb, #9333ea);
-      color: #ffffff;
-      padding: 14px 28px;
-      border-radius: 14px;
       font-size: 15px;
+      line-height: 1.7;
+      color: #94a3b8;
+      margin-bottom: 26px;
+      font-weight: 500;
+    }
+
+    .banner-action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-banner-calc {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #ffffff;
+      padding: 13px 26px;
+      border-radius: 12px;
+      font-size: 13.5px;
       font-weight: 800;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255,255,255,0.2);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 10px 30px rgba(37,99,235,0.45);
       transition: all 0.2s;
     }
 
-    .btn-calc-hero:hover {
+    .btn-banner-calc:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 40px rgba(37, 99, 235, 0.55);
     }
 
-    /* 3. Smooth Infinite Products Ribbon */
-    .ticker-bar {
-      background: #060c1c;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    .btn-banner-phone {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 13px 22px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    /* Fixed No-Gap Clean Image Visual Frame */
+    .banner-right-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(37, 99, 235, 0.25);
+    }
+
+    .banner-eye-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .banner-right-visual:hover .banner-eye-img {
+      transform: scale(1.03);
+    }
+
+    .visual-glass-overlay {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 11px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .visual-glass-overlay h5 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .visual-glass-overlay span {
+      font-size: 11px;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* 4. Products Ribbon */
+    .products-ribbon-bar {
+      background: #070e1b;
+      color: #ffffff;
       overflow: hidden;
       white-space: nowrap;
-      padding: 10px 0;
+      padding: 11px 0;
       display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .ticker-track {
+    .products-ticker-track {
       display: inline-flex;
-      gap: 10px;
-      animation: scrollTrack 34s linear infinite;
+      gap: 9px;
+      animation: scrollProducts 36s linear infinite;
     }
 
-    @keyframes scrollTrack {
+    .products-ribbon-bar:hover .products-ticker-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollProducts {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
 
-    .p-badge {
+    .product-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 13px;
+      padding: 6px 14px;
       border-radius: 999px;
       font-size: 11.5px;
       font-weight: 700;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
     }
 
-    /* 4. Services Grid */
-    .services-sec {
-      max-width: 1300px;
+    /* 5. Services Section */
+    .services-section {
+      max-width: 1400px;
+      padding: 70px 24px 60px;
       margin: 0 auto;
-      padding: 60px 20px;
       width: 100%;
     }
 
-    .sec-head {
+    .section-header-box {
       text-align: center;
-      margin-bottom: 36px;
+      margin-bottom: 38px;
     }
 
-    .sec-head h3 {
+    .section-header-box h2 {
       font-size: 11.5px;
-      letter-spacing: 0.2em;
-      color: #60a5fa;
+      letter-spacing: .22em;
+      color: #64748b;
       text-transform: uppercase;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .sec-head p {
-      font-size: 20px;
       font-weight: 900;
-      color: #ffffff;
+      margin-bottom: 8px;
     }
 
-    .services-grid {
+    .section-header-box h2:before {
+      content: "OUR CAPABILITIES  /  ";
+      color: var(--blue);
+    }
+
+    .section-header-box p {
+      font-size: 18px;
+      color: #1e293b;
+      font-weight: 800;
+    }
+
+    .services-grid-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(7, minmax(135px, 1fr));
+      gap: 12px;
     }
 
     .service-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
+      min-height: 210px;
+      border-radius: 20px;
       padding: 20px 12px;
+      background: #ffffff;
+      border: 1px solid #e1e8f0;
+      box-shadow: 0 7px 24px rgba(8,17,31,.03);
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .service-card:before {
+      content: "";
+      position: absolute; left: 0; top: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow));
+      opacity: .65;
     }
 
     .service-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(8,17,31,.08);
+      border-color: #cbd5e1;
     }
 
-    .icon-circle {
-      width: 58px;
-      height: 58px;
+    .service-icon-circle {
+      width: 60px;
+      height: 60px;
       border-radius: 16px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      box-shadow: 0 10px 20px rgba(8,17,31,.12);
     }
 
-    .icon-circle svg {
+    .service-icon-circle svg {
       width: 28px;
       height: 28px;
-      stroke: #fff;
+      stroke: #ffffff;
       fill: none;
       stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .bg-cmyk-cyan   { background: #00A3FF; }
     .bg-cmyk-magenta{ background: #FF007A; }
     .bg-cmyk-yellow { background: #FFB800; }
-    .bg-cmyk-black  { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); }
+    .bg-cmyk-black  { background: #181E29; }
     .bg-cmyk-purple { background: #8A2BE2; }
     .bg-cmyk-green  { background: #00C853; }
     .bg-cmyk-orange { background: #FF6600; }
 
-    .service-card h4 {
+    .service-card h3 {
       font-size: 13px;
       font-weight: 800;
-      color: #fff;
-      margin-bottom: 2px;
+      letter-spacing: .04em;
+      color: var(--ink);
     }
 
-    .service-card span {
-      font-size: 10.5px;
-      color: var(--muted);
-      line-height: 1.4;
+    .service-sub-label {
+      font-size: 11px;
+      color: #8a97a8;
+      font-weight: 700;
+      margin-top: 2px;
+      margin-bottom: 6px;
     }
 
-    /* 5. Clean Modal Calculator */
+    .service-specs {
+      font-size: 10px;
+      color: #758397;
+      line-height: 1.5;
+      font-weight: 600;
+      margin-top: auto;
+    }
+
+    /* 6. Clean Calculator Modal */
     #calculatorModal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(3, 10, 20, 0.76);
       backdrop-filter: blur(14px);
       z-index: 15000;
       display: none;
@@ -336,21 +606,22 @@
       overflow-y: auto;
     }
 
-    .calc-modal {
+    .calc-modal-wrapper {
       background: #ffffff;
-      color: #0f172a;
-      max-width: 980px;
+      max-width: 1020px;
       width: 100%;
       border-radius: 20px;
-      overflow: hidden;
-      max-height: 92vh;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 35px 90px rgba(0,0,0,.3);
+      max-height: 94vh;
       overflow-y: auto;
+      position: relative;
     }
 
-    .calc-top {
-      background: #030712;
-      color: #fff;
-      padding: 16px 20px;
+    .calc-modal-header {
+      background: #000000;
+      color: #ffffff;
+      padding: 16px 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -359,33 +630,55 @@
       z-index: 10;
     }
 
-    .calc-top h4 {
+    .calc-header-title h4 {
       font-size: 15px;
       font-weight: 800;
+      color: #ffffff;
     }
 
-    .btn-close {
-      background: rgba(255, 255, 255, 0.15);
+    .calc-header-title p {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .btn-close-modal {
+      background: rgba(255,255,255,.14);
       border: none;
       width: 30px;
       height: 30px;
       border-radius: 50%;
+      font-size: 14px;
       color: #fff;
       cursor: pointer;
-      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .calc-body {
+    .calc-modal-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
-      padding: 20px;
+      gap: 22px;
+      padding: 22px;
     }
 
-    @media (max-width: 768px) {
-      .calc-body {
-        grid-template-columns: 1fr;
-      }
+    .calc-subhead {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: #4e6076;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+
+    .form-group {
+      margin-bottom: 11px;
     }
 
     label {
@@ -394,10 +687,6 @@
       font-weight: 700;
       color: #334155;
       margin-bottom: 4px;
-    }
-
-    .form-group {
-      margin-bottom: 11px;
     }
 
     .input-row {
@@ -410,155 +699,187 @@
       flex: 1;
     }
 
-    input, select {
+    input[type="text"], input[type="number"], select {
       width: 100%;
-      padding: 9px 11px;
+      padding: 9px 12px;
       border: 1.5px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 9px;
       font-size: 13px;
+      color: var(--ink);
       outline: none;
       background: #ffffff;
-      color: #0f172a;
+      transition: all 0.2s;
     }
 
     input:focus, select:focus {
-      border-color: var(--accent);
+      border-color: var(--blue);
     }
 
     .option-pill {
       display: flex;
       align-items: center;
       background: #f8fafc;
-      padding: 8px 11px;
-      border-radius: 8px;
+      padding: 9px 12px;
+      border-radius: 9px;
       border: 1.5px solid #e2e8f0;
-      margin-bottom: 10px;
+      margin-bottom: 11px;
+      cursor: pointer;
       font-size: 12px;
       font-weight: 700;
       color: #334155;
-      cursor: pointer;
     }
 
     .option-pill input {
+      accent-color: var(--blue);
+      margin-right: 8px;
       width: 15px;
       height: 15px;
-      margin-right: 8px;
     }
 
-    .summary-card {
+    .summary-panel {
       background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
       border-radius: 14px;
+      border: 1px solid #e2e8f0;
       padding: 16px;
     }
 
-    .sum-line {
+    .invoice-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 13px;
+    }
+
+    .summary-line {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: #64748b;
-      margin-bottom: 6px;
+      color: var(--muted);
+      margin-bottom: 5px;
     }
 
-    .sum-line strong {
-      color: #0f172a;
+    .summary-line strong {
+      color: var(--ink);
+      font-weight: 700;
     }
 
-    .sum-total {
+    .total-box {
       border-top: 1.5px solid #cbd5e1;
       margin-top: 8px;
-      padding-top: 8px;
+      padding-top: 9px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .sum-total h3 {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--accent);
+    .total-box span {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
     }
 
-    .upi-box {
-      margin-top: 12px;
+    .total-box h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .screen-pay-box {
       background: #f0fdf4;
       border: 1.5px dashed #86efac;
-      border-radius: 10px;
-      padding: 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 13px;
     }
 
-    .qr-box {
-      width: 60px;
-      height: 60px;
-      background: #fff;
-      border-radius: 6px;
+    .qr-container {
+      width: 62px;
+      height: 62px;
+      min-width: 62px;
+      background: #ffffff;
+      border: 1px solid #bbf7d0;
+      border-radius: 7px;
+      padding: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .qr-box canvas, .qr-box img {
+    .qr-container canvas, .qr-container img {
       width: 56px !important;
       height: 56px !important;
+    }
+
+    .upi-info h5 {
+      font-size: 12px;
+      color: #14532d;
+      font-weight: 800;
+    }
+
+    .upi-info p {
+      font-size: 10px;
+      color: #166534;
+      margin-top: 1px;
     }
 
     .btn-stack {
       display: flex;
       flex-direction: column;
       gap: 7px;
-      margin-top: 12px;
     }
 
     .btn {
       width: 100%;
       padding: 10px;
-      border-radius: 8px;
-      font-size: 13px;
+      border-radius: 9px;
+      font-size: 12.5px;
       font-weight: 800;
       border: none;
       cursor: pointer;
+      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      text-decoration: none;
+      transition: all 0.2s;
     }
 
-    .btn-pay { background: #16a34a; color: #fff; }
-    .btn-pdf { background: #0f172a; color: #fff; }
-    .btn-wa  { background: #0284c7; color: #fff; }
+    .btn-upi { background: #16a34a; color: #fff; }
+    .btn-dark { background: #0f172a; color: #fff; }
+    .btn-green { background: #0284c7; color: #fff; }
 
-    /* 6. Footer */
+    /* 7. Footer */
     .site-footer {
-      background: #02050e;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 50px 20px 24px;
+      background: #000000;
+      color: #ffffff;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 55px 24px 30px;
       margin-top: auto;
     }
 
-    .footer-wrap {
-      max-width: 1300px;
+    .footer-container {
+      max-width: 1400px;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
     }
 
-    .founder-box {
+    .founder-profile-box {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
 
-    .ring-box {
+    .founder-avatar-container {
       position: relative;
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -568,8 +889,8 @@
       position: absolute;
       inset: -3px;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, #00e5ff, #ec4899, #facc15, #00e5ff);
-      animation: rotateRing 3s linear infinite;
+      background: conic-gradient(from 0deg, #00a7ff, #f43f5e, #f59e0b, #10b981, #00a7ff);
+      animation: rotateRing 3.5s linear infinite;
     }
 
     @keyframes rotateRing {
@@ -577,10 +898,10 @@
       100% { transform: rotate(360deg); }
     }
 
-    .founder-img {
+    .founder-avatar-circle {
       position: relative;
-      width: 74px;
-      height: 74px;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
       object-fit: cover;
       background: #000;
@@ -588,235 +909,331 @@
       z-index: 2;
     }
 
-    .founder-txt h4 {
-      font-size: 16px;
+    .founder-info h4 {
+      font-size: 17px;
       font-weight: 800;
-      color: #fff;
+      color: #ffffff;
     }
 
-    .founder-txt span {
+    .founder-info .role-badge {
+      display: inline-block;
       font-size: 11px;
       color: #60a5fa;
       font-weight: 700;
-      display: block;
+      margin-top: 2px;
       margin-bottom: 6px;
     }
 
-    .call-btn {
+    .founder-phone-btn {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 5px 11px;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 6px 12px;
+      border-radius: 7px;
+      color: #ffffff;
+      font-size: 12.5px;
       font-weight: 700;
       text-decoration: none;
     }
 
-    .coolart-box {
+    .footer-social-branding {
       text-align: right;
     }
 
-    .coolart-box a {
+    .connect-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #60a5fa;
       text-decoration: none;
-      font-size: 12.5px;
       font-weight: 700;
-      display: inline-block;
-      margin-bottom: 6px;
+      font-size: 13px;
+      margin-bottom: 8px;
     }
 
     .coolart-badge {
       font-size: 11px;
-      color: var(--muted);
+      color: #94a3b8;
     }
 
     .coolart-badge strong {
       color: #c084fc;
     }
 
-    @media (max-width: 650px) {
-      .footer-wrap {
-        flex-direction: column;
-        text-align: center;
-      }
-      .coolart-box {
-        text-align: center;
-      }
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .services-grid-row { grid-template-columns: repeat(4, 1fr); }
+      .banner-container { grid-template-columns: 1fr; text-align: center; }
+      .banner-left { text-align: center; }
+      .banner-desc { margin: 0 auto 22px; }
+      .banner-action-row { justify-content: center; }
+      .banner-right-visual { max-width: 620px; margin: 0 auto; }
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .trending-banner-section { padding: 40px 18px 40px; }
+      .services-section { padding: 50px 16px; }
+      .services-grid-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .calc-modal-grid { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; text-align: center; }
+      .founder-profile-box { flex-direction: column; }
+      .footer-social-branding { text-align: center; }
+    }
+
+    @media (max-width: 520px) {
+      .brand-logo-img { height: 38px; }
+      .nav-hanuman-img { display: none; }
+      .banner-action-row { flex-direction: column; }
+      .btn-banner-calc, .btn-banner-phone { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sleek Sticky Navbar -->
+  <!-- 1. Ultra-Clean White Lead Verification Modal -->
+  <div id="leadModalOverlay">
+    <div class="lead-modal-card">
+      <div class="lead-modal-top">
+        <img src="sab kuchh printing logo.jpg" alt="Logo" class="lead-modal-logo" onerror="this.style.display='none'">
+        <div>
+          <h4>Sab Kuch Printing</h4>
+          <p>Instant pricing verification</p>
+        </div>
+      </div>
+
+      <div class="lead-input-group">
+        <label>Full Name *</label>
+        <input type="text" id="leadName" placeholder="e.g. Rahul Sharma">
+        <div id="errName" class="error-hint">Please enter your full name!</div>
+      </div>
+
+      <div class="lead-input-group">
+        <label>Mobile Number (10 Digits) *</label>
+        <input type="tel" id="leadPhone" maxlength="10" placeholder="e.g. 98XXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div id="errPhone" class="error-hint">Please enter a valid 10-digit number!</div>
+      </div>
+
+      <div class="lead-input-group">
+        <label>Town / Business Location *</label>
+        <input type="text" id="leadLocation" placeholder="Enter City/Village or use GPS">
+        <div>
+          <button type="button" class="btn-gps" onclick="fetchLiveLocation()">
+            📍 Add GPS Location
+          </button>
+        </div>
+        <div id="errLocation" class="error-hint">Please enter location or tap GPS!</div>
+      </div>
+
+      <button type="button" class="btn-submit-lead" onclick="submitLeadGate()">
+        Continue to Rates & Calculator ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- Header -->
   <header class="site-header">
     <div class="nav-container">
-      <img src="sab kuchh printing logo.jpg" alt="Sab Kuch Printing" class="brand-logo-img" onerror="this.style.display='none'">
-      <img src="hanumanji.png" alt="Hanuman Ji" class="nav-hanuman-img" onerror="this.style.display='none'">
+      <div class="brand-left">
+        <img src="sab kuchh printing logo.jpg" alt="Sab Kuch Printing" class="brand-logo-img" onerror="this.style.display='none'">
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="javascript:void(0)" onclick="openCalculatorModal()">Pricing Calculator</a></li>
+        <li><a href="#founder">About Founder</a></li>
+        <li><a href="tel:+919458614610">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="btn-calc-nav" onclick="openCalculatorModal()">
+          ⚡ Instant Rate Calculator
+        </button>
+        <img src="hanumanji.png" alt="Hanuman Ji" class="nav-hanuman-img" onerror="this.style.display='none'">
+      </div>
     </div>
   </header>
 
-  <!-- Hero Banner with Seamless Blended Color Eye Visual -->
-  <section class="hero-banner">
-    <div class="hero-tag">
-      <span class="pulse-dot"></span>
-      USA High Precision Color Engineering
-    </div>
+  <!-- Hero Banner with No-Gap Eye Visual -->
+  <section class="trending-banner-section">
+    <div class="banner-container">
+      <div class="banner-left">
+        <div class="banner-badge">
+          <span class="banner-pulse"></span>
+          USA High Precision Technology
+        </div>
 
-    <h1 class="hero-heading">
-      Unleash The Full Spectrum Of <br>
-      <span>Commercial Printing</span>
-    </h1>
+        <h1 class="banner-title">
+          Unleash The Full Spectrum Of <br>
+          <span>Commercial Printing</span>
+        </h1>
 
-    <p class="hero-sub">
-      Industrial digital presses, large-format flex engineering, carton packaging & screen printing. Accurate live estimation at your fingertips.
-    </p>
+        <p class="banner-desc">
+          State-of-the-art digital presses, large-format flex engineering, packaging carton solutions, and screen printing. Accurate rate calculation engine at your service.
+        </p>
 
-    <!-- Seamlessly Blended Visual -->
-    <div class="visual-wrapper">
-      <img src="color eye.jpeg" alt="Color Spectrum Eye" class="visual-img" onerror="this.style.display='none'">
-      <div class="visual-pill">🎯 CMYK True Micro-Dot Calibration</div>
-    </div>
+        <div class="banner-action-row">
+          <button class="btn-banner-calc" onclick="openCalculatorModal()">
+            ⚡ Calculate Rates & Instant Quotation
+          </button>
+          <a href="tel:+919458614610" class="btn-banner-phone">
+            📞 Speak With Founder
+          </a>
+        </div>
+      </div>
 
-    <!-- Single High-Impact Button -->
-    <div>
-      <button class="btn-calc-hero" onclick="openCalculatorModal()">
-        ⚡ Calculate Rates & Instant Quotation
-      </button>
+      <!-- No-Gap 16:10 Aspect Visual Frame -->
+      <div class="banner-right-visual">
+        <img src="color eye.jpeg" alt="Full Color Spectrum Vision" class="banner-eye-img" onerror="this.style.display='none'">
+        <div class="visual-glass-overlay">
+          <div>
+            <h5>CMYK Micro-Dot Calibration</h5>
+            <span>True Color High-Definition Output</span>
+          </div>
+          <span style="font-size: 18px;">🎯</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Products Ribbon -->
-  <div class="ticker-bar">
-    <div class="ticker-track">
-      <span class="p-badge">💼 Business Cards</span>
-      <span class="p-badge">🖼️ Posters</span>
-      <span class="p-badge">💌 Greeting Cards</span>
-      <span class="p-badge">🪧 Flex Banners</span>
-      <span class="p-badge">📄 Letterheads</span>
-      <span class="p-badge">✨ Vinyl Prints</span>
-      <span class="p-badge">📖 Catalogs</span>
-      <span class="p-badge">🧱 Sunboard Mounts</span>
-      <span class="p-badge">🏷️ Name Plates</span>
-      <span class="p-badge">🎯 Standees</span>
-      <span class="p-badge">🔖 Stickers</span>
-      <span class="p-badge">📚 Invoice Books</span>
-      <span class="p-badge">🛍️ Shopping Bags</span>
-      <span class="p-badge">✉️ Envelopes</span>
-      <span class="p-badge">💡 Sign Boards</span>
-      <span class="p-badge">📅 Calendars</span>
-      <span class="p-badge">🖋️ Rubber Stamps</span>
-      <span class="p-badge">🎟️ Event Cards</span>
-      <span class="p-badge">🪪 ID Cards</span>
-      <span class="p-badge">🎂 Birthday Cards</span>
-      <span class="p-badge">☕ Mugs & Pens</span>
-      <span class="p-badge">📑 Pamphlets</span>
-      <span class="p-badge">📸 Photo Books</span>
-      <span class="p-badge">🏢 Indoor Signage</span>
-      <span class="p-badge">📝 Notepads</span>
-      <span class="p-badge">📦 Sunpack Sheets</span>
-      <span class="p-badge">👕 Custom T-Shirts</span>
-      <span class="p-badge">🎁 Packaging Boxes</span>
-      <span class="p-badge">💒 Wedding Cards</span>
+  <div class="products-ribbon-bar" id="products">
+    <div class="products-ticker-track">
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Standees</span>
+      <span class="product-badge">🔖 Stickers</span>
+      <span class="product-badge">📚 Invoice Books</span>
+      <span class="product-badge">🛍️ Shopping Bags</span>
+      <span class="product-badge">✉️ Envelopes</span>
+      <span class="product-badge">💡 Sign Boards</span>
+      <span class="product-badge">📅 Calendars</span>
+      <span class="product-badge">🖋️ Rubber Stamps</span>
+      <span class="product-badge">🎟️ Event Cards</span>
+      <span class="product-badge">🪪 ID Cards</span>
+      <span class="product-badge">🎂 Birthday Cards</span>
+      <span class="product-badge">☕ Mugs & Pens</span>
+      <span class="product-badge">📑 Pamphlets</span>
+      <span class="product-badge">📸 Photo Books</span>
+      <span class="product-badge">🏢 Indoor Signage</span>
+      <span class="product-badge">📝 Notepads</span>
+      <span class="product-badge">📦 Sunpack Sheets</span>
+      <span class="product-badge">👕 Custom T-Shirts</span>
+      <span class="product-badge">🎁 Packaging Boxes</span>
+      <span class="product-badge">💒 Wedding Cards</span>
       <!-- Loop -->
-      <span class="p-badge">💼 Business Cards</span>
-      <span class="p-badge">🖼️ Posters</span>
-      <span class="p-badge">💌 Greeting Cards</span>
-      <span class="p-badge">🪧 Flex Banners</span>
-      <span class="p-badge">📄 Letterheads</span>
-      <span class="p-badge">✨ Vinyl Prints</span>
-      <span class="p-badge">📖 Catalogs</span>
-      <span class="p-badge">🧱 Sunboard Mounts</span>
-      <span class="p-badge">🏷️ Name Plates</span>
-      <span class="p-badge">🎯 Standees</span>
-      <span class="p-badge">🔖 Stickers</span>
-      <span class="p-badge">📚 Invoice Books</span>
-      <span class="p-badge">🛍️ Shopping Bags</span>
-      <span class="p-badge">✉️ Envelopes</span>
-      <span class="p-badge">💡 Sign Boards</span>
-      <span class="p-badge">📅 Calendars</span>
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Standees</span>
+      <span class="product-badge">🔖 Stickers</span>
     </div>
   </div>
 
-  <!-- Capabilities Section -->
-  <section class="services-sec">
-    <div class="sec-head">
-      <h3>Our Capabilities</h3>
-      <p>Industrial Printing & Manufacturing Lines</p>
+  <!-- Services Section -->
+  <section class="services-section" id="services">
+    <div class="section-header-box">
+      <h2>Our Services</h2>
+      <p>Cutting-edge industrial print technologies tailored for bulk and custom needs</p>
     </div>
 
-    <div class="services-grid">
+    <div class="services-grid-row">
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-cyan">
+        <div class="service-icon-circle bg-cmyk-cyan">
           <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         </div>
-        <h4>DIGITAL</h4>
-        <span>Fast | High Quality<br>Vibrant Colors</span>
+        <h3>DIGITAL</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Fast | High Quality<br>Vibrant Colors</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-magenta">
+        <div class="service-icon-circle bg-cmyk-magenta">
           <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
         </div>
-        <h4>OFFSET</h4>
-        <span>Premium | Bulk<br>Cost Effective</span>
+        <h3>OFFSET</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Premium | Bulk<br>Cost Effective</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-yellow">
+        <div class="service-icon-circle bg-cmyk-yellow">
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
         </div>
-        <h4>FLEX</h4>
-        <span>Banners | Hoardings<br>Large Format</span>
+        <h3>FLEX</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Banners | Hoardings<br>Large Format</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-black">
+        <div class="service-icon-circle bg-cmyk-black">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 12s1.5-3 4-3 4 3 4 3-1.5 3-4 3-4-3-4-3z"></path></svg>
         </div>
-        <h4>ROTOGRAVURE</h4>
-        <span>High Volume<br>High Quality</span>
+        <h3>ROTOGRAVURE</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">High Volume<br>High Quality</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-purple">
+        <div class="service-icon-circle bg-cmyk-purple">
           <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
         </div>
-        <h4>FLEXOGRAPHY</h4>
-        <span>Flexible Packaging<br>Labels | Films</span>
+        <h3>FLEXOGRAPHY</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Flexible Packaging<br>Labels | Films</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-green">
+        <div class="service-icon-circle bg-cmyk-green">
           <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </div>
-        <h4>PACKAGING</h4>
-        <span>Boxes | Cartons<br>Custom Solutions</span>
+        <h3>PACKAGING</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Boxes | Cartons<br>Custom Solutions</div>
       </div>
 
       <div class="service-card">
-        <div class="icon-circle bg-cmyk-orange">
+        <div class="service-icon-circle bg-cmyk-orange">
           <svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"></path><line x1="4" y1="20" x2="20" y2="20"></line><line x1="12" y1="16" x2="12" y2="20"></line></svg>
         </div>
-        <h4>SCREEN</h4>
-        <span>Apparel | Bags<br>Spot UV & Foil</span>
+        <h3>SCREEN</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Apparel | Bags<br>Spot UV & Foil</div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing Calculator Modal -->
+  <!-- Interactive Modal Calculator -->
   <div id="calculatorModal">
-    <div class="calc-modal" id="calculatorInvoiceCard">
-      <div class="calc-top">
-        <h4>⚡ Rate Calculator & Quotation</h4>
-        <button class="btn-close" onclick="closeCalculatorModal()">✕</button>
+    <div class="calc-modal-wrapper" id="calculatorInvoiceCard">
+      <div class="calc-modal-header">
+        <div class="calc-header-title">
+          <h4>Smart Rate Estimator & Quotation Generator</h4>
+          <p>Instant precision billing engine with automated sizing & logistics</p>
+        </div>
+        <button class="btn-close-modal" onclick="closeCalculatorModal()">✕</button>
       </div>
 
-      <div class="calc-body">
+      <div class="calc-modal-grid">
         <div>
+          <div class="calc-subhead">📋 Board & Media Specifications</div>
+
           <div class="form-group">
             <label>Customer Name</label>
             <input type="text" id="clientName" placeholder="e.g. Rahul Sharma" oninput="calculateTotal()">
@@ -833,11 +1250,11 @@
 
           <div class="input-row">
             <div class="input-col">
-              <label id="lblWidth">Width (Feet)</label>
+              <label id="lblWidth">Width</label>
               <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
             </div>
             <div class="input-col">
-              <label id="lblHeight">Height (Feet)</label>
+              <label id="lblHeight">Height</label>
               <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
             </div>
           </div>
@@ -857,11 +1274,13 @@
             <label>M.S. Iron Frame Structure</label>
             <select id="cFrameQuality" onchange="calculateTotal()">
               <option value="0" data-name="No Frame" selected>No Frame (Print Only)</option>
-              <option value="18" data-name="Light Frame">Light Duty M.S. Frame - ₹18 / R.ft</option>
-              <option value="25" data-name="Medium Heavy Frame">Medium Heavy Frame - ₹25 / R.ft</option>
-              <option value="30" data-name="Heavy Duty Frame">Heavy Duty Premium Frame - ₹30 / R.ft</option>
+              <option value="18" data-name="Light Frame">Light Duty M.S. Frame - ₹18 / Running Ft</option>
+              <option value="25" data-name="Medium Heavy Frame">Medium Heavy Frame - ₹25 / Running Ft</option>
+              <option value="30" data-name="Heavy Duty Frame">Heavy Duty Premium Frame - ₹30 / Running Ft</option>
             </select>
           </div>
+
+          <div class="calc-subhead" style="margin-top: 14px;">🛠️ Extra Services</div>
 
           <label class="option-pill">
             <input type="checkbox" id="cDesign" onchange="calculateTotal()">
@@ -870,11 +1289,11 @@
 
           <div class="input-row">
             <div class="input-col">
-              <label>Delivery (₹)</label>
+              <label>Delivery / Logistics (₹)</label>
               <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
             </div>
             <div class="input-col">
-              <label>Fitting (₹)</label>
+              <label>Fitting / Installation (₹)</label>
               <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
             </div>
           </div>
@@ -885,55 +1304,58 @@
           </div>
         </div>
 
-        <div>
-          <div class="summary-card">
-            <div class="sum-line">
+        <div class="summary-panel">
+          <div class="calc-subhead">🧾 Realtime Estimation</div>
+
+          <div class="invoice-card">
+            <div class="summary-line">
               <span>Dimensions:</span>
               <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
             </div>
-            <div class="sum-line">
+            <div class="summary-line">
               <span>Printing Cost:</span>
               <span id="resPrint">₹0</span>
             </div>
-            <div class="sum-line">
-              <span>M.S. Frame:</span>
+            <div class="summary-line">
+              <span>M.S. Iron Frame:</span>
               <span id="resFrame">₹0</span>
             </div>
-            <div class="sum-line">
+            <div class="summary-line">
               <span>Bond Adhesive:</span>
               <span id="resBond">₹0</span>
             </div>
-            <div class="sum-line">
-              <span>Designing:</span>
+            <div class="summary-line">
+              <span>Design Charge:</span>
               <span id="resDesign">₹0</span>
             </div>
-            <div class="sum-line">
-              <span>Delivery + Fitting:</span>
+            <div class="summary-line">
+              <span>Logistics + Fitting:</span>
               <span id="resTransportFitting">₹0</span>
             </div>
-            <div class="sum-total">
-              <span>Total Amount:</span>
+            <div class="total-box">
+              <span>Total Estimated Amount:</span>
               <h3 id="resTotal">₹0</h3>
             </div>
           </div>
 
-          <div class="upi-box">
-            <div id="screenQrContainer" class="qr-box"></div>
-            <div>
-              <div style="font-size:12px; font-weight:800; color:#14532d;">⚡ Direct UPI Gateway</div>
-              <div style="font-size:10px; color:#166534; font-weight:600;">9458614610-2@ybl</div>
+          <div class="screen-pay-box">
+            <div id="screenQrContainer" class="qr-container"></div>
+            <div class="upi-info">
+              <h5>⚡ Direct UPI Gateway</h5>
+              <span style="font-size:9px; background:#dcfce7; color:#15803d; padding:1px 5px; border-radius:3px; font-weight:800;">Verified Business</span>
+              <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
             </div>
           </div>
 
           <div class="btn-stack" data-html2canvas-ignore="true">
-            <a id="btnPayUpi" class="btn btn-pay" href="#" target="_blank">
+            <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
               ⚡ Pay Now (GPay / PhonePe)
             </a>
-            <button class="btn btn-pdf" onclick="downloadDirectPDF()">
-              📄 Download PDF Quotation
+            <button class="btn btn-dark" onclick="downloadDirectPDF()">
+              📄 Download Single Page A4 PDF
             </button>
-            <button class="btn btn-wa" onclick="shareOnWhatsApp()">
-              📲 Share on WhatsApp
+            <button class="btn btn-green" onclick="shareOnWhatsApp()">
+              📲 Share Estimate on WhatsApp
             </button>
           </div>
         </div>
@@ -941,30 +1363,37 @@
     </div>
   </div>
 
-  <!-- Modern Dark Footer -->
-  <footer class="site-footer">
-    <div class="footer-wrap">
-      <div class="founder-box">
-        <div class="ring-box">
+  <!-- Footer -->
+  <footer class="site-footer" id="founder">
+    <div class="footer-container">
+      <div class="founder-profile-box">
+        <div class="founder-avatar-container">
           <div class="shining-ring"></div>
-          <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-img" onerror="this.style.display='none'">
+          <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-circle" onerror="this.style.display='none'">
         </div>
-        <div class="founder-txt">
+        <div class="founder-info">
           <h4>Krishan Kant Bhardwaj</h4>
-          <span>Founder & Chief Consultant</span>
-          <a href="tel:+919458614610" class="call-btn">
-            🇮🇳 +91 9458614610
-          </a>
+          <span class="role-badge">Founder & Chief Consultant</span>
+          <div>
+            <a href="tel:+919458614610" class="founder-phone-btn">
+              <span>🇮🇳</span> +91 9458614610
+            </a>
+          </div>
         </div>
       </div>
 
-      <div class="coolart-box">
-        <a href="https://www.facebook.com/sabkuchhprinting" target="_blank">
-          🌐 Facebook: Sab Kuchh Printing
-        </a>
+      <div class="footer-social-branding">
+        <div>
+          <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
+            <svg style="width:16px;height:16px;fill:#60a5fa;" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook Page: Sab Kuchh Printing
+          </a>
+        </div>
         <div class="coolart-badge">
           Designed & Developed by: <strong>COOL ART®</strong><br>
-          Nahal, Atrauli, Aligarh, UP
+          Nahal, Atrauli, Aligarh, UP • Graphic Design, Printing & Media
         </div>
       </div>
     </div>
@@ -973,10 +1402,22 @@
   <script>
     const MY_UPI_ID = "9458614610-2@ybl";
     const MY_NAME = "Krishan Kant Bhardwaj";
+    const OWNER_PHONE = "9458614610";
 
     let currentGrandTotal = 0;
     let qrGenerator = null;
     let autoDesignActivated = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('skp_verified_user');
+      if (!savedUser) {
+        document.getElementById('leadModalOverlay').style.display = 'flex';
+      } else {
+        const userData = JSON.parse(savedUser);
+        document.getElementById('clientName').value = userData.name || '';
+      }
+      calculateTotal();
+    });
 
     function openCalculatorModal() {
       document.getElementById('calculatorModal').style.display = 'flex';
@@ -991,6 +1432,71 @@
       const modal = document.getElementById('calculatorModal');
       if (e.target === modal) closeCalculatorModal();
     });
+
+    function fetchLiveLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            document.getElementById('leadLocation').value = `GPS: https://maps.google.com/?q=${lat},${lng}`;
+            document.getElementById('errLocation').style.display = 'none';
+          },
+          () => {
+            alert("Please enable GPS in your device or type your address manually.");
+          },
+          { timeout: 10000 }
+        );
+      } else {
+        alert("GPS not supported, please enter your address.");
+      }
+    }
+
+    function submitLeadGate() {
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const loc = document.getElementById('leadLocation').value.trim();
+
+      let isValid = true;
+
+      if (name.length < 2) {
+        document.getElementById('errName').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errName').style.display = 'none';
+      }
+
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('errPhone').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errPhone').style.display = 'none';
+      }
+
+      if (loc.length < 4) {
+        document.getElementById('errLocation').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errLocation').style.display = 'none';
+      }
+
+      if (!isValid) return;
+
+      localStorage.setItem('skp_verified_user', JSON.stringify({ name, phone, loc }));
+
+      document.getElementById('clientName').value = name;
+      document.getElementById('leadModalOverlay').style.display = 'none';
+
+      const leadMsg = `*🚨 NEW VERIFIED CALCULATOR LEAD*%0A` +
+        `👤 Name: ${name}%0A` +
+        `📞 Mobile: ${phone}%0A` +
+        `📍 Location: ${loc}%0A` +
+        `--------------------------------%0A` +
+        `Sab Kuch Printing Commercial Portal`;
+
+      window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
+    }
 
     function onUnitChange() {
       const unit = document.getElementById('calcUnitSelect').value;
@@ -1097,7 +1603,7 @@
     async function downloadDirectPDF() {
       calculateTotal();
       const clientName = document.getElementById('clientName').value.trim() || 'Customer';
-      const element = document.querySelector('.summary-card');
+      const element = document.querySelector('.summary-panel');
 
       const opt = {
         margin: [8, 8, 8, 8],

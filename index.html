@@ -41,24 +41,21 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto !important; /* Smooth scrolling guaranteed */
-      -webkit-overflow-scrolling: touch;
+    /* Guaranteed Native Scroll On All Devices */
+    html {
       scroll-behavior: smooth;
     }
 
     body {
       background: #030712;
-      color: #0f172a;
+      color: var(--ink);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
     }
 
-    /* Ultra-Light GPU-Accelerated Floating Bindiyan */
+    /* Floating Bindiyan (Clicks Completely Pass Through) */
     .ink-particle-layer {
       position: fixed;
       inset: 0;
@@ -70,6 +67,7 @@
     .ink-dot {
       position: absolute;
       border-radius: 50%;
+      pointer-events: none !important;
       will-change: transform, opacity;
       animation: floatDotUp 14s linear infinite;
     }
@@ -97,13 +95,13 @@
       }
     }
 
-    /* Content Layout Levels */
+    /* Page Sections Positioning */
     header, section, div.products-ribbon-bar, div.services-wrapper-outer, footer {
       position: relative;
-      z-index: 5;
+      z-index: 2;
     }
 
-    /* 1. Ultra-Clean White Lead Modal */
+    /* 1. Ultra-Clean White Lead Modal (Hidden by Default) */
     #leadModalOverlay {
       position: fixed;
       inset: 0;
@@ -235,7 +233,7 @@
       background: #1e293b;
     }
 
-    /* 2. Dark Header & Interactive Speaker Button */
+    /* 2. Dark Header & Speaker */
     .site-header {
       background: #000000;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -292,7 +290,7 @@
       gap: 12px;
     }
 
-    /* Working Sound Speaker Button */
+    /* Real Sound Speaker Button */
     .sound-toggle-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -306,6 +304,7 @@
       cursor: pointer;
       font-size: 15px;
       transition: all 0.2s;
+      user-select: none;
     }
 
     .sound-toggle-btn:hover {
@@ -316,7 +315,7 @@
     .sound-toggle-btn.sound-on {
       border-color: #38bdf8;
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
-      background: rgba(37, 99, 235, 0.2);
+      background: rgba(37, 99, 235, 0.25);
     }
 
     .btn-calc-nav {
@@ -537,7 +536,7 @@
       transform: scale(1.02);
     }
 
-    /* 4. Products Ribbon */
+    /* 4. Products Ribbon - Guaranteed Smooth Animation */
     .products-ribbon-bar {
       background: #070e1b;
       color: #ffffff;
@@ -546,12 +545,14 @@
       padding: 11px 0;
       display: flex;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 2;
     }
 
     .products-ticker-track {
       display: inline-flex;
       gap: 9px;
-      animation: scrollProducts 36s linear infinite;
+      animation: scrollProducts 32s linear infinite;
       will-change: transform;
     }
 
@@ -560,8 +561,8 @@
     }
 
     @keyframes scrollProducts {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
     }
 
     .product-badge {
@@ -575,6 +576,7 @@
       border: 1px solid rgba(255, 255, 255, 0.16);
       background: rgba(255, 255, 255, 0.08);
       color: #f1f5f9;
+      user-select: none;
     }
 
     /* 5. Services Section: Clean Light Area */
@@ -715,7 +717,7 @@
     #calculatorModal {
       position: fixed;
       inset: 0;
-      background: rgba(3, 10, 20, 0.82);
+      background: rgba(3, 10, 20, 0.85);
       backdrop-filter: blur(8px);
       z-index: 99998;
       display: none;
@@ -731,7 +733,7 @@
       width: 100%;
       border-radius: 20px;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
       max-height: 92vh;
       overflow-y: auto;
       position: relative;
@@ -1114,7 +1116,12 @@
 </head>
 <body>
 
-  <!-- Ultra-Light GPU-Accelerated Floating Bindiyan (Clicks Pass Through) -->
+  <!-- Audio Element with High Quality Ambient Sound -->
+  <audio id="ambientAudio" loop preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2874/2874-preview.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Ultra-Light Floating Bindiyan -->
   <div class="ink-particle-layer">
     <div class="ink-dot dot-cyan"></div>
     <div class="ink-dot dot-pink"></div>
@@ -1123,7 +1130,7 @@
     <div class="ink-dot dot-green"></div>
   </div>
 
-  <!-- 1. Ultra-Clean White Lead Verification Modal -->
+  <!-- 1. Lead Verification Modal -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
       <div class="lead-modal-top">
@@ -1163,7 +1170,7 @@
     </div>
   </div>
 
-  <!-- Header with Working Audio Speaker Button -->
+  <!-- Header with Speaker -->
   <header class="site-header">
     <div class="nav-container">
       <div class="brand-left">
@@ -1179,12 +1186,13 @@
       </ul>
 
       <div class="nav-right">
-        <!-- Interactive Sound Engine Toggle -->
-        <button class="sound-toggle-btn" id="soundBtn" onclick="togglePrintSound()" title="Toggle Ambience Sound">
-          🔊
+        <!-- 100% Working Audio Speaker Button -->
+        <button class="sound-toggle-btn" id="soundBtn" onclick="toggleAudio()" title="Sound On / Off">
+          🔇
         </button>
 
-        <button class="btn-calc-nav" onclick="openCalculatorModal()">
+        <!-- Header Quick Button -->
+        <button type="button" class="btn-calc-nav" onclick="openCalculatorModal()">
           ⚡ Quick Print Cost
         </button>
         <img src="hanumanji.png" alt="Hanuman Ji" class="nav-hanuman-img" onerror="this.style.display='none'">
@@ -1211,7 +1219,8 @@
         </p>
 
         <div class="banner-action-row">
-          <button class="btn-banner-calc" onclick="openCalculatorModal()">
+          <!-- Hero Button -->
+          <button type="button" class="btn-banner-calc" onclick="openCalculatorModal()">
             ⚡ Commercial Rate Card & Estimate
           </button>
           <a href="tel:+919458614610" class="btn-banner-phone">
@@ -1229,9 +1238,10 @@
     </div>
   </section>
 
-  <!-- Products Ribbon -->
+  <!-- Products Ribbon (Infinite Non-Stop Scroll) -->
   <div class="products-ribbon-bar" id="products">
     <div class="products-ticker-track">
+      <!-- Track Part 1 -->
       <span class="product-badge">💼 Business Cards</span>
       <span class="product-badge">🖼️ Posters</span>
       <span class="product-badge">💌 Greeting Cards</span>
@@ -1249,7 +1259,7 @@
       <span class="product-badge">💡 Sign Boards</span>
       <span class="product-badge">📅 Calendars</span>
       <span class="product-badge">🖋️ Rubber Stamps</span>
-      <span class="product-badge">🎟️️ Event Cards</span>
+      <span class="product-badge">🎟️ Event Cards</span>
       <span class="product-badge">🪪 ID Cards</span>
       <span class="product-badge">🎂 Birthday Cards</span>
       <span class="product-badge">☕ Mugs & Pens</span>
@@ -1261,7 +1271,8 @@
       <span class="product-badge">👕 Custom T-Shirts</span>
       <span class="product-badge">🎁 Packaging Boxes</span>
       <span class="product-badge">💒 Wedding Cards</span>
-      <!-- Loop -->
+
+      <!-- Track Part 2 (Seamless Infinite Loop) -->
       <span class="product-badge">💼 Business Cards</span>
       <span class="product-badge">🖼️ Posters</span>
       <span class="product-badge">💌 Greeting Cards</span>
@@ -1273,10 +1284,28 @@
       <span class="product-badge">🏷️ Name Plates</span>
       <span class="product-badge">🎯 Standees</span>
       <span class="product-badge">🔖 Stickers</span>
+      <span class="product-badge">📚 Invoice Books</span>
+      <span class="product-badge">🛍️ Shopping Bags</span>
+      <span class="product-badge">✉️ Envelopes</span>
+      <span class="product-badge">💡 Sign Boards</span>
+      <span class="product-badge">📅 Calendars</span>
+      <span class="product-badge">🖋️ Rubber Stamps</span>
+      <span class="product-badge">🎟️ Event Cards</span>
+      <span class="product-badge">🪪 ID Cards</span>
+      <span class="product-badge">🎂 Birthday Cards</span>
+      <span class="product-badge">☕ Mugs & Pens</span>
+      <span class="product-badge">📑 Pamphlets</span>
+      <span class="product-badge">📸 Photo Books</span>
+      <span class="product-badge">🏢 Indoor Signage</span>
+      <span class="product-badge">📝 Notepads</span>
+      <span class="product-badge">📦 Sunpack Sheets</span>
+      <span class="product-badge">👕 Custom T-Shirts</span>
+      <span class="product-badge">🎁 Packaging Boxes</span>
+      <span class="product-badge">💒 Wedding Cards</span>
     </div>
   </div>
 
-  <!-- Services Section: Clean Light Area with Subtle Print Texture -->
+  <!-- Services Section: Clean Light Area -->
   <div class="services-wrapper-outer" id="services">
     <section class="services-section">
       <div class="section-header-box">
@@ -1595,64 +1624,38 @@
     let currentGrandTotal = 0;
     let qrGenerator = null;
     let autoDesignActivated = false;
+    let isAudioPlaying = false;
 
-    // Web Audio Engine (Pure Browser Chime Sound)
-    let audioCtx = null;
-    let isSoundOn = false;
-
-    function playPrintChime() {
-      try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-
-        const now = audioCtx.currentTime;
-        // Two pleasant harmonious chimes (F#5 and C#6)
-        const freqs = [739.99, 1108.73];
-        freqs.forEach((freq, idx) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-
-          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.6);
-
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start(now + idx * 0.08);
-          osc.stop(now + idx * 0.08 + 0.65);
-        });
-      } catch (e) {
-        console.log("Audio play error:", e);
-      }
-    }
-
-    function togglePrintSound() {
-      isSoundOn = !isSoundOn;
+    // Reliable Audio Player Function
+    function toggleAudio() {
+      const audio = document.getElementById('ambientAudio');
       const btn = document.getElementById('soundBtn');
-      if (isSoundOn) {
-        btn.classList.add('sound-on');
-        btn.innerText = '🔊';
-        playPrintChime();
+
+      if (!audio || !btn) return;
+
+      if (!isAudioPlaying) {
+        audio.volume = 0.35;
+        audio.play().then(() => {
+          isAudioPlaying = true;
+          btn.classList.add('sound-on');
+          btn.innerText = '🔊';
+        }).catch((err) => {
+          console.log("Audio play error:", err);
+          alert("Audio blocked by browser! Please tap screen first.");
+        });
       } else {
+        audio.pause();
+        isAudioPlaying = false;
         btn.classList.remove('sound-on');
         btn.innerText = '🔇';
       }
     }
 
-    // Modal Control Logic
+    // Modal Display Functions (Guaranteed Clicks)
     function openCalculatorModal() {
       const modal = document.getElementById('calculatorModal');
       if (modal) {
         modal.style.display = 'flex';
-        if (isSoundOn) playPrintChime();
         calculateTotal();
       }
     }

@@ -1,56 +1,82 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sab Kuch Printing - Official Price Calculator & Order Portal</title>
-  
+  <title>Sab Kuch Printing | Premium Commercial Printing & Packaging</title>
+  <meta name="description" content="Sab Kuch Printing — premium digital, offset, flex, packaging and commercial printing with instant quotation.">
+
   <!-- Official Favicon & App Bookmark Icons -->
   <link rel="icon" type="image/png" href="SKP.png">
   <link rel="apple-touch-icon" href="SKP.png">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <!-- PDF & Offline QR Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --border-color: #cbd5e1;
-      --text-muted: #64748b;
-      --bg-light: #f8fafc;
-      --surface: #ffffff;
+      --ink: #08111f;
+      --ink-2: #122033;
+      --muted: #617083;
+      --line: #dce4ee;
+      --paper: #f6f8fb;
+      --white: #ffffff;
+      --cyan: #00a7ff;
+      --blue: #2457ff;
+      --violet: #7048ff;
+      --magenta: #f22987;
+      --yellow: #ffbd2e;
+      --green: #10b981;
+      --orange: #ff7a18;
+      --shadow: 0 18px 60px rgba(8,17,31,.08);
+      --shadow-soft: 0 8px 30px rgba(8,17,31,.06);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', 'Mukta', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: #f1f5f9;
-      color: #1e293b;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(36,87,255,.055), transparent 28%),
+        radial-gradient(circle at 88% 14%, rgba(242,41,135,.045), transparent 26%),
+        var(--paper);
+      color: var(--ink);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+      letter-spacing: -.01em;
     }
 
-    /* 1. Inquiry Entry Modal Gate */
+    body:before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      background-image: linear-gradient(rgba(8,17,31,.018) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(8,17,31,.018) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, #000, transparent 72%);
+    }
+
+    /* 1. Lead Gate Modal */
     #leadModalOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(6px);
-      z-index: 10000;
+      background: rgba(3, 10, 20, 0.78);
+      backdrop-filter: blur(16px);
+      z-index: 20000;
       display: none;
       justify-content: center;
       align-items: center;
@@ -61,11 +87,11 @@
       background: #ffffff;
       max-width: 440px;
       width: 100%;
-      border-radius: 18px;
-      padding: 24px 22px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border-radius: 24px;
+      padding: 32px 28px;
+      box-shadow: 0 35px 100px rgba(0, 0, 0, 0.35);
       text-align: center;
-      border: 1.5px solid #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.35);
       animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -75,29 +101,30 @@
     }
 
     .lead-modal-logo {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
-      margin-bottom: 8px;
+      filter: drop-shadow(0 6px 14px rgba(8,17,31,.12));
+      margin-bottom: 12px;
     }
 
     .lead-modal-card h3 {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--primary);
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: .02em;
     }
 
     .lead-modal-card p {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 3px;
-      margin-bottom: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      margin-bottom: 20px;
     }
 
     .lead-input-group {
       text-align: left;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .lead-input-group label {
@@ -105,397 +132,635 @@
       font-size: 12px;
       font-weight: 700;
       color: #334155;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
     .lead-input-group input {
       width: 100%;
-      padding: 9px 12px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
+      padding: 11px 13px;
+      border: 1.5px solid #d5dfeb;
+      border-radius: 11px;
       font-size: 13.5px;
       outline: none;
       background: #ffffff;
+      transition: all 0.2s;
     }
 
     .lead-input-group input:focus {
-      border-color: var(--accent);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(36,87,255,.1);
     }
 
     .error-hint {
       color: #ef4444;
       font-size: 11px;
-      margin-top: 3px;
+      margin-top: 4px;
       display: none;
-      font-weight: 600;
-    }
-
-    .location-btn-box {
-      display: flex;
-      gap: 6px;
-      margin-top: 6px;
+      font-weight: 700;
     }
 
     .btn-gps {
       background: #eff6ff;
-      color: #1d4ed8;
+      color: var(--blue);
       border: 1px solid #bfdbfe;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 7px 12px;
+      border-radius: 8px;
       font-size: 11.5px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-    }
-
-    .btn-gps:hover {
-      background: #dbeafe;
+      margin-top: 6px;
     }
 
     .btn-submit-lead {
       width: 100%;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      background: linear-gradient(135deg, var(--blue), var(--violet));
       color: #fff;
-      padding: 11px;
+      padding: 13px;
       border: none;
-      border-radius: 9px;
-      font-size: 14px;
-      font-weight: 700;
+      border-radius: 12px;
+      font-size: 14.5px;
+      font-weight: 800;
       cursor: pointer;
-      margin-top: 12px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      margin-top: 14px;
+      box-shadow: 0 8px 22px rgba(36,87,255,.25);
     }
 
     /* 2. Top Header & Navbar */
     .site-header {
-      background: #ffffff;
-      border-bottom: 1.5px solid #e2e8f0;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(18px) saturate(160%);
+      border-bottom: 1px solid rgba(220,228,238,.78);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      box-shadow: 0 8px 30px rgba(8,17,31,.035);
     }
 
-    .header-container {
-      max-width: 1200px;
+    .nav-container {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 12px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-    }
-
-    .brand-group-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo-img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
-    }
-
-    .brand-details {
-      text-align: left;
-    }
-
-    .brand-title {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
-      background-size: 300% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbowFlow 4s linear infinite;
-    }
-
-    @keyframes rainbowFlow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
-    }
-
-    .brand-address {
-      font-size: 12px;
-      color: #1e293b;
-      margin-top: 2px;
-      font-weight: 700;
-    }
-
-    .brand-subtitle {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 1px;
-      font-weight: 600;
-    }
-
-    .header-right-group {
-      display: flex;
-      align-items: center;
       gap: 16px;
     }
 
-    .header-hanuman-img {
-      height: 70px;
-      width: auto;
-      max-width: 65px;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
     }
 
-    .header-contact-pill {
+    .brand-logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(8,17,31,.12));
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      line-height: 1.1;
+      background: linear-gradient(90deg, var(--ink), var(--blue), var(--magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text p {
+      font-size: 10.5px;
+      color: #748296;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #526173;
+      font-size: 13px;
+      font-weight: 700;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:after {
+      content: "";
+      position: absolute; left: 0; right: 100%; bottom: -7px; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--magenta));
+      transition: right .25s ease;
+    }
+
+    .nav-links a:hover:after { right: 0; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-calc-nav {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      padding: 7px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      box-shadow: 0 10px 24px rgba(8,17,31,.18);
+      transition: all 0.2s;
     }
 
-    .header-contact-pill:hover {
-      background: #dbeafe;
+    .btn-calc-nav:hover {
+      background: #16243a;
+      transform: translateY(-2px);
     }
 
-    /* Continuous Multi-Color Ticker/Marquee */
-    .services-ticker-wrapper {
-      background: #ffffff;
-      border-bottom: 1.5px solid #e2e8f0;
+    .nav-hanuman-img {
+      height: 54px;
+      width: auto;
+      max-width: 50px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    /* 3. Products Infinite Ticker */
+    .products-ribbon-wrapper {
+      background: #08111f;
+      color: #fff;
       overflow: hidden;
       white-space: nowrap;
-      padding: 10px 0;
+      padding: 9px 0;
       display: flex;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+      box-shadow: 0 8px 24px rgba(8,17,31,.1);
     }
 
-    .services-ticker-track {
+    .products-ticker-track {
       display: inline-flex;
-      gap: 12px;
-      animation: scrollServices 34s linear infinite;
+      gap: 9px;
+      animation: scrollProducts 36s linear infinite;
     }
 
-    .services-ticker-wrapper:hover .services-ticker-track {
+    .products-ribbon-wrapper:hover .products-ticker-track {
       animation-play-state: paused;
     }
 
-    @keyframes scrollServices {
+    @keyframes scrollProducts {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
 
-    .service-tag {
+    .product-badge {
       display: inline-flex;
       align-items: center;
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.2px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.075);
+      color: #f4f7fb;
     }
 
-    /* Distinct Pastel Readability Colors */
-    .c-amber  { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-    .c-blue   { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-    .c-emerald{ background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
-    .c-rose   { background: #ffe4e6; color: #9f1239; border: 1px solid #fecdd3; }
-    .c-purple { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-    .c-cyan   { background: #cffafe; color: #155e75; border: 1px solid #a5f3fc; }
-    .c-orange { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
-
-    /* 3. Main Website Body */
-    .website-content {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-      width: 100%;
-      flex: 1;
+    /* 4. Hero Section */
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 25%, rgba(0,167,255,.16), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(242,41,135,.13), transparent 28%),
+        linear-gradient(135deg, #fff 0%, #f7faff 48%, #fff 100%);
+      padding: 86px 24px 82px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
     }
 
-    .portal-banner {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    .hero-section:before {
+      content: "CMYK • DIGITAL • OFFSET • PACKAGING";
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .24em;
+      color: #9aa7b7;
+    }
+
+    .hero-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-tag {
+      background: rgba(255,255,255,.8);
+      border: 1px solid #d9e4f1;
+      color: #3156a8;
+      padding: 8px 16px;
+      border-radius: 999px;
+      box-shadow: 0 8px 25px rgba(36,87,255,.07);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      display: inline-flex;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      max-width: 1000px;
+      margin: 0 auto 20px;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -.055em;
+      color: var(--ink);
+    }
+
+    .hero-title span {
+      background: linear-gradient(100deg, var(--blue), var(--violet) 45%, var(--magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      max-width: 730px;
+      margin: 0 auto 30px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #657488;
+      font-weight: 500;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--ink), #213552);
       color: #ffffff;
-      padding: 20px 26px;
-      border-radius: 16px;
-      margin-bottom: 22px;
+      padding: 14px 24px;
+      border-radius: 13px;
+      font-size: 13.5px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 14px 30px rgba(8,17,31,.18);
+      transition: all 0.2s;
+    }
+
+    .btn-hero-primary:hover {
+      box-shadow: 0 18px 38px rgba(8,17,31,.24);
+      transform: translateY(-2px);
+    }
+
+    .btn-hero-secondary {
+      background: #ffffff;
+      color: var(--ink);
+      border: 1px solid #d4deea;
+      padding: 14px 24px;
+      border-radius: 13px;
+      font-size: 13.5px;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 22px rgba(8,17,31,.05);
+      transition: all 0.2s;
+    }
+
+    .btn-hero-secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* 5. Services Section */
+    .services-section {
+      max-width: 1400px;
+      padding: 86px 28px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .section-header-box {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .section-header-box h2 {
+      font-size: 11.5px;
+      letter-spacing: .22em;
+      color: #7a8797;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .section-header-box h2:before {
+      content: "OUR CAPABILITIES  /  ";
+      color: var(--blue);
+    }
+
+    .section-header-box p {
+      font-size: 18px;
+      color: #34455b;
+      font-weight: 700;
+    }
+
+    .services-grid-row {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .service-card {
+      min-height: 220px;
+      border-radius: 20px;
+      padding: 22px 13px;
+      background: #ffffff;
+      border: 1px solid #e1e8f0;
+      box-shadow: 0 7px 28px rgba(8,17,31,.035);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .service-card:before {
+      content: "";
+      position: absolute; left: 0; top: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow));
+      opacity: .6;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 45px rgba(8,17,31,.10);
+      border-color: #cdd8e6;
+    }
+
+    .service-icon-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 22px rgba(8,17,31,.13);
+    }
+
+    .service-icon-circle svg {
+      width: 30px;
+      height: 30px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .bg-cmyk-cyan   { background: #00A3FF; }
+    .bg-cmyk-magenta{ background: #FF007A; }
+    .bg-cmyk-yellow { background: #FFB800; }
+    .bg-cmyk-black  { background: #181E29; }
+    .bg-cmyk-purple { background: #8A2BE2; }
+    .bg-cmyk-green  { background: #00C853; }
+    .bg-cmyk-orange { background: #FF6600; }
+
+    .service-card h3 {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: var(--ink);
+    }
+
+    .service-sub-label {
+      font-size: 11px;
+      color: #8a97a8;
+      font-weight: 700;
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    .service-specs {
+      font-size: 10px;
+      color: #758397;
+      line-height: 1.55;
+      font-weight: 600;
+      margin-top: auto;
+    }
+
+    /* 6. Calculator Popup Modal */
+    #calculatorModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 10, 20, 0.76);
+      backdrop-filter: blur(16px);
+      z-index: 15000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .calc-modal-wrapper {
+      background: #ffffff;
+      max-width: 1050px;
+      width: 100%;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 35px 100px rgba(0,0,0,.35);
+      max-height: 94vh;
+      overflow-y: auto;
+      position: relative;
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .calc-modal-header {
+      background: linear-gradient(135deg, #08111f, #122033);
+      color: #ffffff;
+      padding: 18px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .portal-banner h2 {
-      font-size: 19px;
-      font-weight: 800;
+    .calc-header-title h4 {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
     }
 
-    .portal-banner p {
-      font-size: 12.5px;
-      color: #94a3b8;
-      margin-top: 3px;
+    .calc-header-title p {
+      font-size: 11.5px;
+      color: #aebbd0;
+      font-weight: 600;
     }
 
-    .portal-grid {
+    .btn-close-modal {
+      background: rgba(255,255,255,.1);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 15px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-close-modal:hover {
+      background: rgba(255,255,255,.2);
+    }
+
+    .calc-modal-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 24px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .portal-grid {
-        grid-template-columns: 1fr;
-      }
-      .header-container {
-        flex-direction: column;
-        text-align: center;
-      }
-      .brand-details {
-        text-align: center;
-      }
-      .header-right-group {
-        justify-content: center;
-      }
-      .portal-banner {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-      }
-    }
-
-    /* Left Form Panel */
-    .form-panel {
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1.5px solid #e2e8f0;
       padding: 24px;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
     }
 
-    .section-title {
-      font-size: 15px;
+    .form-panel {
+      border-radius: 18px;
+    }
+
+    .calc-subhead {
+      font-size: 12px;
       font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 14px;
-      padding-bottom: 8px;
+      letter-spacing: .06em;
+      color: #4e6076;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
       border-bottom: 1.5px solid #f1f5f9;
       display: flex;
       align-items: center;
       gap: 6px;
+      text-transform: uppercase;
     }
 
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     label {
       display: block;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       color: #334155;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .input-row {
       display: flex;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .input-col {
       flex: 1;
     }
 
-    ::placeholder {
-      color: #cbd5e1 !important;
-      opacity: 0.8;
-    }
-
-    input[type="text"], input[type="number"], select {
+    input[type="text"], input[type="number"], input[type="tel"], select {
       width: 100%;
-      padding: 9px 12px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 13.5px;
-      color: var(--primary);
+      padding: 10px 12px;
+      border: 1.5px solid #d5dfeb;
+      border-radius: 11px;
+      font-size: 13px;
+      color: var(--ink);
       outline: none;
       background: #ffffff;
       transition: all 0.2s;
     }
 
     input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(36,87,255,.1);
     }
 
     .option-pill {
       display: flex;
       align-items: center;
-      background: var(--bg-light);
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1.5px solid #e2e8f0;
-      margin-bottom: 12px;
+      background: #f8fafc;
+      padding: 9px 12px;
+      border-radius: 11px;
+      border: 1.5px solid #dce5ef;
+      margin-bottom: 11px;
       cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12.5px;
+      font-weight: 700;
       color: #334155;
-      transition: all 0.2s;
-    }
-
-    .option-pill:hover {
-      background: #f1f5f9;
     }
 
     .option-pill input {
-      accent-color: var(--accent);
-      margin-right: 10px;
-      width: 16px;
-      height: 16px;
+      accent-color: var(--blue);
+      margin-right: 9px;
+      width: 15px;
+      height: 15px;
     }
 
-    /* Right Sticky Summary Panel */
     .summary-panel {
-      position: sticky;
-      top: 96px;
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1.5px solid #e2e8f0;
-      padding: 22px;
-      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+      background: linear-gradient(180deg, #f6f9fc, #eef3f8);
+      border-radius: 18px;
+      border: 1px solid #dce5ee;
+      padding: 18px;
     }
 
     .invoice-card {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #dbe4ee;
+      border-radius: 14px;
       padding: 14px 16px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-soft);
     }
 
     .summary-line {
       display: flex;
       justify-content: space-between;
-      font-size: 12.5px;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--muted);
       margin-bottom: 6px;
     }
 
     .summary-line strong {
-      color: var(--primary);
+      color: var(--ink);
       font-weight: 700;
     }
 
@@ -509,33 +774,32 @@
     }
 
     .total-box span {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--primary);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--ink);
     }
 
     .total-box h3 {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--accent);
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--blue);
     }
 
-    /* UPI Box */
     .screen-pay-box {
       background: #f0fdf4;
       border: 1.5px dashed #86efac;
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .qr-container {
-      width: 72px;
-      height: 72px;
-      min-width: 72px;
+      width: 66px;
+      height: 66px;
+      min-width: 66px;
       background: #ffffff;
       border: 1px solid #bbf7d0;
       border-radius: 8px;
@@ -546,72 +810,73 @@
     }
 
     .qr-container canvas, .qr-container img {
-      width: 66px !important;
-      height: 66px !important;
+      width: 60px !important;
+      height: 60px !important;
     }
 
     .upi-info h5 {
-      font-size: 12.5px;
+      font-size: 12px;
       color: #14532d;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .upi-info p {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #166534;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .upi-tag {
       display: inline-block;
       background: #dcfce7;
       color: #15803d;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
       border-radius: 4px;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     .btn-stack {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 8px;
     }
 
     .btn {
       width: 100%;
       padding: 11px;
-      border-radius: 8px;
-      font-size: 13.5px;
-      font-weight: 700;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 800;
       border: none;
       cursor: pointer;
       text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s;
     }
 
-    .btn-upi { background: #16a34a; color: #ffffff; }
-    .btn-upi:hover { background: #15803d; }
-    .btn-dark { background: #0f172a; color: #ffffff; }
-    .btn-dark:hover { background: #1e293b; }
-    .btn-green { background: #0284c7; color: #ffffff; }
-    .btn-green:hover { background: #0369a1; }
+    .btn-upi { background: #079669; color: #fff; }
+    .btn-dark { background: #08111f; color: #fff; }
+    .btn-green { background: #1267d6; color: #fff; }
+    .btn-upi:hover { background: #057a55; }
+    .btn-dark:hover { background: #16243a; }
+    .btn-green:hover { background: #0f52ab; }
 
-    /* 4. Official Web Footer with Shining Ring Profile */
+    /* 7. Footer */
     .site-footer {
-      background: #ffffff;
-      border-top: 1.5px solid #e2e8f0;
-      padding: 34px 20px 24px;
-      margin-top: 40px;
+      background: #08111f;
+      color: #ffffff;
+      border: 0;
+      padding: 60px 28px 30px;
+      margin-top: auto;
     }
 
     .footer-container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -619,30 +884,16 @@
       align-items: center;
     }
 
-    @media (max-width: 768px) {
-      .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-    }
-
     .founder-profile-box {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
     }
 
-    @media (max-width: 768px) {
-      .founder-profile-box {
-        flex-direction: column;
-      }
-    }
-
-    /* Shining Animated Circular Ring Frame */
     .founder-avatar-container {
       position: relative;
-      width: 116px;
-      height: 116px;
+      width: 110px;
+      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -652,9 +903,9 @@
       position: absolute;
       inset: -4px;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, #3b82f6, #ec4899, #f59e0b, #10b981, #3b82f6);
+      background: conic-gradient(from 0deg, #0088ff, #ff007a, #ffb800, #00c853, #0088ff);
       animation: rotateRing 3.5s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.45));
+      filter: drop-shadow(0 0 12px rgba(36,87,255,.55));
     }
 
     @keyframes rotateRing {
@@ -664,8 +915,8 @@
 
     .founder-avatar-circle {
       position: relative;
-      width: 108px;
-      height: 108px;
+      width: 102px;
+      height: 102px;
       border-radius: 50%;
       object-fit: cover;
       background: #ffffff;
@@ -675,74 +926,62 @@
 
     .founder-info h4 {
       font-size: 18px;
-      font-weight: 800;
-      color: #0f172a;
+      font-weight: 900;
+      color: #ffffff;
     }
 
     .founder-info .role-badge {
       display: inline-block;
-      font-size: 11.5px;
-      background: #eff6ff;
-      color: #2563eb;
+      font-size: 11px;
+      background: rgba(36,87,255,.18);
+      color: #8fb0ff;
       font-weight: 800;
       padding: 3px 10px;
       border-radius: 6px;
       margin-top: 4px;
       margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: .5px;
     }
 
     .founder-phone-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
       padding: 7px 14px;
       border-radius: 8px;
-      color: #0f172a;
+      color: #ffffff;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
       transition: all 0.2s;
     }
 
     .founder-phone-btn:hover {
-      background: #e2e8f0;
-      border-color: #94a3b8;
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.25);
     }
 
     .footer-social-branding {
       text-align: right;
     }
 
-    @media (max-width: 768px) {
-      .footer-social-branding {
-        text-align: center;
-      }
-    }
-
     .connect-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      color: #1877f2;
+      color: #7eb0ff;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 13px;
       margin-bottom: 12px;
     }
 
-    .fb-icon {
-      width: 16px;
-      height: 16px;
-      fill: #1877f2;
-    }
-
     .coolart-badge {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1px solid #e2e8f0;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
       border-radius: 12px;
       padding: 12px 16px;
       display: inline-block;
@@ -750,322 +989,441 @@
 
     .coolart-badge h5 {
       font-size: 13px;
-      font-weight: 700;
-      color: #1e293b;
+      font-weight: 800;
+      color: #eef3fb;
     }
 
     .coolart-badge h5 span {
-      color: #4f46e5;
-      font-weight: 800;
+      color: #c084fc;
+      font-weight: 900;
     }
 
     .coolart-badge p {
       font-size: 11px;
-      color: #64748b;
+      color: #94a4b8;
       margin-top: 2px;
+      font-weight: 600;
     }
 
-    /* Clean PDF rendering rules */
-    body.rendering-pdf .brand-title {
-      animation: none !important;
-      background: none !important;
-      -webkit-text-fill-color: #0f172a !important;
-      color: #0f172a !important;
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .services-grid-row { grid-template-columns: repeat(4, 1fr); }
+      .nav-links { gap: 16px; }
+    }
+
+    @media (max-width: 800px) {
+      .nav-container { padding: 11px 16px; }
+      .nav-links { display: none; }
+      .hero-section { padding: 70px 18px 62px; }
+      .services-section { padding: 65px 16px; }
+      .services-grid-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .calc-modal-grid { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; text-align: center; }
+      .founder-profile-box { flex-direction: column; }
+      .footer-social-branding { text-align: center; }
+    }
+
+    @media (max-width: 520px) {
+      .brand-text p { display: none; }
+      .brand-logo-img { width: 42px; height: 42px; }
+      .nav-hanuman-img { display: none; }
+      .hero-cta-group { flex-direction: column; }
+      .btn-hero-primary, .btn-hero-secondary { width: 100%; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Lead Inquiry Modal Gate -->
+  <!-- Lead Gate Entry Barrier -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
       <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">
       <h3>SAB KUCH PRINTING</h3>
-      <p>रेट कैलकुलेटर का उपयोग करने के लिए 1 बार सत्यापन आवश्यक है</p>
+      <p>Please verify your details to unlock instant pricing & calculator</p>
 
       <div class="lead-input-group">
-        <label>आपका नाम (Full Name) *</label>
-        <input type="text" id="leadName" placeholder="उदा. राहुल शर्मा">
-        <div id="errName" class="error-hint">कृपया अपना सही नाम दर्ज करें!</div>
+        <label>Full Name *</label>
+        <input type="text" id="leadName" placeholder="e.g. John Doe / Client Name">
+        <div id="errName" class="error-hint">Please enter your full name!</div>
       </div>
 
       <div class="lead-input-group">
-        <label>मोबाइल / व्हाट्सएप नंबर (10 अंक) *</label>
-        <input type="tel" id="leadPhone" maxlength="10" placeholder="उदा. 98XXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-        <div id="errPhone" class="error-hint">कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें!</div>
+        <label>Mobile / WhatsApp Number (10 Digits) *</label>
+        <input type="tel" id="leadPhone" maxlength="10" placeholder="e.g. 98XXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div id="errPhone" class="error-hint">Please enter a valid 10-digit phone number!</div>
       </div>
 
       <div class="lead-input-group">
-        <label>आपकी लोकेशन / दुकान का पता *</label>
-        <input type="text" id="leadLocation" placeholder="पता लिखें या GPS लोकेशन लगाएं">
-        <div class="location-btn-box">
+        <label>Business Location / Town *</label>
+        <input type="text" id="leadLocation" placeholder="Enter City/Village or use GPS">
+        <div>
           <button type="button" class="btn-gps" onclick="fetchLiveLocation()">
-            📍 ऑटोमैटिक GPS लोकेशन लगाएं
+            📍 Add Live GPS Location
           </button>
         </div>
-        <div id="errLocation" class="error-hint">कृपया लोकेशन बटन दबाएं या सही पता लिखें!</div>
+        <div id="errLocation" class="error-hint">Please enter location or tap GPS!</div>
       </div>
 
       <button type="button" class="btn-submit-lead" onclick="submitLeadGate()">
-        कैलकुलेटर खोलें (Continue) ➔
+        Continue to Portal & Pricing ➔
       </button>
     </div>
   </div>
 
-  <!-- Website Top Header & Navigation -->
+  <!-- Modern Navbar -->
   <header class="site-header">
-    <div class="header-container">
-      <div class="brand-group-left">
-        <img src="SKP.png" alt="SKP Logo" class="brand-logo-img" onerror="this.style.display='none'">
-        <div class="brand-details">
-          <h1 class="brand-title">SAB KUCH PRINTING</h1>
-          <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
-          <div class="brand-subtitle">कूल आर्ट एडवरटाइजिंग • डिजिटल रेट कोटेशन पोर्टल</div>
+    <div class="nav-container">
+      <div class="brand-left">
+        <img src="SKP.png" alt="Logo" class="brand-logo-img" onerror="this.style.display='none'">
+        <div class="brand-text">
+          <h1>SAB KUCH PRINTING</h1>
+          <p>Cool Art Advertising • Village: Nahal, Atrauli, Aligarh, UP</p>
         </div>
       </div>
 
-      <div class="header-right-group">
-        <a href="tel:+919458614610" class="header-contact-pill">
-          <span>📞</span> +91 9458614610
-        </a>
-        <img src="hanumanji.png" alt="Hanuman Ji" class="header-hanuman-img" onerror="this.style.display='none'">
+      <ul class="nav-links">
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="javascript:void(0)" onclick="openCalculatorModal()">Pricing Calculator</a></li>
+        <li><a href="#founder">About Founder</a></li>
+        <li><a href="tel:+919458614610">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="btn-calc-nav" onclick="openCalculatorModal()">
+          ⚡ Instant Rate Calculator
+        </button>
+        <img src="hanumanji.png" alt="Hanuman Ji" class="nav-hanuman-img" onerror="this.style.display='none'">
       </div>
     </div>
   </header>
 
-  <!-- Auto-Scrolling Multi-Color Services Ribbon (Attached Works List) -->
-  <div class="services-ticker-wrapper" data-html2canvas-ignore="true">
-    <div class="services-ticker-track">
-      <!-- Batch 1 (28 items) -->
-      <span class="service-tag c-amber">विज़िटिंग कार्ड</span>
-      <span class="service-tag c-blue">पोस्टर</span>
-      <span class="service-tag c-emerald">ग्रीटिंग कार्ड</span>
-      <span class="service-tag c-rose">फ्लैक्स</span>
-      <span class="service-tag c-purple">लैटर हेड</span>
-      <span class="service-tag c-cyan">विनाइल</span>
-      <span class="service-tag c-orange">कैटेलॉग</span>
-      <span class="service-tag c-amber">सनबोर्ड</span>
-      <span class="service-tag c-blue">नेम प्लेट</span>
-      <span class="service-tag c-emerald">बैनर</span>
-      <span class="service-tag c-rose">स्टीकर</span>
-      <span class="service-tag c-purple">स्टैन्डी</span>
-      <span class="service-tag c-cyan">बिल बुक</span>
-      <span class="service-tag c-orange">शॉपिंग बैग</span>
-      <span class="service-tag c-amber">लिफाफे</span>
-      <span class="service-tag c-blue">साइन बोर्ड</span>
-      <span class="service-tag c-emerald">कैलेंदर</span>
-      <span class="service-tag c-rose">रबर स्टैम्प</span>
-      <span class="service-tag c-purple">ईवेन्ट कार्ड</span>
-      <span class="service-tag c-cyan">आई कार्ड्स</span>
-      <span class="service-tag c-orange">जन्मदिन कार्ड</span>
-      <span class="service-tag c-amber">मग, पेन</span>
-      <span class="service-tag c-blue">पैम्पलेट</span>
-      <span class="service-tag c-emerald">फोटो बुक</span>
-      <span class="service-tag c-rose">इनडोर साईनेज</span>
-      <span class="service-tag c-purple">नोटपैड</span>
-      <span class="service-tag c-cyan">सन पैक शीट</span>
-      <span class="service-tag c-orange">टी-शर्ट</span>
-      <span class="service-tag c-amber">पैकेजिंग बॉक्स</span>
-      <span class="service-tag c-rose">शादी कार्ड</span>
+  <!-- Products Infinite Scrolling Ribbon -->
+  <div class="products-ribbon-wrapper" id="products">
+    <div class="products-ticker-track">
+      <!-- Set 1 -->
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Roll-up Standees</span>
+      <span class="product-badge">🔖 Custom Stickers</span>
+      <span class="product-badge">📚 Invoice Books</span>
+      <span class="product-badge">🛍️ Shopping Bags</span>
+      <span class="product-badge">✉️ Envelopes</span>
+      <span class="product-badge">💡 Sign Boards</span>
+      <span class="product-badge">📅 Calendars</span>
+      <span class="product-badge">🖋️ Rubber Stamps</span>
+      <span class="product-badge">🎟️ Event Cards</span>
+      <span class="product-badge">🪪 ID Cards</span>
+      <span class="product-badge">🎂 Birthday Cards</span>
+      <span class="product-badge">☕ Mugs & Pens</span>
+      <span class="product-badge">📑 Pamphlets</span>
+      <span class="product-badge">📸 Photo Books</span>
+      <span class="product-badge">🏢 Indoor Signage</span>
+      <span class="product-badge">📝 Notepads</span>
+      <span class="product-badge">📦 Sunpack Sheets</span>
+      <span class="product-badge">👕 Custom T-Shirts</span>
+      <span class="product-badge">🎁 Packaging Boxes</span>
+      <span class="product-badge">💒 Wedding Cards</span>
 
-      <!-- Batch 2 (Duplicate for Seamless Infinite Loop) -->
-      <span class="service-tag c-amber">विज़िटिंग कार्ड</span>
-      <span class="service-tag c-blue">पोस्टर</span>
-      <span class="service-tag c-emerald">ग्रीटिंग कार्ड</span>
-      <span class="service-tag c-rose">फ्लैक्स</span>
-      <span class="service-tag c-purple">लैटर हेड</span>
-      <span class="service-tag c-cyan">विनाइल</span>
-      <span class="service-tag c-orange">कैटेलॉग</span>
-      <span class="service-tag c-amber">सनबोर्ड</span>
-      <span class="service-tag c-blue">नेम प्लेट</span>
-      <span class="service-tag c-emerald">बैनर</span>
-      <span class="service-tag c-rose">स्टीकर</span>
-      <span class="service-tag c-purple">स्टैन्डी</span>
-      <span class="service-tag c-cyan">बिल बुक</span>
-      <span class="service-tag c-orange">शॉपिंग बैग</span>
-      <span class="service-tag c-amber">लिफाफे</span>
-      <span class="service-tag c-blue">साइन बोर्ड</span>
-      <span class="service-tag c-emerald">कैलेंदर</span>
-      <span class="service-tag c-rose">रबर स्टैम्प</span>
-      <span class="service-tag c-purple">ईवेन्ट कार्ड</span>
-      <span class="service-tag c-cyan">आई कार्ड्स</span>
-      <span class="service-tag c-orange">जन्मदिन कार्ड</span>
-      <span class="service-tag c-amber">मग, पेन</span>
-      <span class="service-tag c-blue">पैम्पलेट</span>
-      <span class="service-tag c-emerald">फोटो बुक</span>
-      <span class="service-tag c-rose">इनडोर साईनेज</span>
-      <span class="service-tag c-purple">नोटपैड</span>
-      <span class="service-tag c-cyan">सन पैक शीट</span>
-      <span class="service-tag c-orange">टी-शर्ट</span>
-      <span class="service-tag c-amber">पैकेजिंग बॉक्स</span>
-      <span class="service-tag c-rose">शादी कार्ड</span>
+      <!-- Set 2 Loop -->
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Roll-up Standees</span>
+      <span class="product-badge">🔖 Custom Stickers</span>
+      <span class="product-badge">📚 Invoice Books</span>
+      <span class="product-badge">🛍️ Shopping Bags</span>
+      <span class="product-badge">✉️ Envelopes</span>
+      <span class="product-badge">💡 Sign Boards</span>
+      <span class="product-badge">📅 Calendars</span>
+      <span class="product-badge">🖋️ Rubber Stamps</span>
+      <span class="product-badge">🎟️ Event Cards</span>
+      <span class="product-badge">🪪 ID Cards</span>
+      <span class="product-badge">🎂 Birthday Cards</span>
+      <span class="product-badge">☕ Mugs & Pens</span>
+      <span class="product-badge">📑 Pamphlets</span>
+      <span class="product-badge">📸 Photo Books</span>
+      <span class="product-badge">🏢 Indoor Signage</span>
+      <span class="product-badge">📝 Notepads</span>
+      <span class="product-badge">📦 Sunpack Sheets</span>
+      <span class="product-badge">👕 Custom T-Shirts</span>
+      <span class="product-badge">🎁 Packaging Boxes</span>
+      <span class="product-badge">💒 Wedding Cards</span>
     </div>
   </div>
 
-  <!-- Website Main Workspace Container -->
-  <main class="website-content" id="full-calculator-portal">
-    
-    <div class="portal-banner" data-html2canvas-ignore="true">
-      <div>
-        <h2>स्मार्ट रेट एस्टीमेशन & बिलिंग इंजन</h2>
-        <p>साइज दर्ज करें, क्वालिटी चुनें और बिना किसी झंझट के सटीक बिल व कोटेशन प्राप्त करें।</p>
-      </div>
-      <div>
-        <span style="background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;">
-          ⚡ 100% पारदर्शी दरें
-        </span>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-tag">USA Quality Printing Standards</div>
+      <h1 class="hero-title">High-Speed Precision <span>Commercial Printing</span> & Packaging Solutions</h1>
+      <p class="hero-desc">
+        Equipped with next-generation digital presses, large format flex engineering, screen printing & packaging lines. Transparent estimation with instant quotation generation.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn-hero-primary" onclick="openCalculatorModal()">
+          ⚡ Calculate Rates & Instant Quotation
+        </button>
+        <a href="tel:+919458614610" class="btn-hero-secondary">
+          📞 Speak With Founder
+        </a>
       </div>
     </div>
+  </section>
 
-    <div class="portal-grid">
-      
-      <!-- Left Column: Form & Specifications -->
-      <section class="form-panel">
-        <div class="section-title">
-          <span>📋</span> ग्राहक & बोर्ड स्पेसिफिकेशन
-        </div>
-
-        <div class="form-group">
-          <label>ग्राहक का नाम (Customer Name)</label>
-          <input type="text" id="clientName" placeholder="उदा. ग्राहक का नाम" oninput="calculateTotal()">
-        </div>
-
-        <div class="form-group">
-          <label>माप की इकाई चुनें (Measurement Unit)</label>
-          <select id="calcUnitSelect" onchange="onUnitChange()">
-            <option value="" disabled selected>-- कृपया इकाई चुनें (Select Unit) --</option>
-            <option value="feet">फ़ीट (Feet)</option>
-            <option value="inches">इंच (Inches)</option>
-            <option value="mm">MM (मिलीमीटर)</option>
-          </select>
-        </div>
-
-        <div class="input-row">
-          <div class="input-col">
-            <label id="lblWidth">चौड़ाई (Width)</label>
-            <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
-          </div>
-          <div class="input-col">
-            <label id="lblHeight">ऊंचाई (Height)</label>
-            <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>फ्लेक्स / मीडिया क्वालिटी</label>
-          <select id="cMedia" onchange="calculateTotal()">
-            <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
-            <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft</option>
-            <option value="25" data-name="स्टार फ्लेक्स (Star Flex)">स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
-            <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft</option>
-            <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
-          <select id="cFrameQuality" onchange="calculateTotal()">
-            <option value="0" data-name="फ्रेम नहीं चाहिए" selected>फ्रेम नहीं चाहिए (Only Flex Print)</option>
-            <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft</option>
-            <option value="25" data-name="बीच का फ्रेम (Medium)">बीच का (Medium Heavy) - ₹25 / Running Ft</option>
-            <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
-          </select>
-        </div>
-
-        <div class="section-title" style="margin-top: 20px;">
-          <span>🛠️</span> अतिरिक्त सेवाएं व शुल्क
-        </div>
-
-        <label class="option-pill">
-          <input type="checkbox" id="cDesign" onchange="calculateTotal()">
-          <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
-        </label>
-
-        <div class="input-row">
-          <div class="input-col">
-            <label>किराया / ट्रांसपोर्ट (₹)</label>
-            <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
-          </div>
-          <div class="input-col">
-            <label>फिटिंग चार्ज (₹)</label>
-            <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>बोर्ड की संख्या (Quantity)</label>
-          <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
-        </div>
-      </section>
-
-      <!-- Right Column: Sticky Summary & Payment Gateway Preview -->
-      <aside class="summary-panel">
-        <div class="section-title">
-          <span>🧾</span> बिल सारांश (Live Breakdown)
-        </div>
-
-        <div class="invoice-card">
-          <div class="summary-line">
-            <span>एरिया / रनिंग माप:</span>
-            <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
-          </div>
-          <div class="summary-line">
-            <span>प्रिंटिंग लागत:</span>
-            <span id="resPrint">₹0</span>
-          </div>
-          <div class="summary-line">
-            <span>लोहे का फ्रेम:</span>
-            <span id="resFrame">₹0</span>
-          </div>
-          <div class="summary-line">
-            <span>पेस्टिंग बॉन्ड खर्च:</span>
-            <span id="resBond">₹0</span>
-          </div>
-          <div class="summary-line">
-            <span>डिज़ाइन शुल्क:</span>
-            <span id="resDesign">₹0</span>
-          </div>
-          <div class="summary-line">
-            <span>किराया + फिटिंग लेबर:</span>
-            <span id="resTransportFitting">₹0</span>
-          </div>
-          <div class="total-box">
-            <span>कुल अनुमानित राशि:</span>
-            <h3 id="resTotal">₹0</h3>
-          </div>
-        </div>
-
-        <div class="screen-pay-box">
-          <div id="screenQrContainer" class="qr-container"></div>
-          <div class="upi-info">
-            <h5>⚡ Instant UPI Payment</h5>
-            <span class="upi-tag">🔒 100% Trusted & Verified</span>
-            <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
-            <p style="font-size: 10px; color: #475569;">GPay • PhonePe • Paytm • BHIM</p>
-          </div>
-        </div>
-
-        <div class="btn-stack" data-html2canvas-ignore="true">
-          <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
-            ⚡ Pay Now (Google Pay / PhonePe)
-          </a>
-          <button class="btn btn-dark" onclick="downloadDirectPDF()">
-            📄 डाउनलोड सिंगल पेज A4 PDF
-          </button>
-          <button class="btn btn-green" onclick="shareOnWhatsApp()">
-            📲 WhatsApp पर शेयर करें
-          </button>
-        </div>
-      </aside>
-
+  <!-- Our Services Section -->
+  <section class="services-section" id="services">
+    <div class="section-header-box">
+      <h2>Our Services</h2>
+      <p>Cutting-edge industrial print technologies tailored for bulk and custom needs</p>
     </div>
-  </main>
 
-  <!-- Website Footer Section with Glowing Profile Ring -->
-  <footer class="site-footer" data-html2canvas-ignore="true">
+    <div class="services-grid-row">
+      <!-- 1. Digital -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-cyan">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        </div>
+        <h3>DIGITAL</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Fast | High Quality<br>Vibrant Colors</div>
+      </div>
+
+      <!-- 2. Offset -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-magenta">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <h3>OFFSET</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Premium | Bulk<br>Cost Effective</div>
+      </div>
+
+      <!-- 3. Flex -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-yellow">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        </div>
+        <h3>FLEX</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Banners | Hoardings<br>Large Format</div>
+      </div>
+
+      <!-- 4. Rotogravure -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-black">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 12s1.5-3 4-3 4 3 4 3-1.5 3-4 3-4-3-4-3z"></path></svg>
+        </div>
+        <h3>ROTOGRAVURE</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">High Volume<br>High Quality</div>
+      </div>
+
+      <!-- 5. Flexography -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-purple">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+        </div>
+        <h3>FLEXOGRAPHY</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Flexible Packaging<br>Labels | Films</div>
+      </div>
+
+      <!-- 6. Packaging -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-green">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        </div>
+        <h3>PACKAGING</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Boxes | Cartons<br>Custom Solutions</div>
+      </div>
+
+      <!-- 7. Screen Printing -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-orange">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"></path><line x1="4" y1="20" x2="20" y2="20"></line><line x1="12" y1="16" x2="12" y2="20"></line></svg>
+        </div>
+        <h3>SCREEN</h3>
+        <div class="service-sub-label">प्रिंटिंग</div>
+        <div class="service-specs">Apparel | Bags<br>Spot UV & Foil</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Modal Calculator -->
+  <div id="calculatorModal">
+    <div class="calc-modal-wrapper" id="calculatorInvoiceCard">
+      <div class="calc-modal-header">
+        <div class="calc-header-title">
+          <h4>Smart Rate Estimator & Quotation Generator</h4>
+          <p>Instant precision billing engine with automated sizing & logistics</p>
+        </div>
+        <button class="btn-close-modal" onclick="closeCalculatorModal()">✕</button>
+      </div>
+
+      <div class="calc-modal-grid">
+        <!-- Left: Form Controls -->
+        <div class="form-panel">
+          <div class="calc-subhead">📋 Board & Media Specifications</div>
+
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" id="clientName" placeholder="e.g. Rahul Sharma / Business Name" oninput="calculateTotal()">
+          </div>
+
+          <div class="form-group">
+            <label>Measurement Unit</label>
+            <select id="calcUnitSelect" onchange="onUnitChange()">
+              <option value="" disabled selected>-- Select Unit --</option>
+              <option value="feet">Feet (फ़ीट)</option>
+              <option value="inches">Inches (इंच)</option>
+              <option value="mm">Millimeters (MM)</option>
+            </select>
+          </div>
+
+          <div class="input-row">
+            <div class="input-col">
+              <label id="lblWidth">Width</label>
+              <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+            </div>
+            <div class="input-col">
+              <label id="lblHeight">Height</label>
+              <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Media / Flex Quality</label>
+            <select id="cMedia" onchange="calculateTotal()">
+              <option value="10" data-name="Eco Light Flex">Eco Light Flex - ₹10 / sq.ft</option>
+              <option value="12" data-name="Medium Flex" selected>Medium Quality Flex - ₹12 / sq.ft</option>
+              <option value="25" data-name="Star Flex">Star Flex (High Res) - ₹25 / sq.ft</option>
+              <option value="35" data-name="Eco Solvent Vinyl">Eco-Solvent Vinyl - ₹35 / sq.ft</option>
+              <option value="45" data-name="Backlit Film">Backlit Film (Glow Sign) - ₹45 / sq.ft</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>M.S. Iron Frame Structure</label>
+            <select id="cFrameQuality" onchange="calculateTotal()">
+              <option value="0" data-name="No Frame" selected>No Frame (Print Only)</option>
+              <option value="18" data-name="Light Frame">Light Duty M.S. Frame - ₹18 / Running Ft</option>
+              <option value="25" data-name="Medium Heavy Frame">Medium Heavy Frame - ₹25 / Running Ft</option>
+              <option value="30" data-name="Heavy Duty Frame">Heavy Duty Premium Frame - ₹30 / Running Ft</option>
+            </select>
+          </div>
+
+          <div class="calc-subhead" style="margin-top: 14px;">🛠️ Extra Services</div>
+
+          <label class="option-pill">
+            <input type="checkbox" id="cDesign" onchange="calculateTotal()">
+            <span>Graphic Designing Charge (@ ₹150)</span>
+          </label>
+
+          <div class="input-row">
+            <div class="input-col">
+              <label>Delivery / Logistics (₹)</label>
+              <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
+            </div>
+            <div class="input-col">
+              <label>Fitting / Installation (₹)</label>
+              <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
+          </div>
+        </div>
+
+        <!-- Right: Summary & Pay -->
+        <div class="summary-panel">
+          <div class="calc-subhead">🧾 Realtime Estimation</div>
+
+          <div class="invoice-card">
+            <div class="summary-line">
+              <span>Dimensions:</span>
+              <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
+            </div>
+            <div class="summary-line">
+              <span>Printing Cost:</span>
+              <span id="resPrint">₹0</span>
+            </div>
+            <div class="summary-line">
+              <span>M.S. Iron Frame:</span>
+              <span id="resFrame">₹0</span>
+            </div>
+            <div class="summary-line">
+              <span>Bond Adhesive:</span>
+              <span id="resBond">₹0</span>
+            </div>
+            <div class="summary-line">
+              <span>Design Charge:</span>
+              <span id="resDesign">₹0</span>
+            </div>
+            <div class="summary-line">
+              <span>Logistics + Fitting:</span>
+              <span id="resTransportFitting">₹0</span>
+            </div>
+            <div class="total-box">
+              <span>Total Estimated Amount:</span>
+              <h3 id="resTotal">₹0</h3>
+            </div>
+          </div>
+
+          <div class="screen-pay-box">
+            <div id="screenQrContainer" class="qr-container"></div>
+            <div class="upi-info">
+              <h5>⚡ Direct UPI Gateway</h5>
+              <span class="upi-tag">Verified Business</span>
+              <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
+              <p style="font-size: 9.5px; color: #475569;">GPay • PhonePe • Paytm • BHIM</p>
+            </div>
+          </div>
+
+          <div class="btn-stack" data-html2canvas-ignore="true">
+            <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
+              ⚡ Pay Now (GPay / PhonePe)
+            </a>
+            <button class="btn btn-dark" onclick="downloadDirectPDF()">
+              📄 Download Single Page A4 PDF
+            </button>
+            <button class="btn btn-green" onclick="shareOnWhatsApp()">
+              📲 Share Estimate on WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with Glowing Circle Profile & Brand Credits -->
+  <footer class="site-footer" id="founder">
     <div class="footer-container">
-      
-      <!-- Founder Profile Left -->
       <div class="founder-profile-box">
         <div class="founder-avatar-container">
           <div class="shining-ring"></div>
@@ -1082,22 +1440,20 @@
         </div>
       </div>
 
-      <!-- Social & Cool Art Right -->
       <div class="footer-social-branding">
         <div>
           <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
-            <svg class="fb-icon" viewBox="0 0 24 24">
+            <svg style="width:16px;height:16px;fill:#1877f2;" viewBox="0 0 24 24">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
-            Connect on Facebook: Sab Kuchh Printing
+            Facebook Page: Sab Kuchh Printing
           </a>
         </div>
         <div class="coolart-badge">
           <h5>Designed & Developed by: <span>COOL ART®</span></h5>
-          <p>Village: Nahal, Atrauli, Aligarh, UP • Graphic Design, Printing & Media</p>
+          <p>Village: Nahal, Atrauli, Aligarh, UP • Graphic Design, Printing & Media Solutions</p>
         </div>
       </div>
-
     </div>
   </footer>
 
@@ -1121,6 +1477,22 @@
       calculateTotal();
     });
 
+    function openCalculatorModal() {
+      document.getElementById('calculatorModal').style.display = 'flex';
+      calculateTotal();
+    }
+
+    function closeCalculatorModal() {
+      document.getElementById('calculatorModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('calculatorModal');
+      if (e.target === modal) {
+        closeCalculatorModal();
+      }
+    });
+
     function fetchLiveLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -1131,12 +1503,12 @@
             document.getElementById('errLocation').style.display = 'none';
           },
           () => {
-            alert("⚠️ कृपया फोन की GPS लोकेशन ऑन करें या नीचे अपना सही पता टाइप करें।");
+            alert("⚠️ Please enable GPS in your device or type your address manually.");
           },
           { timeout: 10000 }
         );
       } else {
-        alert("GPS उपलब्ध नहीं है, कृपया अपना पता टाइप करें।");
+        alert("GPS not supported, please enter your address.");
       }
     }
 
@@ -1162,7 +1534,7 @@
         document.getElementById('errPhone').style.display = 'none';
       }
 
-      if (loc.length < 5) {
+      if (loc.length < 4) {
         document.getElementById('errLocation').style.display = 'block';
         isValid = false;
       } else {
@@ -1177,12 +1549,12 @@
       document.getElementById('leadModalOverlay').style.display = 'none';
 
       const leadMsg = `*🚨 NEW VERIFIED CALCULATOR LEAD*%0A` +
-        `👤 नाम: ${name}%0A` +
-        `📞 मोबाइल: ${phone}%0A` +
-        `📍 लोकेशन: ${loc}%0A` +
+        `👤 Name: ${name}%0A` +
+        `📞 Mobile: ${phone}%0A` +
+        `📍 Location: ${loc}%0A` +
         `--------------------------------%0A` +
-        `Sab Kuch Printing Rate Calculator Portal`;
-      
+        `Sab Kuch Printing Commercial Portal`;
+
       window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
     }
 
@@ -1192,14 +1564,14 @@
       const lblH = document.getElementById('lblHeight');
 
       if (unit === 'inches') {
-        lblW.innerText = "चौड़ाई (Width in Inches)";
-        lblH.innerText = "ऊंचाई (Height in Inches)";
+        lblW.innerText = "Width (Inches)";
+        lblH.innerText = "Height (Inches)";
       } else if (unit === 'mm') {
-        lblW.innerText = "चौड़ाई (Width in MM)";
-        lblH.innerText = "ऊंचाई (Height in MM)";
+        lblW.innerText = "Width (MM)";
+        lblH.innerText = "Height (MM)";
       } else {
-        lblW.innerText = "चौड़ाई (Width in Feet)";
-        lblH.innerText = "ऊंचाई (Height in Feet)";
+        lblW.innerText = "Width (Feet)";
+        lblH.innerText = "Height (Feet)";
       }
       calculateTotal();
     }
@@ -1270,7 +1642,7 @@
       document.getElementById('resDimStats').innerText = `${areaSqFt.toFixed(1)} sq.ft | ${perimeterFeet.toFixed(1)} R.ft`;
       document.getElementById('resPrint').innerText = '₹' + Math.round(printCost).toLocaleString('en-IN');
       document.getElementById('resFrame').innerText = '₹' + Math.round(frameCost).toLocaleString('en-IN');
-      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} शीशी @ 25 sq.ft)` : '₹0';
+      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} Bottle(s) @ 25 sq.ft)` : '₹0';
       document.getElementById('resDesign').innerText = '₹' + designCost.toLocaleString('en-IN');
       document.getElementById('resTransportFitting').innerText = '₹' + tfCost.toLocaleString('en-IN');
       document.getElementById('resTotal').innerText = '₹' + currentGrandTotal.toLocaleString('en-IN');
@@ -1280,8 +1652,8 @@
       qrBox.innerHTML = '';
       qrGenerator = new QRCode(qrBox, {
         text: upiUrl,
-        width: 66,
-        height: 66,
+        width: 60,
+        height: 60,
         correctLevel: QRCode.CorrectLevel.M
       });
 

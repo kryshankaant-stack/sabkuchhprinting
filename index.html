@@ -312,12 +312,27 @@
       margin-bottom: 18px;
     }
 
+    /* Pulsing & Glowing Animated Dot */
     .banner-pulse {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: #38bdf8;
       border-radius: 50%;
       box-shadow: 0 0 10px #38bdf8;
+      animation: pulseAnimation 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseAnimation {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.5;
+        box-shadow: 0 0 4px #38bdf8;
+      }
+      100% {
+        transform: scale(1.35);
+        opacity: 1;
+        box-shadow: 0 0 14px #38bdf8, 0 0 20px #00e5ff;
+      }
     }
 
     .banner-title {
@@ -474,7 +489,7 @@
       color: #f1f5f9;
     }
 
-    /* 5. Services Section (8 Categories in All-English) */
+    /* 5. Services Section */
     .services-section {
       max-width: 1400px;
       padding: 70px 24px 60px;
@@ -1228,7 +1243,7 @@
         <div class="service-specs">Spot UV & Foil<br>Textiles & Surfaces</div>
       </div>
 
-      <!-- 8. Lab Printing (Newly Added) -->
+      <!-- 8. Lab Printing -->
       <div class="service-card">
         <div class="service-icon-circle bg-cmyk-lab">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>

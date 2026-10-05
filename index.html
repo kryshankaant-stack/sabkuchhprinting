@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sab Kuch Printing - Rate Calculator</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- PDF & Offline QR Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --border-color: #cbd5e1;
+      --text-muted: #64748b;
+      --bg-light: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Mukta', sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 14px;
+    }
+
+    /* Single Page Locked Compact Card */
+    .app-wrapper {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 14px;
+      border: 1.5px solid #e2e8f0;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      padding: 16px 18px;
+      page-break-inside: avoid;
+    }
+
+    /* Header with Brand Logo */
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 8px;
+      margin-bottom: 11px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand-text {
+      text-align: left;
+    }
+
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 3px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .input-col {
+      flex: 1;
+    }
+
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 6.5px 9px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: var(--primary);
+      outline: none;
+      background: #ffffff;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    .unit-selector {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 6px;
+    }
+
+    .unit-selector label {
+      flex: 1;
+      text-align: center;
+      margin: 0;
+      padding: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #475569;
+    }
+
+    .unit-selector input[type="radio"] {
+      display: none;
+    }
+
+    .unit-selector input[type="radio"]:checked + span {
+      background: #ffffff;
+      color: var(--accent);
+      font-weight: 700;
+      display: block;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 3px 0;
+    }
+
+    .option-pill {
+      display: flex;
+      align-items: center;
+      background: var(--bg-light);
+      padding: 6px 9px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 7px;
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .option-pill input {
+      accent-color: var(--accent);
+      margin-right: 7px;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Bill Summary */
+    .summary-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 9px 12px;
+      margin-top: 8px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 3.5px;
+    }
+
+    .summary-line strong {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .total-box {
+      border-top: 1.5px solid #cbd5e1;
+      margin-top: 5px;
+      padding-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-box span {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .total-box h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* UPI QR Area */
+    .screen-pay-box {
+      margin-top: 8px;
+      background: #f0fdf4;
+      border: 1.5px dashed #86efac;
+      border-radius: 9px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qr-container {
+      width: 66px;
+      height: 66px;
+      min-width: 66px;
+      background: #ffffff;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-container canvas, .qr-container img {
+      width: 62px !important;
+      height: 62px !important;
+    }
+
+    .upi-info h5 {
+      font-size: 11.5px;
+      color: #14532d;
+      font-weight: 700;
+    }
+
+    .upi-info p {
+      font-size: 10px;
+      color: #166534;
+      margin-top: 1px;
+    }
+
+    .upi-tag {
+      display: inline-block;
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-top: 2px;
+    }
+
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 9px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-upi {
+      background: #16a34a;
+      color: #ffffff;
+    }
+
+    .btn-dark {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .btn-green {
+      background: #0284c7;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrapper" id="full-calculator-card">
+    <!-- Header with SKP Logo -->
+    <div class="brand-header">
+      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <div class="brand-title">SAB KUCH PRINTING</div>
+        <div class="brand-subtitle">कूल आर्ट एडवरटाइजिंग • रेट कोटेशन</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>ग्राहक का नाम (Customer Name)</label>
+      <input type="text" id="clientName" placeholder="उदा. Krishan Kant Bhardwaj" oninput="calculateTotal()">
+    </div>
+
+    <label>माप की इकाई (Measurement Unit)</label>
+    <div class="unit-selector">
+      <label>
+        <input type="radio" name="calcUnit" value="feet" checked onchange="onUnitChange()">
+        <span>फ़ीट (Feet)</span>
+      </label>
+      <label>
+        <input type="radio" name="calcUnit" value="inches" onchange="onUnitChange()">
+        <span>इंच (Inches)</span>
+      </label>
+      <label>
+        <input type="radio" name="calcUnit" value="mm" onchange="onUnitChange()">
+        <span>MM (मिलीमीटर)</span>
+      </label>
+    </div>
+
+    <div class="input-row">
+      <div class="input-col">
+        <label id="lblWidth">चौड़ाई (Width in Feet)</label>
+        <input type="number" id="cWidth" value="10" min="0.1" step="any" oninput="calculateTotal()">
+      </div>
+      <div class="input-col">
+        <label id="lblHeight">ऊंचाई (Height in Feet)</label>
+        <input type="number" id="cHeight" value="3" min="0.1" step="any" oninput="calculateTotal()">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>फ्लेक्स / मीडिया क्वालिटी</label>
+      <select id="cMedia" onchange="calculateTotal()">
+        <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
+        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स">मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft</option>
+        <option value="25" data-name="स्टार फ्लेक्स (Star Flex)" selected>स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
+        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft</option>
+        <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
+      <select id="cFrameQuality" onchange="calculateTotal()">
+        <option value="0" data-name="फ्रेम नहीं चाहिए">फ्रेम नहीं चाहिए (Only Flex Print)</option>
+        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft</option>
+        <option value="25" data-name="बीच का फ्रेम (Medium)" selected>बीच का (Medium Heavy) - ₹25 / Running Ft</option>
+        <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
+      </select>
+    </div>
+
+    <label class="option-pill">
+      <input type="checkbox" id="cDesign" checked onchange="calculateTotal()">
+      <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
+    </label>
+
+    <div class="input-row">
+      <div class="input-col">
+        <label>किराया / ट्रांसपोर्ट (₹)</label>
+        <input type="number" id="cTransport" value="0" min="0" placeholder="0" oninput="calculateTotal()">
+      </div>
+      <div class="input-col">
+        <label>फिटिंग चार्ज (₹)</label>
+        <input type="number" id="cFitting" value="0" min="0" placeholder="0" oninput="calculateTotal()">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>बोर्ड की संख्या (Quantity)</label>
+      <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-line">
+        <span>एरिया / रनिंग माप:</span>
+        <strong id="resDimStats">30.0 sq.ft | 26.0 R.ft</strong>
+      </div>
+      <div class="summary-line">
+        <span>प्रिंटिंग लागत:</span>
+        <span id="resPrint">₹750</span>
+      </div>
+      <div class="summary-line">
+        <span>लोहे का फ्रेम:</span>
+        <span id="resFrame">₹650</span>
+      </div>
+      <div class="summary-line">
+        <span>पेस्टिंग बॉन्ड खर्च:</span>
+        <span id="resBond" style="color:#d97706; font-weight:700;">₹40 (2 शीशी)</span>
+      </div>
+      <div class="summary-line">
+        <span>डिज़ाइन शुल्क:</span>
+        <span id="resDesign">₹150</span>
+      </div>
+      <div class="summary-line">
+        <span>किराया + फिटिंग लेबर:</span>
+        <span id="resTransportFitting">₹0</span>
+      </div>
+      <div class="total-box">
+        <span>कुल अनुमानित राशि:</span>
+        <h3 id="resTotal">₹1,590</h3>
+      </div>
+    </div>
+
+    <div class="screen-pay-box">
+      <div id="screenQrContainer" class="qr-container"></div>
+      <div class="upi-info">
+        <h5>⚡ Instant UPI Payment</h5>
+        <span class="upi-tag">🔒 100% Trusted & Verified</span>
+        <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
+        <p style="font-size: 9.5px; color: #475569;">GPay • PhonePe • Paytm • BHIM</p>
+      </div>
+    </div>
+
+    <div class="btn-stack" data-html2canvas-ignore="true">
+      <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
+        ⚡ Pay Now (Google Pay / PhonePe)
+      </a>
+      <button class="btn btn-dark" onclick="downloadDirectPDF()">
+        📄 डाउनलोड सिंगल पेज A4 PDF
+      </button>
+      <button class="btn btn-green" onclick="shareOnWhatsApp()">
+        📲 WhatsApp पर शेयर करें
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const MY_UPI_ID = "9458614610-2@ybl";
+    const MY_NAME = "Krishan Kant Bhardwaj";
+
+    let currentGrandTotal = 0;
+    let qrGenerator = null;
+
+    function onUnitChange() {
+      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+      const lblW = document.getElementById('lblWidth');
+      const lblH = document.getElementById('lblHeight');
+
+      if (unit === 'inches') {
+        lblW.innerText = "चौड़ाई (Width in Inches)";
+        lblH.innerText = "ऊंचाई (Height in Inches)";
+      } else if (unit === 'mm') {
+        lblW.innerText = "चौड़ाई (Width in MM)";
+        lblH.innerText = "ऊंचाई (Height in MM)";
+      } else {
+        lblW.innerText = "चौड़ाई (Width in Feet)";
+        lblH.innerText = "ऊंचाई (Height in Feet)";
+      }
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const rawW = parseFloat(document.getElementById('cWidth').value) || 0;
+      const rawH = parseFloat(document.getElementById('cHeight').value) || 0;
+      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+
+      let wInFeet = rawW;
+      let hInFeet = rawH;
+
+      if (unit === 'inches') {
+        wInFeet = rawW / 12;
+        hInFeet = rawH / 12;
+      } else if (unit === 'mm') {
+        wInFeet = rawW / 304.8;
+        hInFeet = rawH / 304.8;
+      }
+
+      const mediaRate = parseFloat(document.getElementById('cMedia').value) || 0;
+      const frameRate = parseFloat(document.getElementById('cFrameQuality').value) || 0;
+      const hasDesign = document.getElementById('cDesign').checked;
+      const transportCharge = parseFloat(document.getElementById('cTransport').value) || 0;
+      const fittingCharge = parseFloat(document.getElementById('cFitting').value) || 0;
+      const qty = parseInt(document.getElementById('cQty').value) || 1;
+
+      const areaSqFt = wInFeet * hInFeet;
+      const perimeterFeet = (wInFeet > 0 && hInFeet > 0) ? 2 * (wInFeet + hInFeet) : 0;
+
+      let bondBottlesPerBoard = 0;
+      let bondCost = 0;
+      if (frameRate > 0 && areaSqFt > 0) {
+        bondBottlesPerBoard = Math.ceil(areaSqFt / 25);
+        bondCost = bondBottlesPerBoard * 20 * qty;
+      }
+
+      const printCost = areaSqFt * mediaRate * qty;
+      const frameCost = perimeterFeet * frameRate * qty;
+      const designCost = hasDesign ? 150 : 0;
+      const tfCost = transportCharge + fittingCharge;
+
+      currentGrandTotal = Math.round(printCost + frameCost + designCost + tfCost + bondCost);
+
+      document.getElementById('resDimStats').innerText = `${areaSqFt.toFixed(1)} sq.ft | ${perimeterFeet.toFixed(1)} R.ft`;
+      document.getElementById('resPrint').innerText = '₹' + Math.round(printCost).toLocaleString('en-IN');
+      document.getElementById('resFrame').innerText = '₹' + Math.round(frameCost).toLocaleString('en-IN');
+      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} शीशी)` : '₹0';
+      document.getElementById('resDesign').innerText = '₹' + designCost.toLocaleString('en-IN');
+      document.getElementById('resTransportFitting').innerText = '₹' + tfCost.toLocaleString('en-IN');
+      document.getElementById('resTotal').innerText = '₹' + currentGrandTotal.toLocaleString('en-IN');
+
+      const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=${encodeURIComponent(MY_NAME)}&am=${currentGrandTotal}&cu=INR&tn=Printing_Bill`;
+      const qrBox = document.getElementById('screenQrContainer');
+      qrBox.innerHTML = '';
+      qrGenerator = new QRCode(qrBox, {
+        text: upiUrl,
+        width: 62,
+        height: 62,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      document.getElementById('btnPayUpi').href = upiUrl;
+    }
+
+    async function downloadDirectPDF() {
+      calculateTotal();
+      const clientName = document.getElementById('clientName').value.trim() || 'Customer';
+      const element = document.getElementById('full-calculator-card');
+
+      if (document.fonts) {
+        await document.fonts.ready;
+      }
+      await new Promise(r => setTimeout(r, 100));
+
+      const opt = {
+        margin:       [8, 8, 8, 8],
+        filename:     `Quotation_${clientName.replace(/\s+/g, '_')}.pdf`,
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { 
+          scale: 2.0, 
+          useCORS: true, 
+          letterRendering: false,
+          scrollY: 0
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: 'avoid-all' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+
+    function shareOnWhatsApp() {
+      const client = document.getElementById('clientName').value.trim();
+      const rawW = document.getElementById('cWidth').value;
+      const rawH = document.getElementById('cHeight').value;
+      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+      const mediaName = document.getElementById('cMedia').options[document.getElementById('cMedia').selectedIndex].getAttribute('data-name');
+      const frameName = document.getElementById('cFrameQuality').options[document.getElementById('cFrameQuality').selectedIndex].getAttribute('data-name');
+      const hasDesign = document.getElementById('cDesign').checked ? '₹150' : '₹0';
+      const transport = document.getElementById('cTransport').value || '0';
+      const fitting = document.getElementById('cFitting').value || '0';
+      const qty = document.getElementById('cQty').value;
+      const total = document.getElementById('resTotal').innerText;
+      const bondText = document.getElementById('resBond').innerText;
+      const upiPayLink = `upi://pay?pa=${MY_UPI_ID}&pn=${encodeURIComponent(MY_NAME)}&am=${currentGrandTotal}&cu=INR`;
+
+      let msg = `*PRINTING ESTIMATE - SAB KUCH PRINTING*%0A`;
+      if(client) msg += `Client: *${client}*%0A`;
+      msg += `--------------------------------%0A` +
+        `Size: ${rawW} x ${rawH} (${unit})%0A` +
+        `Media: ${mediaName}%0A` +
+        `Frame: ${frameName}%0A` +
+        `Pasting Bond: ${bondText}%0A` +
+        `Designing: ${hasDesign}%0A` +
+        `Delivery: ₹${transport} | Fitting: ₹${fitting}%0A` +
+        `Quantity: ${qty} Pc(s)%0A` +
+        `--------------------------------%0A` +
+        `*Total Amount: ${total}*%0A` +
+        `--------------------------------%0A` +
+        `*Direct UPI Pay:*%0A${upiPayLink}%0A` +
+        `--------------------------------%0A` +
+        `Cool Art Advertising`;
+
+      window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+    }
+
+    calculateTotal();
+  </script>
+</body>
+</html>

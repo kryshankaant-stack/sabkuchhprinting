@@ -41,25 +41,28 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    html {
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto !important; /* Smooth scrolling guaranteed */
+      -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
     }
 
     body {
       background: #030712;
-      color: var(--ink);
-      min-height: 100vh;
+      color: #0f172a;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
       position: relative;
     }
 
-    /* Ultra-Light GPU-Accelerated Floating Bindiyan (No Lag) */
+    /* Ultra-Light GPU-Accelerated Floating Bindiyan */
     .ink-particle-layer {
       position: fixed;
       inset: 0;
-      pointer-events: none;
+      pointer-events: none !important;
       z-index: 1;
       overflow: hidden;
     }
@@ -94,18 +97,19 @@
       }
     }
 
-    header, section, div.products-ribbon-bar, div.services-wrapper-outer, footer, #calculatorModal, #leadModalOverlay {
+    /* Content Layout Levels */
+    header, section, div.products-ribbon-bar, div.services-wrapper-outer, footer {
       position: relative;
-      z-index: 2;
+      z-index: 5;
     }
 
     /* 1. Ultra-Clean White Lead Modal */
     #leadModalOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(3, 7, 18, 0.8);
+      background: rgba(3, 7, 18, 0.85);
       backdrop-filter: blur(8px);
-      z-index: 20000;
+      z-index: 99999;
       display: none;
       justify-content: center;
       align-items: center;
@@ -119,7 +123,7 @@
       width: 100%;
       border-radius: 20px;
       padding: 28px 24px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
       border: 1px solid #e2e8f0;
       animation: popIn 0.25s ease-out;
     }
@@ -231,7 +235,7 @@
       background: #1e293b;
     }
 
-    /* 2. Dark Header */
+    /* 2. Dark Header & Interactive Speaker Button */
     .site-header {
       background: #000000;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -288,25 +292,31 @@
       gap: 12px;
     }
 
-    /* Sound Music Toggle Button */
-    .btn-audio-toggle {
+    /* Working Sound Speaker Button */
+    .sound-toggle-btn {
       background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 8px 12px;
-      border-radius: 11px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
       transition: all 0.2s;
     }
 
-    .btn-audio-toggle:hover {
+    .sound-toggle-btn:hover {
       background: rgba(255, 255, 255, 0.16);
-      border-color: rgba(255, 255, 255, 0.35);
+      transform: scale(1.05);
+    }
+
+    .sound-toggle-btn.sound-on {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+      background: rgba(37, 99, 235, 0.2);
     }
 
     .btn-calc-nav {
@@ -323,6 +333,7 @@
       gap: 6px;
       box-shadow: 0 4px 14px rgba(37,99,235,.25);
       transition: transform 0.2s;
+      user-select: none;
     }
 
     .btn-calc-nav:hover {
@@ -435,6 +446,7 @@
       gap: 8px;
       box-shadow: 0 6px 20px rgba(37,99,235,0.35);
       transition: transform 0.2s;
+      user-select: none;
     }
 
     .btn-banner-calc:hover {
@@ -494,8 +506,12 @@
     }
 
     @keyframes snakeRun {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .visual-inner-frame {
@@ -521,33 +537,31 @@
       transform: scale(1.02);
     }
 
-    /* 4. Interactive Touch/Drag Products Ribbon with Kit-Kit Sound */
+    /* 4. Products Ribbon */
     .products-ribbon-bar {
       background: #070e1b;
       color: #ffffff;
       overflow: hidden;
-      position: relative;
-      cursor: grab;
-      user-select: none;
-      -webkit-user-select: none;
+      white-space: nowrap;
+      padding: 11px 0;
+      display: flex;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 12px 0;
-    }
-
-    .products-ribbon-bar:active {
-      cursor: grabbing;
-    }
-
-    .products-ticker-viewport {
-      width: 100%;
-      overflow: hidden;
     }
 
     .products-ticker-track {
       display: inline-flex;
-      gap: 10px;
-      white-space: nowrap;
+      gap: 9px;
+      animation: scrollProducts 36s linear infinite;
       will-change: transform;
+    }
+
+    .products-ribbon-bar:hover .products-ticker-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollProducts {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .product-badge {
@@ -561,10 +575,9 @@
       border: 1px solid rgba(255, 255, 255, 0.16);
       background: rgba(255, 255, 255, 0.08);
       color: #f1f5f9;
-      pointer-events: none;
     }
 
-    /* 5. Services Section */
+    /* 5. Services Section: Clean Light Area */
     .services-wrapper-outer {
       background: 
         radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.035), transparent 40%),
@@ -704,7 +717,7 @@
       inset: 0;
       background: rgba(3, 10, 20, 0.82);
       backdrop-filter: blur(8px);
-      z-index: 15000;
+      z-index: 99998;
       display: none;
       justify-content: center;
       align-items: center;
@@ -719,7 +732,7 @@
       border-radius: 20px;
       border: 1px solid #e2e8f0;
       box-shadow: 0 30px 80px rgba(0,0,0,.35);
-      max-height: 94vh;
+      max-height: 92vh;
       overflow-y: auto;
       position: relative;
     }
@@ -1101,7 +1114,7 @@
 </head>
 <body>
 
-  <!-- Ultra-Light Floating Bindiyan -->
+  <!-- Ultra-Light GPU-Accelerated Floating Bindiyan (Clicks Pass Through) -->
   <div class="ink-particle-layer">
     <div class="ink-dot dot-cyan"></div>
     <div class="ink-dot dot-pink"></div>
@@ -1150,7 +1163,7 @@
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Header with Working Audio Speaker Button -->
   <header class="site-header">
     <div class="nav-container">
       <div class="brand-left">
@@ -1166,9 +1179,9 @@
       </ul>
 
       <div class="nav-right">
-        <!-- Interactive Sound Button -->
-        <button id="btnAudioToggle" class="btn-audio-toggle" onclick="toggleBackgroundAudio()">
-          <span id="audioIcon">🔊</span> <span id="audioText">Sound</span>
+        <!-- Interactive Sound Engine Toggle -->
+        <button class="sound-toggle-btn" id="soundBtn" onclick="togglePrintSound()" title="Toggle Ambience Sound">
+          🔊
         </button>
 
         <button class="btn-calc-nav" onclick="openCalculatorModal()">
@@ -1216,61 +1229,54 @@
     </div>
   </section>
 
-  <!-- Interactive Drag/Scroll Products Ribbon with Speed-Responsive Kit-Kit Sound -->
-  <div class="products-ribbon-bar" id="productsRibbon">
-    <div class="products-ticker-viewport">
-      <div class="products-ticker-track" id="productsTickerTrack">
-        <span class="product-badge">💼 Business Cards</span>
-        <span class="product-badge">🖼️ Posters</span>
-        <span class="product-badge">💌 Greeting Cards</span>
-        <span class="product-badge">🪧 Flex Banners</span>
-        <span class="product-badge">📄 Letterheads</span>
-        <span class="product-badge">✨ Vinyl Prints</span>
-        <span class="product-badge">📖 Catalogs</span>
-        <span class="product-badge">🧱 Sunboard Mounts</span>
-        <span class="product-badge">🏷️ Name Plates</span>
-        <span class="product-badge">🎯 Standees</span>
-        <span class="product-badge">🔖 Stickers</span>
-        <span class="product-badge">📚 Invoice Books</span>
-        <span class="product-badge">🛍️ Shopping Bags</span>
-        <span class="product-badge">✉️ Envelopes</span>
-        <span class="product-badge">💡 Sign Boards</span>
-        <span class="product-badge">📅 Calendars</span>
-        <span class="product-badge">🖋️ Rubber Stamps</span>
-        <span class="product-badge">🎟️ Event Cards</span>
-        <span class="product-badge">🪪 ID Cards</span>
-        <span class="product-badge">🎂 Birthday Cards</span>
-        <span class="product-badge">☕ Mugs & Pens</span>
-        <span class="product-badge">📑 Pamphlets</span>
-        <span class="product-badge">📸 Photo Books</span>
-        <span class="product-badge">🏢 Indoor Signage</span>
-        <span class="product-badge">📝 Notepads</span>
-        <span class="product-badge">📦 Sunpack Sheets</span>
-        <span class="product-badge">👕 Custom T-Shirts</span>
-        <span class="product-badge">🎁 Packaging Boxes</span>
-        <span class="product-badge">💒 Wedding Cards</span>
-        <!-- Duplicated Set for Infinite Drag & Loop -->
-        <span class="product-badge">💼 Business Cards</span>
-        <span class="product-badge">🖼️ Posters</span>
-        <span class="product-badge">💌 Greeting Cards</span>
-        <span class="product-badge">🪧 Flex Banners</span>
-        <span class="product-badge">📄 Letterheads</span>
-        <span class="product-badge">✨ Vinyl Prints</span>
-        <span class="product-badge">📖 Catalogs</span>
-        <span class="product-badge">🧱 Sunboard Mounts</span>
-        <span class="product-badge">🏷️️ Name Plates</span>
-        <span class="product-badge">🎯 Standees</span>
-        <span class="product-badge">🔖 Stickers</span>
-        <span class="product-badge">📚 Invoice Books</span>
-        <span class="product-badge">🛍️ Shopping Bags</span>
-        <span class="product-badge">✉️ Envelopes</span>
-        <span class="product-badge">💡 Sign Boards</span>
-        <span class="product-badge">📅 Calendars</span>
-      </div>
+  <!-- Products Ribbon -->
+  <div class="products-ribbon-bar" id="products">
+    <div class="products-ticker-track">
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Standees</span>
+      <span class="product-badge">🔖 Stickers</span>
+      <span class="product-badge">📚 Invoice Books</span>
+      <span class="product-badge">🛍️ Shopping Bags</span>
+      <span class="product-badge">✉️ Envelopes</span>
+      <span class="product-badge">💡 Sign Boards</span>
+      <span class="product-badge">📅 Calendars</span>
+      <span class="product-badge">🖋️ Rubber Stamps</span>
+      <span class="product-badge">🎟️️ Event Cards</span>
+      <span class="product-badge">🪪 ID Cards</span>
+      <span class="product-badge">🎂 Birthday Cards</span>
+      <span class="product-badge">☕ Mugs & Pens</span>
+      <span class="product-badge">📑 Pamphlets</span>
+      <span class="product-badge">📸 Photo Books</span>
+      <span class="product-badge">🏢 Indoor Signage</span>
+      <span class="product-badge">📝 Notepads</span>
+      <span class="product-badge">📦 Sunpack Sheets</span>
+      <span class="product-badge">👕 Custom T-Shirts</span>
+      <span class="product-badge">🎁 Packaging Boxes</span>
+      <span class="product-badge">💒 Wedding Cards</span>
+      <!-- Loop -->
+      <span class="product-badge">💼 Business Cards</span>
+      <span class="product-badge">🖼️ Posters</span>
+      <span class="product-badge">💌 Greeting Cards</span>
+      <span class="product-badge">🪧 Flex Banners</span>
+      <span class="product-badge">📄 Letterheads</span>
+      <span class="product-badge">✨ Vinyl Prints</span>
+      <span class="product-badge">📖 Catalogs</span>
+      <span class="product-badge">🧱 Sunboard Mounts</span>
+      <span class="product-badge">🏷️ Name Plates</span>
+      <span class="product-badge">🎯 Standees</span>
+      <span class="product-badge">🔖 Stickers</span>
     </div>
   </div>
 
-  <!-- Services Section -->
+  <!-- Services Section: Clean Light Area with Subtle Print Texture -->
   <div class="services-wrapper-outer" id="services">
     <section class="services-section">
       <div class="section-header-box">
@@ -1549,4 +1555,350 @@
   <footer class="site-footer" id="founder">
     <div class="footer-container">
       <div class="founder-profile-box">
-        <div class="founder-
+        <div class="founder-avatar-container">
+          <div class="shining-ring"></div>
+          <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-circle" onerror="this.style.display='none'">
+        </div>
+        <div class="founder-info">
+          <h4>Krishan Kant Bhardwaj</h4>
+          <span class="role-badge">Founder & Chief Consultant</span>
+          <div>
+            <a href="tel:+919458614610" class="founder-phone-btn">
+              <span>🇮🇳</span> +91 9458614610
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-social-branding">
+        <div>
+          <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
+            <svg style="width:16px;height:16px;fill:#60a5fa;" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook Page: Sab Kuchh Printing
+          </a>
+        </div>
+        <div class="coolart-badge">
+          Designed & Developed by: <strong>COOL ART®</strong><br>
+          Nahal, Atrauli, Aligarh, UP • Graphic Design, Printing & Media
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MY_UPI_ID = "9458614610-2@ybl";
+    const MY_NAME = "Krishan Kant Bhardwaj";
+    const OWNER_PHONE = "9458614610";
+
+    let currentGrandTotal = 0;
+    let qrGenerator = null;
+    let autoDesignActivated = false;
+
+    // Web Audio Engine (Pure Browser Chime Sound)
+    let audioCtx = null;
+    let isSoundOn = false;
+
+    function playPrintChime() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+        // Two pleasant harmonious chimes (F#5 and C#6)
+        const freqs = [739.99, 1108.73];
+        freqs.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.6);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.65);
+        });
+      } catch (e) {
+        console.log("Audio play error:", e);
+      }
+    }
+
+    function togglePrintSound() {
+      isSoundOn = !isSoundOn;
+      const btn = document.getElementById('soundBtn');
+      if (isSoundOn) {
+        btn.classList.add('sound-on');
+        btn.innerText = '🔊';
+        playPrintChime();
+      } else {
+        btn.classList.remove('sound-on');
+        btn.innerText = '🔇';
+      }
+    }
+
+    // Modal Control Logic
+    function openCalculatorModal() {
+      const modal = document.getElementById('calculatorModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        if (isSoundOn) playPrintChime();
+        calculateTotal();
+      }
+    }
+
+    function closeCalculatorModal() {
+      const modal = document.getElementById('calculatorModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('calculatorModal');
+      if (e.target === modal) {
+        closeCalculatorModal();
+      }
+    });
+
+    // Check user registration on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('skp_verified_user');
+      const leadModal = document.getElementById('leadModalOverlay');
+
+      if (!savedUser && leadModal) {
+        leadModal.style.display = 'flex';
+      } else if (savedUser) {
+        if (leadModal) leadModal.style.display = 'none';
+        try {
+          const userData = JSON.parse(savedUser);
+          document.getElementById('clientName').value = userData.name || '';
+        } catch (e) {}
+      }
+      calculateTotal();
+    });
+
+    function fetchLiveLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            document.getElementById('leadLocation').value = `GPS: https://maps.google.com/?q=${lat},${lng}`;
+            document.getElementById('errLocation').style.display = 'none';
+          },
+          () => {
+            alert("Please enable GPS in your device or type your address manually.");
+          },
+          { timeout: 10000 }
+        );
+      } else {
+        alert("GPS not supported, please enter your address.");
+      }
+    }
+
+    function submitLeadGate() {
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const loc = document.getElementById('leadLocation').value.trim();
+
+      let isValid = true;
+
+      if (name.length < 2) {
+        document.getElementById('errName').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errName').style.display = 'none';
+      }
+
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('errPhone').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errPhone').style.display = 'none';
+      }
+
+      if (loc.length < 4) {
+        document.getElementById('errLocation').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errLocation').style.display = 'none';
+      }
+
+      if (!isValid) return;
+
+      localStorage.setItem('skp_verified_user', JSON.stringify({ name, phone, loc }));
+
+      document.getElementById('clientName').value = name;
+      document.getElementById('leadModalOverlay').style.display = 'none';
+
+      const leadMsg = `*🚨 NEW VERIFIED CALCULATOR LEAD*%0A` +
+        `👤 Name: ${name}%0A` +
+        `📞 Mobile: ${phone}%0A` +
+        `📍 Location: ${loc}%0A` +
+        `--------------------------------%0A` +
+        `Sab Kuch Printing Commercial Portal`;
+
+      window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
+    }
+
+    function onUnitChange() {
+      const unit = document.getElementById('calcUnitSelect').value;
+      const lblW = document.getElementById('lblWidth');
+      const lblH = document.getElementById('lblHeight');
+
+      if (unit === 'inches') {
+        lblW.innerText = "Width (Inches)";
+        lblH.innerText = "Height (Inches)";
+      } else if (unit === 'mm') {
+        lblW.innerText = "Width (MM)";
+        lblH.innerText = "Height (MM)";
+      } else {
+        lblW.innerText = "Width (Feet)";
+        lblH.innerText = "Height (Feet)";
+      }
+      calculateTotal();
+    }
+
+    function onDimensionInput() {
+      const rawW = parseFloat(document.getElementById('cWidth').value) || 0;
+      const rawH = parseFloat(document.getElementById('cHeight').value) || 0;
+
+      if ((rawW > 0 || rawH > 0) && !autoDesignActivated) {
+        document.getElementById('cDesign').checked = true;
+        autoDesignActivated = true;
+      }
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const rawW = parseFloat(document.getElementById('cWidth').value) || 0;
+      const rawH = parseFloat(document.getElementById('cHeight').value) || 0;
+      const unit = document.getElementById('calcUnitSelect').value || 'feet';
+
+      if (rawW <= 0 || rawH <= 0) {
+        currentGrandTotal = 0;
+        document.getElementById('resDimStats').innerText = "0.0 sq.ft | 0.0 R.ft";
+        document.getElementById('resPrint').innerText = "₹0";
+        document.getElementById('resFrame').innerText = "₹0";
+        document.getElementById('resBond').innerText = "₹0";
+        document.getElementById('resDesign').innerText = document.getElementById('cDesign').checked ? "₹150" : "₹0";
+        document.getElementById('resTransportFitting').innerText = "₹0";
+        document.getElementById('resTotal').innerText = document.getElementById('cDesign').checked ? "₹150" : "₹0";
+        return;
+      }
+
+      let wInFeet = rawW;
+      let hInFeet = rawH;
+
+      if (unit === 'inches') {
+        wInFeet = rawW / 12;
+        hInFeet = rawH / 12;
+      } else if (unit === 'mm') {
+        wInFeet = rawW / 304.8;
+        hInFeet = rawH / 304.8;
+      }
+
+      const mediaRate = parseFloat(document.getElementById('cMedia').value) || 0;
+      const frameRate = parseFloat(document.getElementById('cFrameQuality').value) || 0;
+      const hasDesign = document.getElementById('cDesign').checked;
+      const transportCharge = parseFloat(document.getElementById('cTransport').value) || 0;
+      const fittingCharge = parseFloat(document.getElementById('cFitting').value) || 0;
+      const qty = parseInt(document.getElementById('cQty').value) || 1;
+
+      const areaSqFt = wInFeet * hInFeet;
+      const perimeterFeet = 2 * (wInFeet + hInFeet);
+
+      let bondBottlesPerBoard = 0;
+      let bondCost = 0;
+      if (frameRate > 0 && areaSqFt > 0) {
+        bondBottlesPerBoard = Math.ceil(areaSqFt / 25);
+        bondCost = bondBottlesPerBoard * 20 * qty;
+      }
+
+      const printCost = areaSqFt * mediaRate * qty;
+      const frameCost = perimeterFeet * frameRate * qty;
+      const designCost = hasDesign ? 150 : 0;
+      const tfCost = transportCharge + fittingCharge;
+
+      currentGrandTotal = Math.round(printCost + frameCost + designCost + tfCost + bondCost);
+
+      document.getElementById('resDimStats').innerText = `${areaSqFt.toFixed(1)} sq.ft | ${perimeterFeet.toFixed(1)} R.ft`;
+      document.getElementById('resPrint').innerText = '₹' + Math.round(printCost).toLocaleString('en-IN');
+      document.getElementById('resFrame').innerText = '₹' + Math.round(frameCost).toLocaleString('en-IN');
+      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} Bottle(s))` : '₹0';
+      document.getElementById('resDesign').innerText = '₹' + designCost.toLocaleString('en-IN');
+      document.getElementById('resTransportFitting').innerText = '₹' + tfCost.toLocaleString('en-IN');
+      document.getElementById('resTotal').innerText = '₹' + currentGrandTotal.toLocaleString('en-IN');
+
+      const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=${encodeURIComponent(MY_NAME)}&am=${currentGrandTotal}&cu=INR&tn=Printing_Bill`;
+      const qrBox = document.getElementById('screenQrContainer');
+      if (qrBox) {
+        qrBox.innerHTML = '';
+        qrGenerator = new QRCode(qrBox, {
+          text: upiUrl,
+          width: 56,
+          height: 56,
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+
+      document.getElementById('btnPayUpi').href = upiUrl;
+    }
+
+    async function downloadDirectPDF() {
+      calculateTotal();
+      const clientName = document.getElementById('clientName').value.trim() || 'Customer';
+      const element = document.querySelector('.summary-panel');
+
+      const opt = {
+        margin: [8, 8, 8, 8],
+        filename: `Quotation_${clientName.replace(/\s+/g, '_')}.pdf`,
+        image: { type: 'jpeg', quality: 1.0 },
+        html2canvas: { scale: 2.0, useCORS: true, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+
+    function shareOnWhatsApp() {
+      const client = document.getElementById('clientName').value.trim();
+      const rawW = document.getElementById('cWidth').value || 0;
+      const rawH = document.getElementById('cHeight').value || 0;
+      const unit = document.getElementById('calcUnitSelect').value || 'feet';
+      const mediaName = document.getElementById('cMedia').options[document.getElementById('cMedia').selectedIndex].getAttribute('data-name');
+      const frameName = document.getElementById('cFrameQuality').options[document.getElementById('cFrameQuality').selectedIndex].getAttribute('data-name');
+      const hasDesign = document.getElementById('cDesign').checked ? '₹150' : '₹0';
+      const total = document.getElementById('resTotal').innerText;
+      const upiPayLink = `upi://pay?pa=${MY_UPI_ID}&pn=${encodeURIComponent(MY_NAME)}&am=${currentGrandTotal}&cu=INR`;
+
+      let msg = `*PRINTING ESTIMATE - SAB KUCH PRINTING*%0A`;
+      if(client) msg += `Client: *${client}*%0A`;
+      msg += `--------------------------------%0A` +
+        `Size: ${rawW} x ${rawH} (${unit})%0A` +
+        `Media: ${mediaName}%0A` +
+        `Frame: ${frameName}%0A` +
+        `Designing: ${hasDesign}%0A` +
+        `--------------------------------%0A` +
+        `*Total Amount: ${total}*%0A` +
+        `--------------------------------%0A` +
+        `*Direct UPI Pay:*%0A${upiPayLink}%0A` +
+        `Cool Art Advertising (Nahal, Atrauli, Aligarh, UP)`;
+
+      window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>

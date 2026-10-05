@@ -112,7 +112,7 @@
       transform: translateY(0);
     }
 
-    /* 3. Header with App-Shape Icon & Rainbow Text */
+    /* 3. Header with App Icon & Rainbow Brand Text */
     .brand-header {
       display: flex;
       align-items: center;
@@ -123,7 +123,6 @@
       margin-bottom: 11px;
     }
 
-    /* Non-circular App Icon */
     .brand-logo {
       width: 46px;
       height: 46px;
@@ -141,9 +140,8 @@
       text-align: left;
     }
 
-    /* Continuous Flowing Rainbow Gradient Animation */
     .brand-title {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 1.1;
@@ -169,10 +167,17 @@
       100% { background-position: 300% 50%; }
     }
 
-    .brand-subtitle {
-      font-size: 11.5px;
-      color: var(--text-muted);
+    .brand-address {
+      font-size: 11px;
+      color: #1e293b;
       margin-top: 2px;
+      font-weight: 700;
+    }
+
+    .brand-subtitle {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 1px;
       font-weight: 600;
     }
 
@@ -369,12 +374,12 @@
       display: flex;
       flex-direction: column;
       gap: 7px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .btn {
       width: 100%;
-      padding: 9px;
+      padding: 8.5px;
       border-radius: 7px;
       font-size: 12.5px;
       font-weight: 700;
@@ -392,6 +397,11 @@
       color: #ffffff;
     }
 
+    .btn-fb {
+      background: #1877f2;
+      color: #ffffff;
+    }
+
     .btn-dark {
       background: #0f172a;
       color: #ffffff;
@@ -402,7 +412,36 @@
       color: #ffffff;
     }
 
-    /* PDF Print Rule: Turn off text gradient so PDF renders crisp black text */
+    /* Cool Art Footer Credit Badge */
+    .coolart-footer-badge {
+      margin-top: 12px;
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    .coolart-footer-badge h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+
+    .coolart-footer-badge h4 span {
+      color: #4f46e5;
+      font-weight: 800;
+    }
+
+    .coolart-footer-badge p {
+      font-size: 10px;
+      color: #64748b;
+      margin: 1px 0;
+      font-weight: 500;
+    }
+
+    /* PDF Print Rule */
     body.rendering-pdf .brand-title {
       animation: none !important;
       background: none !important;
@@ -413,7 +452,7 @@
 </head>
 <body>
 
-  <!-- App-Style Splash Preloader Screen -->
+  <!-- App-Style Splash Preloader -->
   <div id="app-splash-screen">
     <img src="SKP.png" alt="Sab Kuch Printing" class="splash-logo" onerror="this.style.display='none'">
     <div class="splash-loader-bar">
@@ -422,11 +461,12 @@
   </div>
 
   <div class="app-wrapper" id="full-calculator-card">
-    <!-- Header with Clean Original Icon & Rainbow Brand Text -->
+    <!-- Header with Icon, Rainbow Text & Address -->
     <div class="brand-header">
       <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
       <div class="brand-text">
         <div class="brand-title">SAB KUCH PRINTING</div>
+        <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
         <div class="brand-subtitle">कूल आर्ट एडवरटाइजिंग • रेट कोटेशन</div>
       </div>
     </div>
@@ -546,9 +586,13 @@
       </div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="btn-stack" data-html2canvas-ignore="true">
       <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
         ⚡ Pay Now (Google Pay / PhonePe)
+      </a>
+      <a class="btn btn-fb" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
+        🌐 Facebook Page: Sab Kuchh Printing
       </a>
       <button class="btn btn-dark" onclick="downloadDirectPDF()">
         📄 डाउनलोड सिंगल पेज A4 PDF
@@ -556,6 +600,13 @@
       <button class="btn btn-green" onclick="shareOnWhatsApp()">
         📲 WhatsApp पर शेयर करें
       </button>
+    </div>
+
+    <!-- Cool Art Footer Badge -->
+    <div class="coolart-footer-badge">
+      <h4>Designed & Developed by: <span>COOL ART®</span></h4>
+      <p>Village: Nahal, Atrauli, Aligarh, UP</p>
+      <p>Complete Graphic Design, Printing & Media Solutions</p>
     </div>
   </div>
 
@@ -566,7 +617,7 @@
     let currentGrandTotal = 0;
     let qrGenerator = null;
 
-    // Splash Screen Loading Handlers
+    // Splash Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
         const splash = document.getElementById('app-splash-screen');
@@ -670,7 +721,7 @@
       await new Promise(r => setTimeout(r, 100));
 
       const opt = {
-        margin:       [8, 8, 8, 8],
+        margin:       [6, 8, 6, 8],
         filename:     `Quotation_${clientName.replace(/\s+/g, '_')}.pdf`,
         image:        { type: 'jpeg', quality: 1.0 },
         html2canvas:  { 
@@ -718,7 +769,8 @@
         `--------------------------------%0A` +
         `*Direct UPI Pay:*%0A${upiPayLink}%0A` +
         `--------------------------------%0A` +
-        `Cool Art Advertising`;
+        `Facebook: https://www.facebook.com/sabkuchhprinting%0A` +
+        `Cool Art Advertising (Nahal, Atrauli, Aligarh, UP)`;
 
       window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
     }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sab Kuch Printing - Smart Rate Calculator</title>
+  <title>Sab Kuch Printing - Official Price Calculator & Order Portal</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,11 @@
     :root {
       --primary: #0f172a;
       --accent: #2563eb;
+      --accent-hover: #1d4ed8;
       --border-color: #cbd5e1;
       --text-muted: #64748b;
       --bg-light: #f8fafc;
+      --surface: #ffffff;
     }
 
     * {
@@ -32,19 +34,17 @@
 
     body {
       background-color: #f1f5f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: #1e293b;
       min-height: 100vh;
-      padding: 14px;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     /* 1. Inquiry Entry Modal Gate */
     #leadModalOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.78);
+      background: rgba(15, 23, 42, 0.82);
       backdrop-filter: blur(6px);
       z-index: 10000;
       display: none;
@@ -55,11 +55,11 @@
 
     .lead-modal-card {
       background: #ffffff;
-      max-width: 420px;
+      max-width: 440px;
       width: 100%;
-      border-radius: 16px;
-      padding: 22px 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+      border-radius: 18px;
+      padding: 24px 22px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       text-align: center;
       border: 1.5px solid #e2e8f0;
       animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -71,36 +71,34 @@
     }
 
     .lead-modal-logo {
-      width: 58px;
-      height: 58px;
-      min-width: 58px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
       margin-bottom: 8px;
     }
 
     .lead-modal-card h3 {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--primary);
-      letter-spacing: -0.01em;
     }
 
     .lead-modal-card p {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-top: 2px;
-      margin-bottom: 14px;
+      margin-top: 3px;
+      margin-bottom: 16px;
     }
 
     .lead-input-group {
       text-align: left;
-      margin-bottom: 11px;
+      margin-bottom: 12px;
     }
 
     .lead-input-group label {
       display: block;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 700;
       color: #334155;
       margin-bottom: 4px;
@@ -108,13 +106,12 @@
 
     .lead-input-group input {
       width: 100%;
-      padding: 8px 11px;
+      padding: 9px 12px;
       border: 1.5px solid var(--border-color);
-      border-radius: 7px;
-      font-size: 13px;
+      border-radius: 8px;
+      font-size: 13.5px;
       outline: none;
       background: #ffffff;
-      color: var(--primary);
     }
 
     .lead-input-group input:focus {
@@ -123,7 +120,7 @@
 
     .error-hint {
       color: #ef4444;
-      font-size: 10.5px;
+      font-size: 11px;
       margin-top: 3px;
       display: none;
       font-weight: 600;
@@ -132,21 +129,21 @@
     .location-btn-box {
       display: flex;
       gap: 6px;
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
     .btn-gps {
       background: #eff6ff;
       color: #1d4ed8;
       border: 1px solid #bfdbfe;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .btn-gps:hover {
@@ -157,62 +154,55 @@
       width: 100%;
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #fff;
-      padding: 10.5px;
+      padding: 11px;
       border: none;
-      border-radius: 8px;
-      font-size: 13.5px;
+      border-radius: 9px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 12px;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
 
-    /* 2. Main App Card */
-    .app-wrapper {
+    /* 2. Top Header & Navbar */
+    .site-header {
       background: #ffffff;
-      max-width: 490px;
-      width: 100%;
-      border-radius: 14px;
-      border: 1.5px solid #e2e8f0;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-      padding: 16px 18px;
-      page-break-inside: avoid;
+      border-bottom: 1.5px solid #e2e8f0;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    /* Header: Balanced Left Logo, Center Branding & Prominent Right Hanuman Ji */
-    .brand-header {
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      border-bottom: 2px solid #0f172a;
-      padding-bottom: 10px;
-      margin-bottom: 11px;
+      gap: 14px;
     }
 
-    .brand-logo {
-      width: 52px;
-      height: 52px;
-      min-width: 52px;
+    .brand-group-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo-img {
+      width: 58px;
+      height: 58px;
       object-fit: contain;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
     }
 
-    .hanuman-img {
-      height: 64px;
-      width: auto;
-      max-width: 58px;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
-    }
-
-    .brand-text {
-      text-align: center;
-      flex: 1;
+    .brand-details {
+      text-align: left;
     }
 
     .brand-title {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 1.1;
@@ -229,35 +219,149 @@
     }
 
     .brand-address {
-      font-size: 10.5px;
+      font-size: 12px;
       color: #1e293b;
       margin-top: 2px;
       font-weight: 700;
     }
 
     .brand-subtitle {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
       margin-top: 1px;
       font-weight: 600;
     }
 
+    .header-right-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-hanuman-img {
+      height: 70px;
+      width: auto;
+      max-width: 65px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+    }
+
+    .header-contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .header-contact-pill:hover {
+      background: #dbeafe;
+    }
+
+    /* 3. Main Website Body */
+    .website-content {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 20px;
+      width: 100%;
+      flex: 1;
+    }
+
+    .portal-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 22px 28px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+    }
+
+    .portal-banner h2 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .portal-banner p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 3px;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .brand-details {
+        text-align: center;
+      }
+      .header-right-group {
+        justify-content: center;
+      }
+      .portal-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+    }
+
+    /* Left Calculator Form Panel */
+    .form-panel {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1.5px solid #e2e8f0;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .form-group {
-      margin-bottom: 8px;
+      margin-bottom: 14px;
     }
 
     label {
       display: block;
-      font-size: 11.5px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #334155;
-      margin-bottom: 3px;
+      margin-bottom: 5px;
     }
 
     .input-row {
       display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .input-col {
@@ -266,60 +370,77 @@
 
     ::placeholder {
       color: #cbd5e1 !important;
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
-    input[type="text"], input[type="number"], input[type="tel"], select {
+    input[type="text"], input[type="number"], select {
       width: 100%;
-      padding: 6.5px 9px;
+      padding: 9px 12px;
       border: 1.5px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 12.5px;
+      border-radius: 8px;
+      font-size: 13.5px;
       color: var(--primary);
       outline: none;
       background: #ffffff;
+      transition: all 0.2s;
     }
 
     input:focus, select:focus {
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .option-pill {
       display: flex;
       align-items: center;
       background: var(--bg-light);
-      padding: 6px 9px;
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 7px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #e2e8f0;
+      margin-bottom: 12px;
       cursor: pointer;
-      font-size: 11.5px;
+      font-size: 13px;
       font-weight: 600;
       color: #334155;
+      transition: all 0.2s;
+    }
+
+    .option-pill:hover {
+      background: #f1f5f9;
     }
 
     .option-pill input {
       accent-color: var(--accent);
-      margin-right: 7px;
-      width: 14px;
-      height: 14px;
+      margin-right: 10px;
+      width: 16px;
+      height: 16px;
     }
 
-    /* Bill Summary */
-    .summary-card {
+    /* Right Sticky Summary & Invoice Panel */
+    .summary-panel {
+      position: sticky;
+      top: 96px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1.5px solid #e2e8f0;
+      padding: 22px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+    }
+
+    .invoice-card {
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      border-radius: 9px;
-      padding: 9px 12px;
-      margin-top: 8px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
     }
 
     .summary-line {
       display: flex;
       justify-content: space-between;
-      font-size: 11.5px;
+      font-size: 12.5px;
       color: var(--text-muted);
-      margin-bottom: 3.5px;
+      margin-bottom: 6px;
     }
 
     .summary-line strong {
@@ -329,90 +450,89 @@
 
     .total-box {
       border-top: 1.5px solid #cbd5e1;
-      margin-top: 5px;
-      padding-top: 5px;
+      margin-top: 8px;
+      padding-top: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .total-box span {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--primary);
     }
 
     .total-box h3 {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 800;
       color: var(--accent);
     }
 
-    /* UPI QR Area */
+    /* UPI Box */
     .screen-pay-box {
-      margin-top: 8px;
       background: #f0fdf4;
       border: 1.5px dashed #86efac;
-      border-radius: 9px;
-      padding: 8px 10px;
+      border-radius: 12px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .qr-container {
-      width: 66px;
-      height: 66px;
-      min-width: 66px;
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
       background: #ffffff;
       border: 1px solid #bbf7d0;
-      border-radius: 6px;
-      padding: 2px;
+      border-radius: 8px;
+      padding: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .qr-container canvas, .qr-container img {
-      width: 62px !important;
-      height: 62px !important;
+      width: 66px !important;
+      height: 66px !important;
     }
 
     .upi-info h5 {
-      font-size: 11.5px;
+      font-size: 12.5px;
       color: #14532d;
       font-weight: 700;
     }
 
     .upi-info p {
-      font-size: 10px;
+      font-size: 11px;
       color: #166534;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
     .upi-tag {
       display: inline-block;
       background: #dcfce7;
       color: #15803d;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 3px;
-      margin-top: 2px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 3px;
     }
 
     .btn-stack {
       display: flex;
       flex-direction: column;
-      gap: 7px;
-      margin-top: 10px;
+      gap: 9px;
     }
 
     .btn {
       width: 100%;
-      padding: 8.5px;
-      border-radius: 7px;
-      font-size: 12.5px;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 13.5px;
       font-weight: 700;
       border: none;
       cursor: pointer;
@@ -420,58 +540,51 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
+      transition: all 0.2s;
     }
 
     .btn-upi { background: #16a34a; color: #ffffff; }
+    .btn-upi:hover { background: #15803d; }
     .btn-dark { background: #0f172a; color: #ffffff; }
+    .btn-dark:hover { background: #1e293b; }
     .btn-green { background: #0284c7; color: #ffffff; }
+    .btn-green:hover { background: #0369a1; }
 
-    /* Connect With Us Section */
-    .connect-with-us {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 9px;
-      padding: 4px;
-      font-size: 11.5px;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    .connect-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: #1877f2;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    .connect-link:hover {
-      text-decoration: underline;
-    }
-
-    .fb-icon {
-      width: 14px;
-      height: 14px;
-      fill: #1877f2;
-    }
-
-    /* Founder Card: Bada Photo & Vertical Stack Info */
-    .founder-card {
-      margin-top: 11px;
+    /* 4. Official Web Footer */
+    .site-footer {
       background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
+      border-top: 1.5px solid #e2e8f0;
+      padding: 30px 20px 20px;
+      margin-top: 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
       align-items: center;
-      text-align: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .founder-profile-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .founder-profile-box {
+        flex-direction: column;
+      }
     }
 
     .founder-avatar-large {
@@ -480,29 +593,31 @@
       max-width: 125px;
       object-fit: contain;
       filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
-      margin-bottom: 2px;
       transition: transform 0.3s ease;
     }
 
     .founder-avatar-large:hover {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
 
-    .founder-info h5 {
-      font-size: 15px;
+    .founder-info h4 {
+      font-size: 17px;
       font-weight: 800;
       color: #0f172a;
-      line-height: 1.2;
     }
 
-    .founder-info span {
-      display: block;
+    .founder-info .role-badge {
+      display: inline-block;
       font-size: 11px;
+      background: #eff6ff;
       color: #2563eb;
       font-weight: 800;
-      margin-top: 2px;
-      letter-spacing: 0.6px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 3px;
+      margin-bottom: 8px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .founder-phone-btn {
@@ -511,50 +626,67 @@
       gap: 6px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      padding: 7px 14px;
+      padding: 6px 12px;
       border-radius: 8px;
       color: #0f172a;
       font-size: 12.5px;
       font-weight: 700;
       text-decoration: none;
-      margin-top: 4px;
-      transition: all 0.2s ease;
     }
 
-    .founder-phone-btn:hover {
-      background: #e2e8f0;
-      border-color: #94a3b8;
+    .footer-social-branding {
+      text-align: right;
     }
 
-    /* Cool Art Footer Credit Badge */
-    .coolart-footer-badge {
-      margin-top: 8px;
+    @media (max-width: 768px) {
+      .footer-social-branding {
+        text-align: center;
+      }
+    }
+
+    .connect-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #1877f2;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .fb-icon {
+      width: 16px;
+      height: 16px;
+      fill: #1877f2;
+    }
+
+    .coolart-badge {
       background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
       border: 1px solid #e2e8f0;
       border-radius: 10px;
-      padding: 7px 12px;
-      text-align: center;
+      padding: 10px 14px;
+      display: inline-block;
     }
 
-    .coolart-footer-badge h4 {
-      font-size: 11.5px;
+    .coolart-badge h5 {
+      font-size: 12.5px;
       font-weight: 700;
       color: #1e293b;
-      margin-bottom: 1px;
     }
 
-    .coolart-footer-badge h4 span {
+    .coolart-badge h5 span {
       color: #4f46e5;
       font-weight: 800;
     }
 
-    .coolart-footer-badge p {
-      font-size: 9.5px;
+    .coolart-badge p {
+      font-size: 11px;
       color: #64748b;
-      margin: 1px 0;
-      font-weight: 500;
+      margin-top: 2px;
     }
 
+    /* PDF Rendering Optimization */
     body.rendering-pdf .brand-title {
       animation: none !important;
       background: none !important;
@@ -568,7 +700,7 @@
   <!-- Lead Inquiry Modal Gate -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
-      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">[cite: 5, 10]
+      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">
       <h3>SAB KUCH PRINTING</h3>
       <p>रेट कैलकुलेटर का उपयोग करने के लिए 1 बार सत्यापन आवश्यक है</p>
 
@@ -601,173 +733,222 @@
     </div>
   </div>
 
-  <!-- Main Calculator Card -->
-  <div class="app-wrapper" id="full-calculator-card">
-    <div class="brand-header">
-      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">[cite: 5, 10]
-      <div class="brand-text">
-        <div class="brand-title">SAB KUCH PRINTING</div>
-        <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
-        <div class="brand-subtitle">कूल आर्ट एडवरटाइजिंग • रेट कोटेशन</div>
+  <!-- Website Top Header & Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-group-left">
+        <img src="SKP.png" alt="SKP Logo" class="brand-logo-img" onerror="this.style.display='none'">
+        <div class="brand-details">
+          <h1 class="brand-title">SAB KUCH PRINTING</h1>
+          <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
+          <div class="brand-subtitle">कूल आर्ट एडवरटाइजिंग • डिजिटल रेट कोटेशन पोर्टल</div>
+        </div>
       </div>
-      <img src="hanumanji.png" alt="Hanuman Ji" class="hanuman-img" onerror="this.style.display='none'">
-    </div>
 
-    <div class="form-group">
-      <label>ग्राहक का नाम (Customer Name)</label>
-      <input type="text" id="clientName" placeholder="उदा. ग्राहक का नाम" oninput="calculateTotal()">
-    </div>
-
-    <!-- Unit Selection Dropdown -->
-    <div class="form-group">
-      <label>माप की इकाई चुनें (Measurement Unit)</label>
-      <select id="calcUnitSelect" onchange="onUnitChange()">
-        <option value="" disabled selected>-- कृपया इकाई चुनें (Select Unit) --</option>
-        <option value="feet">फ़ीट (Feet)</option>
-        <option value="inches">इंच (Inches)</option>
-        <option value="mm">MM (मिलीमीटर)</option>
-      </select>
-    </div>
-
-    <!-- Dimensions (Initial Blank) -->
-    <div class="input-row">
-      <div class="input-col">
-        <label id="lblWidth">चौड़ाई (Width)</label>
-        <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+      <div class="header-right-group">
+        <a href="tel:+919458614610" class="header-contact-pill">
+          <span>📞</span> +91 9458614610
+        </a>
+        <img src="hanumanji.png" alt="Hanuman Ji" class="header-hanuman-img" onerror="this.style.display='none'">
       </div>
-      <div class="input-col">
-        <label id="lblHeight">ऊंचाई (Height)</label>
-        <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+    </div>
+  </header>
+
+  <!-- Website Main Workspace Container -->
+  <main class="website-content" id="full-calculator-portal">
+    
+    <div class="portal-banner" data-html2canvas-ignore="true">
+      <div>
+        <h2>स्मार्ट रेट एस्टीमेशन & बिलिंग इंजन</h2>
+        <p>साइज दर्ज करें, क्वालिटी चुनें और बिना किसी झंझट के सटीक बिल व कोटेशन प्राप्त करें।</p>
+      </div>
+      <div>
+        <span style="background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;">
+          ⚡ 100% पारदर्शी दरें
+        </span>
       </div>
     </div>
 
-    <div class="form-group">
-      <label>फ्लेक्स / मीडिया क्वालिटी</label>
-      <select id="cMedia" onchange="calculateTotal()">
-        <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
-        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft[cite: 1]</option>
-        <option value="25" data-name="स्टार फ्लेक्स (Star Flex)">स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
-        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft[cite: 1]</option>
-        <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
-      </select>
-    </div>
+    <div class="portal-grid">
+      
+      <!-- Left Column: Form & Specifications -->
+      <section class="form-panel">
+        <div class="section-title">
+          <span>📋</span> ग्राहक & बोर्ड स्पेसिफिकेशन
+        </div>
 
-    <div class="form-group">
-      <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
-      <select id="cFrameQuality" onchange="calculateTotal()">
-        <option value="0" data-name="फ्रेम नहीं चाहिए" selected>फ्रेम नहीं चाहिए (Only Flex Print)</option>
-        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft[cite: 1]</option>
-        <option value="25" data-name="बीच का फ्रेम (Medium)">बीच का (Medium Heavy) - ₹25 / Running Ft</option>
-        <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
-      </select>
-    </div>
+        <div class="form-group">
+          <label>ग्राहक का नाम (Customer Name)</label>
+          <input type="text" id="clientName" placeholder="उदा. ग्राहक का नाम" oninput="calculateTotal()">
+        </div>
 
-    <label class="option-pill">
-      <input type="checkbox" id="cDesign" onchange="calculateTotal()">
-      <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
-    </label>
+        <div class="form-group">
+          <label>माप की इकाई चुनें (Measurement Unit)</label>
+          <select id="calcUnitSelect" onchange="onUnitChange()">
+            <option value="" disabled selected>-- कृपया इकाई चुनें (Select Unit) --</option>
+            <option value="feet">फ़ीट (Feet)</option>
+            <option value="inches">इंच (Inches)</option>
+            <option value="mm">MM (मिलीमीटर)</option>
+          </select>
+        </div>
 
-    <div class="input-row">
-      <div class="input-col">
-        <label>किराया / ट्रांसपोर्ट (₹)</label>
-        <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
-      </div>
-      <div class="input-col">
-        <label>फिटिंग चार्ज (₹)</label>
-        <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
-      </div>
-    </div>
+        <div class="input-row">
+          <div class="input-col">
+            <label id="lblWidth">चौड़ाई (Width)</label>
+            <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+          </div>
+          <div class="input-col">
+            <label id="lblHeight">ऊंचाई (Height)</label>
+            <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
+          </div>
+        </div>
 
-    <div class="form-group">
-      <label>बोर्ड की संख्या (Quantity)</label>
-      <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
-    </div>
+        <div class="form-group">
+          <label>फ्लेक्स / मीडिया क्वालिटी</label>
+          <select id="cMedia" onchange="calculateTotal()">
+            <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
+            <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft</option>
+            <option value="25" data-name="स्टार फ्लेक्स (Star Flex)">स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
+            <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft</option>
+            <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
+          </select>
+        </div>
 
-    <!-- Summary Box -->
-    <div class="summary-card">
-      <div class="summary-line">
-        <span>एरिया / रनिंग माप:</span>
-        <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
-      </div>
-      <div class="summary-line">
-        <span>प्रिंटिंग लागत:</span>
-        <span id="resPrint">₹0</span>
-      </div>
-      <div class="summary-line">
-        <span>लोहे का फ्रेम:</span>
-        <span id="resFrame">₹0</span>
-      </div>
-      <div class="summary-line">
-        <span>पेस्टिंग बॉन्ड खर्च:</span>
-        <span id="resBond">₹0</span>
-      </div>
-      <div class="summary-line">
-        <span>डिज़ाइन शुल्क:</span>
-        <span id="resDesign">₹0</span>
-      </div>
-      <div class="summary-line">
-        <span>किराया + फिटिंग लेबर:</span>
-        <span id="resTransportFitting">₹0</span>
-      </div>
-      <div class="total-box">
-        <span>कुल अनुमानित राशि:</span>
-        <h3 id="resTotal">₹0</h3>
-      </div>
-    </div>
+        <div class="form-group">
+          <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
+          <select id="cFrameQuality" onchange="calculateTotal()">
+            <option value="0" data-name="फ्रेम नहीं चाहिए" selected>फ्रेम नहीं चाहिए (Only Flex Print)</option>
+            <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft</option>
+            <option value="25" data-name="बीच का फ्रेम (Medium)">बीच का (Medium Heavy) - ₹25 / Running Ft</option>
+            <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
+          </select>
+        </div>
 
-    <div class="screen-pay-box">
-      <div id="screenQrContainer" class="qr-container"></div>
-      <div class="upi-info">
-        <h5>⚡ Instant UPI Payment</h5>
-        <span class="upi-tag">🔒 100% Trusted & Verified</span>
-        <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
-        <p style="font-size: 9.5px; color: #475569;">GPay • PhonePe • Paytm • BHIM</p>
+        <div class="section-title" style="margin-top: 20px;">
+          <span>🛠️</span> अतिरिक्त सेवाएं व शुल्क
+        </div>
+
+        <label class="option-pill">
+          <input type="checkbox" id="cDesign" onchange="calculateTotal()">
+          <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
+        </label>
+
+        <div class="input-row">
+          <div class="input-col">
+            <label>किराया / ट्रांसपोर्ट (₹)</label>
+            <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
+          </div>
+          <div class="input-col">
+            <label>फिटिंग चार्ज (₹)</label>
+            <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>बोर्ड की संख्या (Quantity)</label>
+          <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
+        </div>
+      </section>
+
+      <!-- Right Column: Sticky Summary & Payment Gateway Preview -->
+      <aside class="summary-panel">
+        <div class="section-title">
+          <span>🧾</span> बिल सारांश (Live Breakdown)
+        </div>
+
+        <div class="invoice-card">
+          <div class="summary-line">
+            <span>एरिया / रनिंग माप:</span>
+            <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
+          </div>
+          <div class="summary-line">
+            <span>प्रिंटिंग लागत:</span>
+            <span id="resPrint">₹0</span>
+          </div>
+          <div class="summary-line">
+            <span>लोहे का फ्रेम:</span>
+            <span id="resFrame">₹0</span>
+          </div>
+          <div class="summary-line">
+            <span>पेस्टिंग बॉन्ड खर्च:</span>
+            <span id="resBond">₹0</span>
+          </div>
+          <div class="summary-line">
+            <span>डिज़ाइन शुल्क:</span>
+            <span id="resDesign">₹0</span>
+          </div>
+          <div class="summary-line">
+            <span>किराया + फिटिंग लेबर:</span>
+            <span id="resTransportFitting">₹0</span>
+          </div>
+          <div class="total-box">
+            <span>कुल अनुमानित राशि:</span>
+            <h3 id="resTotal">₹0</h3>
+          </div>
+        </div>
+
+        <div class="screen-pay-box">
+          <div id="screenQrContainer" class="qr-container"></div>
+          <div class="upi-info">
+            <h5>⚡ Instant UPI Payment</h5>
+            <span class="upi-tag">🔒 100% Trusted & Verified</span>
+            <p style="margin-top: 2px;"><strong>UPI: 9458614610-2@ybl</strong></p>
+            <p style="font-size: 10px; color: #475569;">GPay • PhonePe • Paytm • BHIM</p>
+          </div>
+        </div>
+
+        <div class="btn-stack" data-html2canvas-ignore="true">
+          <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
+            ⚡ Pay Now (Google Pay / PhonePe)
+          </a>
+          <button class="btn btn-dark" onclick="downloadDirectPDF()">
+            📄 डाउनलोड सिंगल पेज A4 PDF
+          </button>
+          <button class="btn btn-green" onclick="shareOnWhatsApp()">
+            📲 WhatsApp पर शेयर करें
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Website Footer Section -->
+  <footer class="site-footer" data-html2canvas-ignore="true">
+    <div class="footer-container">
+      
+      <!-- Founder Profile Left -->
+      <div class="founder-profile-box">
+        <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-large" onerror="this.style.display='none'">
+        <div class="founder-info">
+          <h4>Krishan Kant Bhardwaj</h4>
+          <span class="role-badge">Founder & Chief Consultant</span>
+          <div>
+            <a href="tel:+919458614610" class="founder-phone-btn">
+              <span>🇮🇳</span> +91 9458614610
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Action Buttons -->
-    <div class="btn-stack" data-html2canvas-ignore="true">
-      <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
-        ⚡ Pay Now (Google Pay / PhonePe)
-      </a>
-      <button class="btn btn-dark" onclick="downloadDirectPDF()">
-        📄 डाउनलोड सिंगल पेज A4 PDF
-      </button>
-      <button class="btn btn-green" onclick="shareOnWhatsApp()">
-        📲 WhatsApp पर शेयर करें
-      </button>
-    </div>
-
-    <!-- Connect With Us Section -->
-    <div class="connect-with-us" data-html2canvas-ignore="true">
-      <span>Connect with us:</span>
-      <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
-        <svg class="fb-icon" viewBox="0 0 24 24">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-        </svg>
-        Facebook
-      </a>
-    </div>
-
-    <!-- Founder Profile & Contact Card (Big Natural Image with Stacked Info) -->
-    <div class="founder-card" data-html2canvas-ignore="true">
-      <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-large" onerror="this.style.display='none'">
-      <div class="founder-info">
-        <h5>Krishan Kant Bhardwaj</h5>
-        <span>Founder</span>
+      <!-- Social & Cool Art Right -->
+      <div class="footer-social-branding">
+        <div>
+          <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
+            <svg class="fb-icon" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Connect on Facebook: Sab Kuchh Printing
+          </a>
+        </div>
+        <div class="coolart-badge">
+          <h5>Designed & Developed by: <span>COOL ART®</span></h5>
+          <p>Village: Nahal, Atrauli, Aligarh, UP • Graphic Design, Printing & Media</p>
+        </div>
       </div>
-      <a href="tel:+919458614610" class="founder-phone-btn">
-        <span>🇮🇳</span> +91 9458614610
-      </a>
-    </div>
 
-    <!-- Cool Art Footer Badge -->
-    <div class="coolart-footer-badge">
-      <h4>Designed & Developed by: <span>COOL ART®</span></h4>
-      <p>Village: Nahal, Atrauli, Aligarh, UP</p>
-      <p>Complete Graphic Design, Printing & Media Solutions</p>
     </div>
-  </div>
+  </footer>
 
   <script>
     const MY_UPI_ID = "9458614610-2@ybl";
@@ -778,7 +959,7 @@
     let qrGenerator = null;
     let autoDesignActivated = false;
 
-    // Check if user already registered previously
+    // Check user registration on page load
     window.addEventListener('DOMContentLoaded', () => {
       const savedUser = localStorage.getItem('skp_verified_user');
       if (!savedUser) {
@@ -852,7 +1033,7 @@
         `📞 मोबाइल: ${phone}%0A` +
         `📍 लोकेशन: ${loc}%0A` +
         `--------------------------------%0A` +
-        `Sab Kuch Printing Rate Calculator`;
+        `Sab Kuch Printing Rate Calculator Portal`;
       
       window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
     }
@@ -951,8 +1132,8 @@
       qrBox.innerHTML = '';
       qrGenerator = new QRCode(qrBox, {
         text: upiUrl,
-        width: 62,
-        height: 62,
+        width: 66,
+        height: 66,
         correctLevel: QRCode.CorrectLevel.M
       });
 
@@ -962,7 +1143,7 @@
     async function downloadDirectPDF() {
       calculateTotal();
       const clientName = document.getElementById('clientName').value.trim() || 'Customer';
-      const element = document.getElementById('full-calculator-card');
+      const element = document.querySelector('.summary-panel');
 
       document.body.classList.add('rendering-pdf');
 
@@ -972,7 +1153,7 @@
       await new Promise(r => setTimeout(r, 100));
 
       const opt = {
-        margin:       [6, 8, 6, 8],
+        margin:       [8, 8, 8, 8],
         filename:     `Quotation_${clientName.replace(/\s+/g, '_')}.pdf`,
         image:        { type: 'jpeg', quality: 1.0 },
         html2canvas:  { 
@@ -1019,7 +1200,6 @@
         `*Total Amount: ${total}*%0A` +
         `--------------------------------%0A` +
         `*Direct UPI Pay:*%0A${upiPayLink}%0A` +
-        `--------------------------------%0A` +
         `Facebook: https://www.facebook.com/sabkuchhprinting%0A` +
         `Cool Art Advertising (Nahal, Atrauli, Aligarh, UP)`;
 

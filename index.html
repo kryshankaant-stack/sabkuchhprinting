@@ -40,56 +40,130 @@
       overflow-x: hidden;
     }
 
-    /* 1. App-Style Splash Preloader Screen */
-    #app-splash-screen {
+    /* 1. Inquiry Entry Modal Gate */
+    #leadModalOverlay {
       position: fixed;
       inset: 0;
-      background: #ffffff;
-      z-index: 9999;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 10000;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      padding: 16px;
     }
 
-    .splash-logo {
-      width: 85px;
-      height: 85px;
+    .lead-modal-card {
+      background: #ffffff;
+      max-width: 420px;
+      width: 100%;
+      border-radius: 16px;
+      padding: 22px 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+      text-align: center;
+      border: 1.5px solid #e2e8f0;
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Pop-up Logo Styling (Authentic App Icon, Non-circular) */
+    .lead-modal-logo {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
       object-fit: contain;
-      animation: appPulse 1.2s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+      margin-bottom: 8px;
+      transition: transform 0.3s ease;
     }
 
-    .splash-loader-bar {
-      width: 130px;
-      height: 4px;
-      background: #e2e8f0;
-      border-radius: 4px;
-      margin-top: 18px;
-      overflow: hidden;
-      position: relative;
+    .lead-modal-logo:hover {
+      transform: scale(1.05);
     }
 
-    .splash-loader-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 50%;
-      background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6, #10b981);
-      border-radius: 4px;
-      animation: loaderSlide 1s infinite ease-in-out;
+    .lead-modal-card h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.01em;
     }
 
-    @keyframes appPulse {
-      0% { transform: scale(0.92); opacity: 0.85; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08)); }
-      100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 12px 20px rgba(37,99,235,0.25)); }
+    .lead-modal-card p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      margin-bottom: 14px;
     }
 
-    @keyframes loaderSlide {
-      0% { left: -50%; width: 30%; }
-      50% { width: 70%; }
-      100% { left: 100%; width: 30%; }
+    .lead-input-group {
+      text-align: left;
+      margin-bottom: 11px;
+    }
+
+    .lead-input-group label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    .lead-input-group input {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 7px;
+      font-size: 13px;
+      outline: none;
+      background: #ffffff;
+      color: var(--primary);
+    }
+
+    .lead-input-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .location-btn-box {
+      display: flex;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .btn-gps {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gps:hover {
+      background: #c7d2fe;
+    }
+
+    .btn-submit-lead {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
 
     /* 2. Main App Card */
@@ -102,17 +176,8 @@
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
       padding: 16px 18px;
       page-break-inside: avoid;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .app-wrapper.loaded {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* 3. Header with App Icon & Rainbow Brand Text */
     .brand-header {
       display: flex;
       align-items: center;
@@ -129,11 +194,6 @@
       min-width: 46px;
       object-fit: contain;
       filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.08));
-      transition: transform 0.3s ease;
-    }
-
-    .brand-logo:hover {
-      transform: scale(1.06) rotate(2deg);
     }
 
     .brand-text {
@@ -145,17 +205,7 @@
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 1.1;
-      background: linear-gradient(
-        90deg, 
-        #ef4444, 
-        #f59e0b, 
-        #10b981, 
-        #06b6d4, 
-        #3b82f6, 
-        #8b5cf6, 
-        #ec4899, 
-        #ef4444
-      );
+      background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
       background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -203,6 +253,11 @@
       flex: 1;
     }
 
+    ::placeholder {
+      color: #cbd5e1 !important;
+      opacity: 0.7;
+    }
+
     input[type="text"], input[type="number"], select {
       width: 100%;
       padding: 6.5px 9px;
@@ -216,41 +271,6 @@
 
     input:focus, select:focus {
       border-color: var(--accent);
-    }
-
-    .unit-selector {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      background: #f1f5f9;
-      padding: 3px;
-      border-radius: 6px;
-    }
-
-    .unit-selector label {
-      flex: 1;
-      text-align: center;
-      margin: 0;
-      padding: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      border-radius: 5px;
-      cursor: pointer;
-      color: #475569;
-    }
-
-    .unit-selector input[type="radio"] {
-      display: none;
-    }
-
-    .unit-selector input[type="radio"]:checked + span {
-      background: #ffffff;
-      color: var(--accent);
-      font-weight: 700;
-      display: block;
-      border-radius: 5px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      padding: 3px 0;
     }
 
     .option-pill {
@@ -392,25 +412,10 @@
       gap: 6px;
     }
 
-    .btn-upi {
-      background: #16a34a;
-      color: #ffffff;
-    }
-
-    .btn-fb {
-      background: #1877f2;
-      color: #ffffff;
-    }
-
-    .btn-dark {
-      background: #0f172a;
-      color: #ffffff;
-    }
-
-    .btn-green {
-      background: #0284c7;
-      color: #ffffff;
-    }
+    .btn-upi { background: #16a34a; color: #ffffff; }
+    .btn-fb { background: #1877f2; color: #ffffff; }
+    .btn-dark { background: #0f172a; color: #ffffff; }
+    .btn-green { background: #0284c7; color: #ffffff; }
 
     /* Cool Art Footer Credit Badge */
     .coolart-footer-badge {
@@ -441,7 +446,7 @@
       font-weight: 500;
     }
 
-    /* PDF Print Rule */
+    /* PDF Rule */
     body.rendering-pdf .brand-title {
       animation: none !important;
       background: none !important;
@@ -452,16 +457,41 @@
 </head>
 <body>
 
-  <!-- App-Style Splash Preloader -->
-  <div id="app-splash-screen">
-    <img src="SKP.png" alt="Sab Kuch Printing" class="splash-logo" onerror="this.style.display='none'">
-    <div class="splash-loader-bar">
-      <div class="splash-loader-progress"></div>
+  <!-- Lead Inquiry Modal Gate (Entry Barrier With Authentic SKP Logo) -->
+  <div id="leadModalOverlay">
+    <div class="lead-modal-card">
+      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">
+      <h3>SAB KUCH PRINTING</h3>
+      <p>कृपया रेट कैलकुलेटर देखने के लिए अपना विवरण दर्ज करें</p>
+
+      <div class="lead-input-group">
+        <label>आपका नाम (Full Name) *</label>
+        <input type="text" id="leadName" placeholder="उदा. राहुल शर्मा">
+      </div>
+
+      <div class="lead-input-group">
+        <label>मोबाइल / व्हाट्सएप नंबर *</label>
+        <input type="number" id="leadPhone" placeholder="उदा. 98XXXXXXXX">
+      </div>
+
+      <div class="lead-input-group">
+        <label>आपकी लोकेशन / दुकान का पता *</label>
+        <input type="text" id="leadLocation" placeholder="उदा. अतरौली / गाँव का नाम">
+        <div class="location-btn-box">
+          <button type="button" class="btn-gps" onclick="fetchLiveLocation()">
+            📍 लाइव GPS लोकेशन जोड़ें
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-submit-lead" onclick="submitLeadGate()">
+        कैलकुलेटर खोलें (Continue) ➔
+      </button>
     </div>
   </div>
 
+  <!-- Main Calculator Card -->
   <div class="app-wrapper" id="full-calculator-card">
-    <!-- Header with Icon, Rainbow Text & Address -->
     <div class="brand-header">
       <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
       <div class="brand-text">
@@ -473,33 +503,29 @@
 
     <div class="form-group">
       <label>ग्राहक का नाम (Customer Name)</label>
-      <input type="text" id="clientName" placeholder="उदा. Krishan Kant Bhardwaj" oninput="calculateTotal()">
+      <input type="text" id="clientName" placeholder="उदा. ग्राहक का नाम" oninput="calculateTotal()">
     </div>
 
-    <label>माप की इकाई (Measurement Unit)</label>
-    <div class="unit-selector">
-      <label>
-        <input type="radio" name="calcUnit" value="feet" checked onchange="onUnitChange()">
-        <span>फ़ीट (Feet)</span>
-      </label>
-      <label>
-        <input type="radio" name="calcUnit" value="inches" onchange="onUnitChange()">
-        <span>इंच (Inches)</span>
-      </label>
-      <label>
-        <input type="radio" name="calcUnit" value="mm" onchange="onUnitChange()">
-        <span>MM (मिलीमीटर)</span>
-      </label>
+    <!-- Unit Selection Dropdown -->
+    <div class="form-group">
+      <label>माप की इकाई चुनें (Measurement Unit)</label>
+      <select id="calcUnitSelect" onchange="onUnitChange()">
+        <option value="" disabled selected>-- कृपया इकाई चुनें (Select Unit) --</option>
+        <option value="feet">फ़ीट (Feet)</option>
+        <option value="inches">इंच (Inches)</option>
+        <option value="mm">MM (मिलीमीटर)</option>
+      </select>
     </div>
 
+    <!-- Dimensions (Initial Blank) -->
     <div class="input-row">
       <div class="input-col">
-        <label id="lblWidth">चौड़ाई (Width in Feet)</label>
-        <input type="number" id="cWidth" value="10" min="0.1" step="any" oninput="calculateTotal()">
+        <label id="lblWidth">चौड़ाई (Width)</label>
+        <input type="number" id="cWidth" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
       </div>
       <div class="input-col">
-        <label id="lblHeight">ऊंचाई (Height in Feet)</label>
-        <input type="number" id="cHeight" value="3" min="0.1" step="any" oninput="calculateTotal()">
+        <label id="lblHeight">ऊंचाई (Height)</label>
+        <input type="number" id="cHeight" placeholder="0" min="0.1" step="any" oninput="onDimensionInput()">
       </div>
     </div>
 
@@ -507,9 +533,9 @@
       <label>फ्लेक्स / मीडिया क्वालिटी</label>
       <select id="cMedia" onchange="calculateTotal()">
         <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
-        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स">मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft</option>
-        <option value="25" data-name="स्टार फ्लेक्स (Star Flex)" selected>स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
-        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft</option>
+        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft[cite: 1]</option>
+        <option value="25" data-name="स्टार फ्लेक्स (Star Flex)">स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
+        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft[cite: 1]</option>
         <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
       </select>
     </div>
@@ -517,26 +543,27 @@
     <div class="form-group">
       <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
       <select id="cFrameQuality" onchange="calculateTotal()">
-        <option value="0" data-name="फ्रेम नहीं चाहिए">फ्रेम नहीं चाहिए (Only Flex Print)</option>
-        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft</option>
-        <option value="25" data-name="बीच का फ्रेम (Medium)" selected>बीच का (Medium Heavy) - ₹25 / Running Ft</option>
+        <option value="0" data-name="फ्रेम नहीं चाहिए" selected>फ्रेम नहीं चाहिए (Only Flex Print)</option>
+        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft[cite: 1]</option>
+        <option value="25" data-name="बीच का फ्रेम (Medium)">बीच का (Medium Heavy) - ₹25 / Running Ft</option>
         <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
       </select>
     </div>
 
+    <!-- Designing Checkbox (Initially False, activates automatically on input) -->
     <label class="option-pill">
-      <input type="checkbox" id="cDesign" checked onchange="calculateTotal()">
+      <input type="checkbox" id="cDesign" onchange="calculateTotal()">
       <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
     </label>
 
     <div class="input-row">
       <div class="input-col">
         <label>किराया / ट्रांसपोर्ट (₹)</label>
-        <input type="number" id="cTransport" value="0" min="0" placeholder="0" oninput="calculateTotal()">
+        <input type="number" id="cTransport" placeholder="0" min="0" oninput="calculateTotal()">
       </div>
       <div class="input-col">
         <label>फिटिंग चार्ज (₹)</label>
-        <input type="number" id="cFitting" value="0" min="0" placeholder="0" oninput="calculateTotal()">
+        <input type="number" id="cFitting" placeholder="0" min="0" oninput="calculateTotal()">
       </div>
     </div>
 
@@ -545,26 +572,27 @@
       <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
     </div>
 
+    <!-- Summary Box (Initially 0) -->
     <div class="summary-card">
       <div class="summary-line">
         <span>एरिया / रनिंग माप:</span>
-        <strong id="resDimStats">30.0 sq.ft | 26.0 R.ft</strong>
+        <strong id="resDimStats">0.0 sq.ft | 0.0 R.ft</strong>
       </div>
       <div class="summary-line">
         <span>प्रिंटिंग लागत:</span>
-        <span id="resPrint">₹750</span>
+        <span id="resPrint">₹0</span>
       </div>
       <div class="summary-line">
         <span>लोहे का फ्रेम:</span>
-        <span id="resFrame">₹650</span>
+        <span id="resFrame">₹0</span>
       </div>
       <div class="summary-line">
         <span>पेस्टिंग बॉन्ड खर्च:</span>
-        <span id="resBond" style="color:#d97706; font-weight:700;">₹40 (2 शीशी)</span>
+        <span id="resBond">₹0</span>
       </div>
       <div class="summary-line">
         <span>डिज़ाइन शुल्क:</span>
-        <span id="resDesign">₹150</span>
+        <span id="resDesign">₹0</span>
       </div>
       <div class="summary-line">
         <span>किराया + फिटिंग लेबर:</span>
@@ -572,7 +600,7 @@
       </div>
       <div class="total-box">
         <span>कुल अनुमानित राशि:</span>
-        <h3 id="resTotal">₹1,590</h3>
+        <h3 id="resTotal">₹0</h3>
       </div>
     </div>
 
@@ -613,24 +641,57 @@
   <script>
     const MY_UPI_ID = "9458614610-2@ybl";
     const MY_NAME = "Krishan Kant Bhardwaj";
+    const OWNER_PHONE = "9458614610";
 
     let currentGrandTotal = 0;
     let qrGenerator = null;
+    let autoDesignActivated = false;
 
-    // Splash Loader
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('app-splash-screen');
-        const card = document.getElementById('full-calculator-card');
-        
-        splash.style.opacity = '0';
-        splash.style.visibility = 'hidden';
-        card.classList.add('loaded');
-      }, 700);
-    });
+    // 1. Live GPS Location Fetcher
+    function fetchLiveLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            document.getElementById('leadLocation').value = `GPS: https://maps.google.com/?q=${lat},${lng}`;
+            alert("✅ लोकेशन सफलतापूर्वक मिल गई!");
+          },
+          () => {
+            alert("⚠️ कृपया फोन में लोकेशन ऑन करें या मैन्युअल पता लिखें।");
+          }
+        );
+      } else {
+        alert("GPS लोकेशन सपोर्ट नहीं है, कृपया अपना पता लिखें।");
+      }
+    }
+
+    // 2. Lead Gate Submit Handler
+    function submitLeadGate() {
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const loc = document.getElementById('leadLocation').value.trim();
+
+      if (!name || !phone || !loc) {
+        alert("कृपया सभी विवरण (नाम, मोबाइल और लोकेशन) भरें!");
+        return;
+      }
+
+      document.getElementById('clientName').value = name;
+      document.getElementById('leadModalOverlay').style.display = 'none';
+
+      const leadMsg = `*🚨 NEW CALCULATOR LEAD - SAB KUCH PRINTING*%0A` +
+        `👤 नाम: ${name}%0A` +
+        `📞 मोबाइल: ${phone}%0A` +
+        `📍 लोकेशन: ${loc}%0A` +
+        `--------------------------------%0A` +
+        `ग्राहक कैलकुलेटर पर रेट चेक कर रहा है।`;
+      
+      window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
+    }
 
     function onUnitChange() {
-      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+      const unit = document.getElementById('calcUnitSelect').value;
       const lblW = document.getElementById('lblWidth');
       const lblH = document.getElementById('lblHeight');
 
@@ -647,10 +708,33 @@
       calculateTotal();
     }
 
+    function onDimensionInput() {
+      const rawW = parseFloat(document.getElementById('cWidth').value) || 0;
+      const rawH = parseFloat(document.getElementById('cHeight').value) || 0;
+
+      if ((rawW > 0 || rawH > 0) && !autoDesignActivated) {
+        document.getElementById('cDesign').checked = true;
+        autoDesignActivated = true;
+      }
+      calculateTotal();
+    }
+
     function calculateTotal() {
       const rawW = parseFloat(document.getElementById('cWidth').value) || 0;
       const rawH = parseFloat(document.getElementById('cHeight').value) || 0;
-      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+      const unit = document.getElementById('calcUnitSelect').value || 'feet';
+
+      if (rawW <= 0 || rawH <= 0) {
+        currentGrandTotal = 0;
+        document.getElementById('resDimStats').innerText = "0.0 sq.ft | 0.0 R.ft";
+        document.getElementById('resPrint').innerText = "₹0";
+        document.getElementById('resFrame').innerText = "₹0";
+        document.getElementById('resBond').innerText = "₹0";
+        document.getElementById('resDesign').innerText = document.getElementById('cDesign').checked ? "₹150" : "₹0";
+        document.getElementById('resTransportFitting').innerText = "₹0";
+        document.getElementById('resTotal').innerText = document.getElementById('cDesign').checked ? "₹150" : "₹0";
+        return;
+      }
 
       let wInFeet = rawW;
       let hInFeet = rawH;
@@ -671,7 +755,7 @@
       const qty = parseInt(document.getElementById('cQty').value) || 1;
 
       const areaSqFt = wInFeet * hInFeet;
-      const perimeterFeet = (wInFeet > 0 && hInFeet > 0) ? 2 * (wInFeet + hInFeet) : 0;
+      const perimeterFeet = 2 * (wInFeet + hInFeet);
 
       let bondBottlesPerBoard = 0;
       let bondCost = 0;
@@ -741,9 +825,9 @@
 
     function shareOnWhatsApp() {
       const client = document.getElementById('clientName').value.trim();
-      const rawW = document.getElementById('cWidth').value;
-      const rawH = document.getElementById('cHeight').value;
-      const unit = document.querySelector('input[name="calcUnit"]:checked').value;
+      const rawW = document.getElementById('cWidth').value || 0;
+      const rawH = document.getElementById('cHeight').value || 0;
+      const unit = document.getElementById('calcUnitSelect').value || 'feet';
       const mediaName = document.getElementById('cMedia').options[document.getElementById('cMedia').selectedIndex].getAttribute('data-name');
       const frameName = document.getElementById('cFrameQuality').options[document.getElementById('cFrameQuality').selectedIndex].getAttribute('data-name');
       const hasDesign = document.getElementById('cDesign').checked ? '₹150' : '₹0';

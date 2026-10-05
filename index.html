@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sab Kuch Printing - Rate Calculator</title>
+  <title>Sab Kuch Printing - Smart Rate Calculator</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,9 +37,62 @@
       align-items: center;
       min-height: 100vh;
       padding: 14px;
+      overflow-x: hidden;
     }
 
-    /* Single Page Locked Compact Card */
+    /* 1. App-Style Splash Preloader Screen */
+    #app-splash-screen {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .splash-logo {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      animation: appPulse 1.2s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+    }
+
+    .splash-loader-bar {
+      width: 130px;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      margin-top: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .splash-loader-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6, #10b981);
+      border-radius: 4px;
+      animation: loaderSlide 1s infinite ease-in-out;
+    }
+
+    @keyframes appPulse {
+      0% { transform: scale(0.92); opacity: 0.85; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08)); }
+      100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 12px 20px rgba(37,99,235,0.25)); }
+    }
+
+    @keyframes loaderSlide {
+      0% { left: -50%; width: 30%; }
+      50% { width: 70%; }
+      100% { left: 100%; width: 30%; }
+    }
+
+    /* 2. Main App Card */
     .app-wrapper {
       background: #ffffff;
       max-width: 480px;
@@ -49,40 +102,71 @@
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
       padding: 16px 18px;
       page-break-inside: avoid;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    /* Header with Brand Logo */
+    .app-wrapper.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 3. Header with App-Shape Icon & Rainbow Text */
     .brand-header {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       border-bottom: 2px solid #0f172a;
-      padding-bottom: 8px;
+      padding-bottom: 9px;
       margin-bottom: 11px;
     }
 
+    /* Non-circular App Icon */
     .brand-logo {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
       object-fit: contain;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.08));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.06) rotate(2deg);
     }
 
     .brand-text {
       text-align: left;
     }
 
+    /* Continuous Flowing Rainbow Gradient Animation */
     .brand-title {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 800;
-      color: var(--primary);
       letter-spacing: -0.01em;
       line-height: 1.1;
+      background: linear-gradient(
+        90deg, 
+        #ef4444, 
+        #f59e0b, 
+        #10b981, 
+        #06b6d4, 
+        #3b82f6, 
+        #8b5cf6, 
+        #ec4899, 
+        #ef4444
+      );
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbowFlow 4s linear infinite;
+    }
+
+    @keyframes rainbowFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
     }
 
     .brand-subtitle {
@@ -317,12 +401,28 @@
       background: #0284c7;
       color: #ffffff;
     }
+
+    /* PDF Print Rule: Turn off text gradient so PDF renders crisp black text */
+    body.rendering-pdf .brand-title {
+      animation: none !important;
+      background: none !important;
+      -webkit-text-fill-color: #0f172a !important;
+      color: #0f172a !important;
+    }
   </style>
 </head>
 <body>
 
+  <!-- App-Style Splash Preloader Screen -->
+  <div id="app-splash-screen">
+    <img src="SKP.png" alt="Sab Kuch Printing" class="splash-logo" onerror="this.style.display='none'">
+    <div class="splash-loader-bar">
+      <div class="splash-loader-progress"></div>
+    </div>
+  </div>
+
   <div class="app-wrapper" id="full-calculator-card">
-    <!-- Header with SKP Logo -->
+    <!-- Header with Clean Original Icon & Rainbow Brand Text -->
     <div class="brand-header">
       <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
       <div class="brand-text">
@@ -466,6 +566,18 @@
     let currentGrandTotal = 0;
     let qrGenerator = null;
 
+    // Splash Screen Loading Handlers
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('app-splash-screen');
+        const card = document.getElementById('full-calculator-card');
+        
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        card.classList.add('loaded');
+      }, 700);
+    });
+
     function onUnitChange() {
       const unit = document.querySelector('input[name="calcUnit"]:checked').value;
       const lblW = document.getElementById('lblWidth');
@@ -550,6 +662,8 @@
       const clientName = document.getElementById('clientName').value.trim() || 'Customer';
       const element = document.getElementById('full-calculator-card');
 
+      document.body.classList.add('rendering-pdf');
+
       if (document.fonts) {
         await document.fonts.ready;
       }
@@ -569,7 +683,9 @@
         pagebreak:    { mode: 'avoid-all' }
       };
 
-      html2pdf().set(opt).from(element).save();
+      html2pdf().set(opt).from(element).save().then(() => {
+        document.body.classList.remove('rendering-pdf');
+      });
     }
 
     function shareOnWhatsApp() {

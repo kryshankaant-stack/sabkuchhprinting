@@ -52,179 +52,14 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* 1. Moving Print Grid & Animated Laser Lines Layer */
-    .bg-animated-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    /* Moving Dot Matrix Grid */
-    .bg-dot-matrix {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.2px, transparent 1.2px);
-      background-size: 28px 28px;
-      animation: moveMatrix 35s linear infinite;
-    }
-
-    @keyframes moveMatrix {
-      0% { background-position: 0 0; }
-      100% { background-position: 56px 56px; }
-    }
-
-    /* Moving Laser Scan Lines */
-    .moving-laser-line {
-      position: absolute;
-      width: 200%;
-      height: 2px;
-      left: -50%;
-      opacity: 0.35;
-      background: linear-gradient(90deg, transparent 0%, #00a7ff 25%, #f43f5e 50%, #f59e0b 75%, transparent 100%);
-      filter: drop-shadow(0 0 10px #00a7ff);
-      animation: scanLaser 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-
-    .line-2 {
-      height: 1.5px;
-      opacity: 0.22;
-      animation: scanLaser 18s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
-      animation-delay: -6s;
-    }
-
-    @keyframes scanLaser {
-      0% { top: -5%; transform: rotate(-18deg) translateY(0); }
-      100% { top: 105%; transform: rotate(-18deg) translateY(0); }
-    }
-
-    /* Moving Diagonal Mesh Lines */
-    .diagonal-lines-grid {
-      position: absolute;
-      inset: -50%;
-      width: 200%;
-      height: 200%;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.012) 0px,
-        rgba(255, 255, 255, 0.012) 1px,
-        transparent 1px,
-        transparent 40px
-      );
-      animation: moveMesh 60s linear infinite;
-    }
-
-    @keyframes moveMesh {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(80px); }
-    }
-
-    /* 2. Floating CMYK Ink Splatters (Chhinte) */
-    .ink-splatter-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .splatter-shape {
-      position: absolute;
-      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-      filter: blur(55px);
-      opacity: 0.18;
-      animation: floatSplatter 18s ease-in-out infinite alternate;
-    }
-
-    .splatter-cyan {
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, #00a7ff 0%, transparent 70%);
-      top: 5%;
-      left: -90px;
-      animation-duration: 20s;
-    }
-
-    .splatter-magenta {
-      width: 460px;
-      height: 460px;
-      background: radial-gradient(circle, #f43f5e 0%, transparent 70%);
-      top: 25%;
-      right: -80px;
-      animation-duration: 24s;
-    }
-
-    .splatter-yellow {
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
-      bottom: 25%;
-      left: 5%;
-      animation-duration: 17s;
-    }
-
-    .splatter-violet {
-      width: 440px;
-      height: 440px;
-      background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
-      bottom: 5%;
-      right: 10%;
-      animation-duration: 22s;
-    }
-
-    @keyframes floatSplatter {
-      0% {
-        transform: translate(0, 0) scale(0.9) rotate(0deg);
-        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-      }
-      50% {
-        transform: translate(35px, 40px) scale(1.1) rotate(60deg);
-        border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
-      }
-      100% {
-        transform: translate(-25px, 20px) scale(0.98) rotate(120deg);
-        border-radius: 50% 50% 60% 40% / 40% 60% 40% 60%;
-      }
-    }
-
-    /* 3. Drifting Micro Ink Droplets */
-    .ink-particle {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: drop-shadow(0 0 8px currentColor);
-      animation: driftParticle 14s linear infinite;
-    }
-
-    .p-cyan   { width: 6px; height: 6px; background: #00a7ff; color: #00a7ff; left: 12%; top: 92%; animation-duration: 12s; animation-delay: 1s; }
-    .p-pink   { width: 8px; height: 8px; background: #f43f5e; color: #f43f5e; left: 42%; top: 95%; animation-duration: 15s; animation-delay: 3s; }
-    .p-yellow { width: 5px; height: 5px; background: #f59e0b; color: #f59e0b; left: 70%; top: 93%; animation-duration: 11s; animation-delay: 0.5s; }
-    .p-violet { width: 7px; height: 7px; background: #7c3aed; color: #7c3aed; left: 88%; top: 96%; animation-duration: 16s; animation-delay: 4s; }
-    .p-green  { width: 5px; height: 5px; background: #10b981; color: #10b981; left: 26%; top: 94%; animation-duration: 13s; animation-delay: 2s; }
-
-    @keyframes driftParticle {
-      0% { transform: translateY(0) scale(0.7); opacity: 0; }
-      20% { opacity: 0.8; }
-      80% { opacity: 0.6; }
-      100% { transform: translateY(-900px) scale(1.3); opacity: 0; }
-    }
-
-    /* Layout Positioning */
-    header, section, div.products-ribbon-bar, footer, #calculatorModal, #leadModalOverlay {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* 4. Ultra-Clean White Lead Modal */
+    /* 1. Ultra-Clean White Lead Modal */
     #leadModalOverlay {
       position: fixed;
       inset: 0;
       background: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(8px);
       z-index: 20000;
       display: none;
       justify-content: center;
@@ -241,11 +76,11 @@
       padding: 28px 24px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
       border: 1px solid #e2e8f0;
-      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: popIn 0.25s ease-out;
     }
 
     @keyframes popIn {
-      0% { transform: scale(0.94); opacity: 0; }
+      0% { transform: scale(0.95); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
@@ -302,7 +137,7 @@
       outline: none;
       background: #ffffff;
       color: #0f172a;
-      transition: all 0.2s;
+      transition: border-color 0.2s;
     }
 
     .lead-input-group input:focus {
@@ -344,17 +179,16 @@
       font-weight: 800;
       cursor: pointer;
       margin-top: 12px;
-      transition: all 0.2s;
+      transition: background 0.2s;
     }
 
     .btn-submit-lead:hover {
       background: #1e293b;
     }
 
-    /* 5. Dark Header */
+    /* 2. Dark Header */
     .site-header {
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(16px);
+      background: #000000;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: sticky;
       top: 0;
@@ -421,8 +255,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 8px 20px rgba(37,99,235,.35);
-      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(37,99,235,.25);
+      transition: transform 0.2s;
     }
 
     .btn-calc-nav:hover {
@@ -437,10 +271,13 @@
       filter: drop-shadow(0 4px 10px rgba(255,255,255,0.15));
     }
 
-    /* 6. Hero Banner */
+    /* 3. Clean Performance-Friendly Hero Banner */
     .trending-banner-section {
       padding: 50px 24px 50px;
-      background: transparent;
+      background: 
+        radial-gradient(circle at 85% 30%, rgba(37,99,235,.15), transparent 45%),
+        radial-gradient(circle at 15% 70%, rgba(124,58,237,.12), transparent 40%),
+        #030712;
       color: #ffffff;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       position: relative;
@@ -465,7 +302,6 @@
       gap: 8px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(10px);
       color: #38bdf8;
       padding: 6px 14px;
       border-radius: 999px;
@@ -481,21 +317,13 @@
       height: 7px;
       background: #38bdf8;
       border-radius: 50%;
-      box-shadow: 0 0 10px #38bdf8;
-      animation: pulseAnimation 1.6s ease-in-out infinite alternate;
+      box-shadow: 0 0 8px #38bdf8;
+      animation: pulseGlow 1.6s ease-in-out infinite alternate;
     }
 
-    @keyframes pulseAnimation {
-      0% {
-        transform: scale(0.85);
-        opacity: 0.5;
-        box-shadow: 0 0 4px #38bdf8;
-      }
-      100% {
-        transform: scale(1.35);
-        opacity: 1;
-        box-shadow: 0 0 14px #38bdf8, 0 0 20px #00e5ff;
-      }
+    @keyframes pulseGlow {
+      0% { opacity: 0.5; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.3); }
     }
 
     .banner-title {
@@ -539,8 +367,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 10px 30px rgba(37,99,235,0.45);
-      transition: all 0.2s;
+      box-shadow: 0 6px 20px rgba(37,99,235,0.35);
+      transition: transform 0.2s;
     }
 
     .btn-banner-calc:hover {
@@ -559,18 +387,23 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s;
+      transition: background 0.2s;
     }
 
-    /* Fixed No-Gap Clean Image Visual Frame */
+    .btn-banner-phone:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Fixed Clean Image Visual Frame */
     .banner-right-visual {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 10;
       border-radius: 24px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.20);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(37, 99, 235, 0.2);
+      background: #000;
     }
 
     .banner-eye-img {
@@ -579,11 +412,11 @@
       object-fit: cover;
       object-position: center;
       display: block;
-      transition: transform 0.5s ease;
+      transition: transform 0.4s ease;
     }
 
     .banner-right-visual:hover .banner-eye-img {
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
 
     .visual-glass-overlay {
@@ -591,8 +424,8 @@
       bottom: 14px;
       left: 14px;
       right: 14px;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 14px;
       padding: 11px 16px;
@@ -613,10 +446,9 @@
       font-weight: 700;
     }
 
-    /* 7. Products Ribbon */
+    /* 4. Products Ribbon */
     .products-ribbon-bar {
-      background: rgba(7, 14, 27, 0.88);
-      backdrop-filter: blur(12px);
+      background: #070e1b;
       color: #ffffff;
       overflow: hidden;
       white-space: nowrap;
@@ -629,6 +461,7 @@
       display: inline-flex;
       gap: 9px;
       animation: scrollProducts 36s linear infinite;
+      will-change: transform;
     }
 
     .products-ribbon-bar:hover .products-ticker-track {
@@ -653,14 +486,18 @@
       color: #f1f5f9;
     }
 
-    /* 8. Services Section (Light Background Container Restored For Contrast) */
+    /* 5. Services Section: Clean Light Area with Subtle Print Texture */
     .services-wrapper-outer {
-      background: #f8fafc;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.035), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.03), transparent 40%),
+        radial-gradient(#e2e8f0 1px, transparent 1px),
+        #f8fafc;
+      background-size: 100% 100%, 100% 100%, 20px 20px, 100% 100%;
       padding: 80px 24px 70px;
       border-top: 1px solid #e2e8f0;
       border-bottom: 1px solid #e2e8f0;
       position: relative;
-      z-index: 2;
     }
 
     .services-section {
@@ -706,14 +543,14 @@
       padding: 22px 14px;
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
       overflow: hidden;
-      transition: all 0.25s ease;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .service-card:before {
@@ -724,8 +561,8 @@
     }
 
     .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.09);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
       border-color: #cbd5e1;
     }
 
@@ -737,7 +574,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .service-icon-circle svg {
@@ -783,12 +620,12 @@
       margin-top: auto;
     }
 
-    /* 9. Clean Calculator Modal */
+    /* 6. Clean Calculator Modal */
     #calculatorModal {
       position: fixed;
       inset: 0;
       background: rgba(3, 10, 20, 0.82);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(8px);
       z-index: 15000;
       display: none;
       justify-content: center;
@@ -803,7 +640,7 @@
       width: 100%;
       border-radius: 20px;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 35px 90px rgba(0,0,0,.45);
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
       max-height: 94vh;
       overflow-y: auto;
       position: relative;
@@ -900,7 +737,7 @@
       color: #0f172a;
       outline: none;
       background: #ffffff;
-      transition: all 0.2s;
+      transition: border-color 0.2s;
     }
 
     input:focus, select:focus {
@@ -1037,14 +874,15 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s;
+      transition: opacity 0.2s;
     }
 
     .btn-upi { background: #16a34a; color: #fff; }
     .btn-dark { background: #0f172a; color: #fff; }
     .btn-green { background: #0284c7; color: #fff; }
+    .btn:hover { opacity: 0.9; }
 
-    /* 10. Footer */
+    /* 7. Footer */
     .site-footer {
       background: #000000;
       color: #ffffff;
@@ -1185,29 +1023,7 @@
 </head>
 <body>
 
-  <!-- Dynamic Ambient Background: Moving Matrix & Laser Lines -->
-  <div class="bg-animated-canvas">
-    <div class="bg-dot-matrix"></div>
-    <div class="diagonal-lines-grid"></div>
-    <div class="moving-laser-line"></div>
-    <div class="moving-laser-line line-2"></div>
-  </div>
-
-  <!-- Ambient CMYK Ink Splatters & Particles -->
-  <div class="ink-splatter-layer">
-    <div class="splatter-shape splatter-cyan"></div>
-    <div class="splatter-shape splatter-magenta"></div>
-    <div class="splatter-shape splatter-yellow"></div>
-    <div class="splatter-shape splatter-violet"></div>
-
-    <div class="ink-particle p-cyan"></div>
-    <div class="ink-particle p-pink"></div>
-    <div class="ink-particle p-yellow"></div>
-    <div class="ink-particle p-violet"></div>
-    <div class="ink-particle p-green"></div>
-  </div>
-
-  <!-- Ultra-Clean White Lead Modal -->
+  <!-- 1. Ultra-Clean White Lead Verification Modal -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
       <div class="lead-modal-top">
@@ -1360,7 +1176,7 @@
     </div>
   </div>
 
-  <!-- Services Section: Light Outer Container Restored For Rich Contrast -->
+  <!-- Services Section: Clean Light Area with Subtle Print Texture -->
   <div class="services-wrapper-outer" id="services">
     <section class="services-section">
       <div class="section-header-box">
@@ -1423,34 +1239,34 @@
         <div class="service-card">
           <div class="service-icon-circle bg-cmyk-green">
             <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          </div>
-          <h3>Packaging</h3>
-          <div class="service-sub-type">Cartons & Boxes</div>
-          <div class="service-specs">Custom Dies<br>Product Packaging</div>
         </div>
-
-        <!-- 7. Screen Printing -->
-        <div class="service-card">
-          <div class="service-icon-circle bg-cmyk-orange">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"></path><line x1="4" y1="20" x2="20" y2="20"></line><line x1="12" y1="16" x2="12" y2="20"></line></svg>
-          </div>
-          <h3>Screen</h3>
-          <div class="service-sub-type">Apparel & Bags</div>
-          <div class="service-specs">Spot UV & Foil<br>Textiles & Surfaces</div>
-        </div>
-
-        <!-- 8. Lab Printing -->
-        <div class="service-card">
-          <div class="service-icon-circle bg-cmyk-lab">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          </div>
-          <h3>Lab Print</h3>
-          <div class="service-sub-type">Photo Lab Quality</div>
-          <div class="service-specs">Luster & Metallic<br>Ultra-HD Resolution</div>
-        </div>
+        <h3>Packaging</h3>
+        <div class="service-sub-type">Cartons & Boxes</div>
+        <div class="service-specs">Custom Dies<br>Product Packaging</div>
       </div>
-    </section>
-  </div>
+
+      <!-- 7. Screen Printing -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-orange">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v12H4z"></path><line x1="4" y1="20" x2="20" y2="20"></line><line x1="12" y1="16" x2="12" y2="20"></line></svg>
+        </div>
+        <h3>Screen</h3>
+        <div class="service-sub-type">Apparel & Bags</div>
+        <div class="service-specs">Spot UV & Foil<br>Textiles & Surfaces</div>
+      </div>
+
+      <!-- 8. Lab Printing -->
+      <div class="service-card">
+        <div class="service-icon-circle bg-cmyk-lab">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </div>
+        <h3>Lab Print</h3>
+        <div class="service-sub-type">Photo Lab Quality</div>
+        <div class="service-specs">Luster & Metallic<br>Ultra-HD Resolution</div>
+      </div>
+    </div>
+  </section>
+</div>
 
   <!-- Interactive Modal Calculator -->
   <div id="calculatorModal">

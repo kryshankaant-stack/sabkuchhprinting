@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sab Kuch Printing - Official Price Calculator & Order Portal</title>
   
+  <!-- Official Favicon & App Bookmark Icons -->
+  <link rel="icon" type="image/png" href="SKP.png">
+  <link rel="apple-touch-icon" href="SKP.png">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -325,7 +329,7 @@
       }
     }
 
-    /* Left Calculator Form Panel */
+    /* Left Form Panel */
     .form-panel {
       background: #ffffff;
       border-radius: 16px;
@@ -416,7 +420,7 @@
       height: 16px;
     }
 
-    /* Right Sticky Summary & Invoice Panel */
+    /* Right Sticky Summary Panel */
     .summary-panel {
       position: sticky;
       top: 96px;
@@ -686,7 +690,7 @@
       margin-top: 2px;
     }
 
-    /* PDF Rendering Optimization */
+    /* Clean PDF rendering rules */
     body.rendering-pdf .brand-title {
       animation: none !important;
       background: none !important;
@@ -959,7 +963,6 @@
     let qrGenerator = null;
     let autoDesignActivated = false;
 
-    // Check user registration on page load
     window.addEventListener('DOMContentLoaded', () => {
       const savedUser = localStorage.getItem('skp_verified_user');
       if (!savedUser) {
@@ -971,7 +974,6 @@
       calculateTotal();
     });
 
-    // 1. Live GPS Location Fetcher
     function fetchLiveLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -991,7 +993,6 @@
       }
     }
 
-    // 2. Strict Lead Gate Verification
     function submitLeadGate() {
       const name = document.getElementById('leadName').value.trim();
       const phone = document.getElementById('leadPhone').value.trim();

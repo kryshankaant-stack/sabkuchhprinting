@@ -179,31 +179,31 @@
       page-break-inside: avoid;
     }
 
-    /* Header with Left Logo, Center Text & Right Hanuman Ji PNG */
+    /* Header: Balanced Left Logo, Center Branding & Prominent Right Hanuman Ji */
     .brand-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       border-bottom: 2px solid #0f172a;
-      padding-bottom: 9px;
+      padding-bottom: 10px;
       margin-bottom: 11px;
     }
 
     .brand-logo {
-      width: 46px;
-      height: 46px;
-      min-width: 46px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
       object-fit: contain;
-      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.08));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
     }
 
     .hanuman-img {
-      width: 46px;
-      height: 46px;
-      min-width: 46px;
+      height: 64px;
+      width: auto;
+      max-width: 58px;
       object-fit: contain;
-      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
     }
 
     .brand-text {
@@ -459,36 +459,37 @@
       fill: #1877f2;
     }
 
-    /* Founder Profile & Contact Card (Big Natural PNG, No Circle) */
+    /* Founder Card: Bada Photo & Vertical Stack Info */
     .founder-card {
-      margin-top: 10px;
+      margin-top: 11px;
       background: #ffffff;
       border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 10px 14px;
+      border-radius: 14px;
+      padding: 14px 12px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      text-align: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     }
 
-    .founder-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-    }
-
-    .founder-avatar {
-      height: 65px;
+    .founder-avatar-large {
+      height: 115px;
       width: auto;
-      max-width: 65px;
+      max-width: 125px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+      margin-bottom: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    .founder-avatar-large:hover {
+      transform: scale(1.03);
     }
 
     .founder-info h5 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       color: #0f172a;
       line-height: 1.2;
@@ -498,24 +499,25 @@
       display: block;
       font-size: 11px;
       color: #2563eb;
-      font-weight: 700;
+      font-weight: 800;
       margin-top: 2px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .founder-phone-btn {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      padding: 7px 11px;
+      padding: 7px 14px;
       border-radius: 8px;
       color: #0f172a;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
       text-decoration: none;
+      margin-top: 4px;
       transition: all 0.2s ease;
     }
 
@@ -566,7 +568,7 @@
   <!-- Lead Inquiry Modal Gate -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
-      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">
+      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">[cite: 5, 10]
       <h3>SAB KUCH PRINTING</h3>
       <p>रेट कैलकुलेटर का उपयोग करने के लिए 1 बार सत्यापन आवश्यक है</p>
 
@@ -602,7 +604,7 @@
   <!-- Main Calculator Card -->
   <div class="app-wrapper" id="full-calculator-card">
     <div class="brand-header">
-      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
+      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">[cite: 5, 10]
       <div class="brand-text">
         <div class="brand-title">SAB KUCH PRINTING</div>
         <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
@@ -643,9 +645,9 @@
       <label>फ्लेक्स / मीडिया क्वालिटी</label>
       <select id="cMedia" onchange="calculateTotal()">
         <option value="10" data-name="बिलकुल हल्का फ्लेक्स">बिलकुल हल्का फ्लेक्स - ₹10 / sq.ft</option>
-        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft</option>
+        <option value="12" data-name="मध्यम बढ़िया फ्लेक्स" selected>मध्यम बढ़िया फ्लेक्स - ₹12 / sq.ft[cite: 1]</option>
         <option value="25" data-name="स्टार फ्लेक्स (Star Flex)">स्टार फ्लेक्स (Star Flex) - ₹25 / sq.ft</option>
-        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft</option>
+        <option value="35" data-name="इको सॉल्वेंट विनाइल">इको सॉल्वेंट विनाइल - ₹35 / sq.ft[cite: 1]</option>
         <option value="45" data-name="बैकलाइट मीडिया">बैकलाइट मीडिया (Backlit) - ₹45 / sq.ft</option>
       </select>
     </div>
@@ -654,7 +656,7 @@
       <label>लोहे का फ्रेम (M.S. Iron Frame)</label>
       <select id="cFrameQuality" onchange="calculateTotal()">
         <option value="0" data-name="फ्रेम नहीं चाहिए" selected>फ्रेम नहीं चाहिए (Only Flex Print)</option>
-        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft</option>
+        <option value="18" data-name="कम वाला फ्रेम (Light)">कम वाला (Light Frame) - ₹18 / Running Ft[cite: 1]</option>
         <option value="25" data-name="बीच का फ्रेम (Medium)">बीच का (Medium Heavy) - ₹25 / Running Ft</option>
         <option value="30" data-name="सबसे अच्छा / भारी फ्रेम">सबसे अच्छा / भारी (Heavy Duty) - ₹30 / Running Ft</option>
       </select>
@@ -747,14 +749,12 @@
       </a>
     </div>
 
-    <!-- Founder Profile & Contact Card (Big Natural PNG, No Circle) -->
+    <!-- Founder Profile & Contact Card (Big Natural Image with Stacked Info) -->
     <div class="founder-card" data-html2canvas-ignore="true">
-      <div class="founder-left">
-        <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar" onerror="this.style.display='none'">
-        <div class="founder-info">
-          <h5>Krishan Kant Bhardwaj</h5>
-          <span>Founder</span>
-        </div>
+      <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-large" onerror="this.style.display='none'">
+      <div class="founder-info">
+        <h5>Krishan Kant Bhardwaj</h5>
+        <span>Founder</span>
       </div>
       <a href="tel:+919458614610" class="founder-phone-btn">
         <span>🇮🇳</span> +91 9458614610

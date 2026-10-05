@@ -44,10 +44,10 @@
     #leadModalOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.78);
       backdrop-filter: blur(6px);
       z-index: 10000;
-      display: flex;
+      display: none; /* Controlled via LocalStorage */
       justify-content: center;
       align-items: center;
       padding: 16px;
@@ -70,19 +70,13 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Pop-up Logo Styling (Authentic App Icon, Non-circular) */
     .lead-modal-logo {
-      width: 60px;
-      height: 60px;
-      min-width: 60px;
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
       object-fit: contain;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
       margin-bottom: 8px;
-      transition: transform 0.3s ease;
-    }
-
-    .lead-modal-logo:hover {
-      transform: scale(1.05);
     }
 
     .lead-modal-card h3 {
@@ -127,6 +121,14 @@
       border-color: var(--accent);
     }
 
+    .error-hint {
+      color: #ef4444;
+      font-size: 10.5px;
+      margin-top: 3px;
+      display: none;
+      font-weight: 600;
+    }
+
     .location-btn-box {
       display: flex;
       gap: 6px;
@@ -134,9 +136,9 @@
     }
 
     .btn-gps {
-      background: #e0e7ff;
-      color: #3730a3;
-      border: 1px solid #c7d2fe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
       padding: 6px 10px;
       border-radius: 6px;
       font-size: 11px;
@@ -145,18 +147,17 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.2s ease;
     }
 
     .btn-gps:hover {
-      background: #c7d2fe;
+      background: #dbeafe;
     }
 
     .btn-submit-lead {
       width: 100%;
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #fff;
-      padding: 10px;
+      padding: 10.5px;
       border: none;
       border-radius: 8px;
       font-size: 13.5px;
@@ -413,13 +414,44 @@
     }
 
     .btn-upi { background: #16a34a; color: #ffffff; }
-    .btn-fb { background: #1877f2; color: #ffffff; }
     .btn-dark { background: #0f172a; color: #ffffff; }
     .btn-green { background: #0284c7; color: #ffffff; }
 
+    /* Connect With Us Section */
+    .connect-with-us {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px;
+      font-size: 11.5px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .connect-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #1877f2;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .connect-link:hover {
+      text-decoration: underline;
+    }
+
+    .fb-icon {
+      width: 15px;
+      height: 15px;
+      fill: #1877f2;
+    }
+
     /* Cool Art Footer Credit Badge */
     .coolart-footer-badge {
-      margin-top: 12px;
+      margin-top: 8px;
       background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
       border: 1px solid #e2e8f0;
       border-radius: 10px;
@@ -457,31 +489,34 @@
 </head>
 <body>
 
-  <!-- Lead Inquiry Modal Gate (Entry Barrier With Authentic SKP Logo) -->
+  <!-- Lead Inquiry Modal Gate -->
   <div id="leadModalOverlay">
     <div class="lead-modal-card">
-      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">
+      <img src="SKP.png" alt="Sab Kuch Printing" class="lead-modal-logo" onerror="this.style.display='none'">[cite: 5, 10]
       <h3>SAB KUCH PRINTING</h3>
-      <p>कृपया रेट कैलकुलेटर देखने के लिए अपना विवरण दर्ज करें</p>
+      <p>रेट कैलकुलेटर का उपयोग करने के लिए 1 बार सत्यापन आवश्यक है</p>
 
       <div class="lead-input-group">
         <label>आपका नाम (Full Name) *</label>
         <input type="text" id="leadName" placeholder="उदा. राहुल शर्मा">
+        <div id="errName" class="error-hint">कृपया अपना सही नाम दर्ज करें!</div>
       </div>
 
       <div class="lead-input-group">
-        <label>मोबाइल / व्हाट्सएप नंबर *</label>
-        <input type="number" id="leadPhone" placeholder="उदा. 98XXXXXXXX">
+        <label>मोबाइल / व्हाट्सएप नंबर (10 अंक) *</label>
+        <input type="tel" id="leadPhone" maxlength="10" placeholder="उदा. 98XXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div id="errPhone" class="error-hint">कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें!</div>
       </div>
 
       <div class="lead-input-group">
         <label>आपकी लोकेशन / दुकान का पता *</label>
-        <input type="text" id="leadLocation" placeholder="उदा. अतरौली / गाँव का नाम">
+        <input type="text" id="leadLocation" placeholder="पता लिखें या GPS लोकेशन लगाएं">
         <div class="location-btn-box">
           <button type="button" class="btn-gps" onclick="fetchLiveLocation()">
-            📍 लाइव GPS लोकेशन जोड़ें
+            📍 ऑटोमैटिक GPS लोकेशन लगाएं
           </button>
         </div>
+        <div id="errLocation" class="error-hint">कृपया लोकेशन बटन दबाएं या सही पता लिखें!</div>
       </div>
 
       <button type="button" class="btn-submit-lead" onclick="submitLeadGate()">
@@ -493,7 +528,7 @@
   <!-- Main Calculator Card -->
   <div class="app-wrapper" id="full-calculator-card">
     <div class="brand-header">
-      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">
+      <img src="SKP.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'">[cite: 5, 10]
       <div class="brand-text">
         <div class="brand-title">SAB KUCH PRINTING</div>
         <div class="brand-address">Village: Nahal, Atrauli, Aligarh, UP</div>
@@ -550,7 +585,6 @@
       </select>
     </div>
 
-    <!-- Designing Checkbox (Initially False, activates automatically on input) -->
     <label class="option-pill">
       <input type="checkbox" id="cDesign" onchange="calculateTotal()">
       <span>ग्राफिक डिज़ाइनिंग चार्ज (Design Fee @ ₹150)</span>
@@ -572,7 +606,7 @@
       <input type="number" id="cQty" value="1" min="1" oninput="calculateTotal()">
     </div>
 
-    <!-- Summary Box (Initially 0) -->
+    <!-- Summary Box -->
     <div class="summary-card">
       <div class="summary-line">
         <span>एरिया / रनिंग माप:</span>
@@ -619,15 +653,23 @@
       <a id="btnPayUpi" class="btn btn-upi" href="#" target="_blank">
         ⚡ Pay Now (Google Pay / PhonePe)
       </a>
-      <a class="btn btn-fb" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
-        🌐 Facebook Page: Sab Kuchh Printing
-      </a>
       <button class="btn btn-dark" onclick="downloadDirectPDF()">
         📄 डाउनलोड सिंगल पेज A4 PDF
       </button>
       <button class="btn btn-green" onclick="shareOnWhatsApp()">
         📲 WhatsApp पर शेयर करें
       </button>
+    </div>
+
+    <!-- Subtle Connect With Us Section -->
+    <div class="connect-with-us" data-html2canvas-ignore="true">
+      <span>Connect with us:</span>
+      <a class="connect-link" href="https://www.facebook.com/sabkuchhprinting" target="_blank">
+        <svg class="fb-icon" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Facebook
+      </a>
     </div>
 
     <!-- Cool Art Footer Badge -->
@@ -647,6 +689,18 @@
     let qrGenerator = null;
     let autoDesignActivated = false;
 
+    // Check if user already registered previously
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('skp_verified_user');
+      if (!savedUser) {
+        document.getElementById('leadModalOverlay').style.display = 'flex';
+      } else {
+        const userData = JSON.parse(savedUser);
+        document.getElementById('clientName').value = userData.name || '';
+      }
+      calculateTotal();
+    });
+
     // 1. Live GPS Location Fetcher
     function fetchLiveLocation() {
       if (navigator.geolocation) {
@@ -655,37 +709,66 @@
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
             document.getElementById('leadLocation').value = `GPS: https://maps.google.com/?q=${lat},${lng}`;
-            alert("✅ लोकेशन सफलतापूर्वक मिल गई!");
+            document.getElementById('errLocation').style.display = 'none';
           },
           () => {
-            alert("⚠️ कृपया फोन में लोकेशन ऑन करें या मैन्युअल पता लिखें।");
-          }
+            alert("⚠️ कृपया फोन की GPS लोकेशन ऑन करें या नीचे अपना सही पता टाइप करें।");
+          },
+          { timeout: 10000 }
         );
       } else {
-        alert("GPS लोकेशन सपोर्ट नहीं है, कृपया अपना पता लिखें।");
+        alert("GPS उपलब्ध नहीं है, कृपया अपना पता टाइप करें।");
       }
     }
 
-    // 2. Lead Gate Submit Handler
+    // 2. Strict Lead Gate Verification
     function submitLeadGate() {
       const name = document.getElementById('leadName').value.trim();
       const phone = document.getElementById('leadPhone').value.trim();
       const loc = document.getElementById('leadLocation').value.trim();
 
-      if (!name || !phone || !loc) {
-        alert("कृपया सभी विवरण (नाम, मोबाइल और लोकेशन) भरें!");
-        return;
+      let isValid = true;
+
+      // Name Validation
+      if (name.length < 2) {
+        document.getElementById('errName').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errName').style.display = 'none';
       }
+
+      // Indian Mobile Number Strict Check (10 digits starting with 6-9)
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('errPhone').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errPhone').style.display = 'none';
+      }
+
+      // Location Validation (Must be GPS or at least 5 characters)
+      if (loc.length < 5) {
+        document.getElementById('errLocation').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('errLocation').style.display = 'none';
+      }
+
+      if (!isValid) return;
+
+      // Save user permanently in browser memory so modal never appears again
+      localStorage.setItem('skp_verified_user', JSON.stringify({ name, phone, loc }));
 
       document.getElementById('clientName').value = name;
       document.getElementById('leadModalOverlay').style.display = 'none';
 
-      const leadMsg = `*🚨 NEW CALCULATOR LEAD - SAB KUCH PRINTING*%0A` +
+      // Send WhatsApp lead alert to Owner
+      const leadMsg = `*🚨 NEW VERIFIED CALCULATOR LEAD*%0A` +
         `👤 नाम: ${name}%0A` +
         `📞 मोबाइल: ${phone}%0A` +
         `📍 लोकेशन: ${loc}%0A` +
         `--------------------------------%0A` +
-        `ग्राहक कैलकुलेटर पर रेट चेक कर रहा है।`;
+        `Sab Kuch Printing Rate Calculator`;
       
       window.open(`https://api.whatsapp.com/send?phone=91${OWNER_PHONE}&text=${leadMsg}`, '_blank');
     }
@@ -858,8 +941,6 @@
 
       window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
     }
-
-    calculateTotal();
   </script>
 </body>
 </html>

@@ -269,10 +269,57 @@
       background: #dbeafe;
     }
 
+    /* Continuous Multi-Color Ticker/Marquee */
+    .services-ticker-wrapper {
+      background: #ffffff;
+      border-bottom: 1.5px solid #e2e8f0;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      display: flex;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .services-ticker-track {
+      display: inline-flex;
+      gap: 12px;
+      animation: scrollServices 34s linear infinite;
+    }
+
+    .services-ticker-wrapper:hover .services-ticker-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollServices {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      white-space: nowrap;
+    }
+
+    /* Distinct Pastel Readability Colors */
+    .c-amber  { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .c-blue   { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .c-emerald{ background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .c-rose   { background: #ffe4e6; color: #9f1239; border: 1px solid #fecdd3; }
+    .c-purple { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+    .c-cyan   { background: #cffafe; color: #155e75; border: 1px solid #a5f3fc; }
+    .c-orange { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+
     /* 3. Main Website Body */
     .website-content {
       max-width: 1200px;
-      margin: 24px auto;
+      margin: 20px auto;
       padding: 0 20px;
       width: 100%;
       flex: 1;
@@ -281,9 +328,9 @@
     .portal-banner {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       color: #ffffff;
-      padding: 22px 28px;
+      padding: 20px 26px;
       border-radius: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -291,12 +338,12 @@
     }
 
     .portal-banner h2 {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
     }
 
     .portal-banner p {
-      font-size: 13px;
+      font-size: 12.5px;
       color: #94a3b8;
       margin-top: 3px;
     }
@@ -555,11 +602,11 @@
     .btn-green { background: #0284c7; color: #ffffff; }
     .btn-green:hover { background: #0369a1; }
 
-    /* 4. Official Web Footer */
+    /* 4. Official Web Footer with Shining Ring Profile */
     .site-footer {
       background: #ffffff;
       border-top: 1.5px solid #e2e8f0;
-      padding: 30px 20px 20px;
+      padding: 34px 20px 24px;
       margin-top: 40px;
     }
 
@@ -568,7 +615,7 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 28px;
       align-items: center;
     }
 
@@ -582,7 +629,7 @@
     .founder-profile-box {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
     }
 
     @media (max-width: 768px) {
@@ -591,34 +638,56 @@
       }
     }
 
-    .founder-avatar-large {
-      height: 115px;
-      width: auto;
-      max-width: 125px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
-      transition: transform 0.3s ease;
+    /* Shining Animated Circular Ring Frame */
+    .founder-avatar-container {
+      position: relative;
+      width: 116px;
+      height: 116px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .founder-avatar-large:hover {
-      transform: scale(1.04);
+    .shining-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #3b82f6, #ec4899, #f59e0b, #10b981, #3b82f6);
+      animation: rotateRing 3.5s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.45));
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .founder-avatar-circle {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ffffff;
+      border: 3px solid #ffffff;
+      z-index: 2;
     }
 
     .founder-info h4 {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       color: #0f172a;
     }
 
     .founder-info .role-badge {
       display: inline-block;
-      font-size: 11px;
+      font-size: 11.5px;
       background: #eff6ff;
       color: #2563eb;
       font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-top: 3px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-top: 4px;
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -630,12 +699,18 @@
       gap: 6px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 8px;
       color: #0f172a;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .founder-phone-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
     }
 
     .footer-social-branding {
@@ -656,7 +731,7 @@
       text-decoration: none;
       font-weight: 700;
       font-size: 13px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .fb-icon {
@@ -668,13 +743,13 @@
     .coolart-badge {
       background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 14px;
+      border-radius: 12px;
+      padding: 12px 16px;
       display: inline-block;
     }
 
     .coolart-badge h5 {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       color: #1e293b;
     }
@@ -757,6 +832,75 @@
       </div>
     </div>
   </header>
+
+  <!-- Auto-Scrolling Multi-Color Services Ribbon (Attached Works List) -->
+  <div class="services-ticker-wrapper" data-html2canvas-ignore="true">
+    <div class="services-ticker-track">
+      <!-- Batch 1 (28 items) -->
+      <span class="service-tag c-amber">विज़िटिंग कार्ड</span>
+      <span class="service-tag c-blue">पोस्टर</span>
+      <span class="service-tag c-emerald">ग्रीटिंग कार्ड</span>
+      <span class="service-tag c-rose">फ्लैक्स</span>
+      <span class="service-tag c-purple">लैटर हेड</span>
+      <span class="service-tag c-cyan">विनाइल</span>
+      <span class="service-tag c-orange">कैटेलॉग</span>
+      <span class="service-tag c-amber">सनबोर्ड</span>
+      <span class="service-tag c-blue">नेम प्लेट</span>
+      <span class="service-tag c-emerald">बैनर</span>
+      <span class="service-tag c-rose">स्टीकर</span>
+      <span class="service-tag c-purple">स्टैन्डी</span>
+      <span class="service-tag c-cyan">बिल बुक</span>
+      <span class="service-tag c-orange">शॉपिंग बैग</span>
+      <span class="service-tag c-amber">लिफाफे</span>
+      <span class="service-tag c-blue">साइन बोर्ड</span>
+      <span class="service-tag c-emerald">कैलेंदर</span>
+      <span class="service-tag c-rose">रबर स्टैम्प</span>
+      <span class="service-tag c-purple">ईवेन्ट कार्ड</span>
+      <span class="service-tag c-cyan">आई कार्ड्स</span>
+      <span class="service-tag c-orange">जन्मदिन कार्ड</span>
+      <span class="service-tag c-amber">मग, पेन</span>
+      <span class="service-tag c-blue">पैम्पलेट</span>
+      <span class="service-tag c-emerald">फोटो बुक</span>
+      <span class="service-tag c-rose">इनडोर साईनेज</span>
+      <span class="service-tag c-purple">नोटपैड</span>
+      <span class="service-tag c-cyan">सन पैक शीट</span>
+      <span class="service-tag c-orange">टी-शर्ट</span>
+      <span class="service-tag c-amber">पैकेजिंग बॉक्स</span>
+      <span class="service-tag c-rose">शादी कार्ड</span>
+
+      <!-- Batch 2 (Duplicate for Seamless Infinite Loop) -->
+      <span class="service-tag c-amber">विज़िटिंग कार्ड</span>
+      <span class="service-tag c-blue">पोस्टर</span>
+      <span class="service-tag c-emerald">ग्रीटिंग कार्ड</span>
+      <span class="service-tag c-rose">फ्लैक्स</span>
+      <span class="service-tag c-purple">लैटर हेड</span>
+      <span class="service-tag c-cyan">विनाइल</span>
+      <span class="service-tag c-orange">कैटेलॉग</span>
+      <span class="service-tag c-amber">सनबोर्ड</span>
+      <span class="service-tag c-blue">नेम प्लेट</span>
+      <span class="service-tag c-emerald">बैनर</span>
+      <span class="service-tag c-rose">स्टीकर</span>
+      <span class="service-tag c-purple">स्टैन्डी</span>
+      <span class="service-tag c-cyan">बिल बुक</span>
+      <span class="service-tag c-orange">शॉपिंग बैग</span>
+      <span class="service-tag c-amber">लिफाफे</span>
+      <span class="service-tag c-blue">साइन बोर्ड</span>
+      <span class="service-tag c-emerald">कैलेंदर</span>
+      <span class="service-tag c-rose">रबर स्टैम्प</span>
+      <span class="service-tag c-purple">ईवेन्ट कार्ड</span>
+      <span class="service-tag c-cyan">आई कार्ड्स</span>
+      <span class="service-tag c-orange">जन्मदिन कार्ड</span>
+      <span class="service-tag c-amber">मग, पेन</span>
+      <span class="service-tag c-blue">पैम्पलेट</span>
+      <span class="service-tag c-emerald">फोटो बुक</span>
+      <span class="service-tag c-rose">इनडोर साईनेज</span>
+      <span class="service-tag c-purple">नोटपैड</span>
+      <span class="service-tag c-cyan">सन पैक शीट</span>
+      <span class="service-tag c-orange">टी-शर्ट</span>
+      <span class="service-tag c-amber">पैकेजिंग बॉक्स</span>
+      <span class="service-tag c-rose">शादी कार्ड</span>
+    </div>
+  </div>
 
   <!-- Website Main Workspace Container -->
   <main class="website-content" id="full-calculator-portal">
@@ -917,13 +1061,16 @@
     </div>
   </main>
 
-  <!-- Website Footer Section -->
+  <!-- Website Footer Section with Glowing Profile Ring -->
   <footer class="site-footer" data-html2canvas-ignore="true">
     <div class="footer-container">
       
       <!-- Founder Profile Left -->
       <div class="founder-profile-box">
-        <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-large" onerror="this.style.display='none'">
+        <div class="founder-avatar-container">
+          <div class="shining-ring"></div>
+          <img src="krishna.png" alt="Krishan Kant Bhardwaj" class="founder-avatar-circle" onerror="this.style.display='none'">
+        </div>
         <div class="founder-info">
           <h4>Krishan Kant Bhardwaj</h4>
           <span class="role-badge">Founder & Chief Consultant</span>
@@ -1123,7 +1270,7 @@
       document.getElementById('resDimStats').innerText = `${areaSqFt.toFixed(1)} sq.ft | ${perimeterFeet.toFixed(1)} R.ft`;
       document.getElementById('resPrint').innerText = '₹' + Math.round(printCost).toLocaleString('en-IN');
       document.getElementById('resFrame').innerText = '₹' + Math.round(frameCost).toLocaleString('en-IN');
-      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} शीशी)` : '₹0';
+      document.getElementById('resBond').innerText = bondCost > 0 ? `₹${bondCost} (${bondBottlesPerBoard * qty} शीशी @ 25 sq.ft)` : '₹0';
       document.getElementById('resDesign').innerText = '₹' + designCost.toLocaleString('en-IN');
       document.getElementById('resTransportFitting').innerText = '₹' + tfCost.toLocaleString('en-IN');
       document.getElementById('resTotal').innerText = '₹' + currentGrandTotal.toLocaleString('en-IN');
